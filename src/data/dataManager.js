@@ -1,13 +1,45 @@
 class DataManager {
   constructor() {
-    this.data = this.loadData();
+    this.data = [];
     this.referenceValue = 50; // Reference parameter for comparison
     this.metricTypes = ['Identity', 'Data', 'Device', 'Apps'];
+    this.dataFile = '/data/sample-data.json'; // Default to sample data
+    this.initializeData();
   }
 
-  loadData() {
-    const stored = localStorage.getItem('metricsData');
-    return stored ? JSON.parse(stored) : [];
+  async initializeData() {
+    try {
+      // Try to load from localStorage first (for existing data)
+      const stored = localStorage.getItem('metricsData');
+      if (stored) {
+        this.data = JSON.parse(stored);
+      } else {
+        // Load from JSON file
+        await this.loadFromFile();
+      }
+    } catch (error) {
+      console.error('Error initializing data:', error);
+      this.data = [];
+    }
+  }
+
+  async loadFromFile() {
+    try {
+      const response = await fetch(this.dataFile);
+      const fileData = await response.json();
+      this.data = fileData.entries || [];
+      this.referenceValue = fileData.referenceValue || 50;
+      // Also save to localStorage for persistence
+      this.saveData();
+    } catch (error) {
+      console.error('Error loading from file:', error);
+      this.data = [];
+    }
+  }
+
+  async switchDataFile(filename) {
+    this.dataFile = `/data/${filename}`;
+    await this.loadFromFile();
   }
 
   saveData() {
@@ -101,6 +133,28 @@ class DataManager {
   clearAllData() {
     this.data = [];
     this.saveData();
+  }
+
+  exportData() {
+    const exportData = {
+      entries: this.data,
+      referenceValue: this.referenceValue,
+      lastUpdated: new Date().toISOString(),
+      version: "1.0.0"
+    };
+    return exportData;
+  }
+
+  importData(importData) {
+    try {
+      this.data = importData.entries || [];
+      this.referenceValue = importData.referenceValue || 50;
+      this.saveData();
+      return true;
+    } catch (error) {
+      console.error('Error importing data:', error);
+      return false;
+    }
   }
 }
 
