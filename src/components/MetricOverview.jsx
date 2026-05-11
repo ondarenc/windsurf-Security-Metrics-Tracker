@@ -30,10 +30,10 @@ const MetricOverview = () => {
   return (
     <div className="space-y-6 mb-8">
       {/* Horizontal layout - 2:3 ratio */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 print:grid-cols-5 print:gap-3 print:scale-75 print:origin-top-left">
         {/* Secure Score - Bigger on horizontal axis */}
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-lg shadow-lg border-2 border-red-200 p-8 text-center hover:shadow-xl transition-all duration-300 aspect-square flex flex-col justify-center">
+          <div className="bg-white rounded-lg shadow-lg border-2 border-red-200 p-8 text-center hover:shadow-xl transition-all duration-300 aspect-square flex flex-col justify-center print:shadow-none print:scale-90">
             <div className="mb-4">
               <div className={`w-16 h-16 ${secureScoreIndicator.bgColor} rounded-lg flex items-center justify-center mx-auto mb-4`}>
                 <secureScoreIndicator.icon className={`w-8 h-8 ${secureScoreIndicator.color}`} />
@@ -56,7 +56,7 @@ const MetricOverview = () => {
         <div className="lg:col-span-3">
           <div className="grid grid-cols-2 gap-3 h-full">
             {otherMetricsData.map((metric) => (
-              <div key={metric.name} className="bg-white rounded-lg shadow-lg border-2 border-gray-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full">
+              <div key={metric.name} className="bg-white rounded-lg shadow-lg border-2 border-gray-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full print:shadow-none print:scale-90">
                 {/* Left side - Vertical information */}
                 <div className="flex-1 flex flex-col justify-center">
                   <h2 className="text-sm font-bold text-gray-900 mb-2">{metric.name}</h2>
