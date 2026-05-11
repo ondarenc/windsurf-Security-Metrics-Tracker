@@ -1,91 +1,112 @@
 {
   "entries": [
     {
-      "id": "sample-1",
+      "id": "secure-1",
+      "name": "Secure Score",
+      "value": 64,
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T10:00:00.000Z"
+    },
+    {
+      "id": "secure-2",
+      "name": "Secure Score",
+      "value": 65,
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T10:00:00.000Z"
+    },
+    {
+      "id": "secure-3",
+      "name": "Secure Score",
+      "value": 66,
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T10:00:00.000Z"
+    },
+    {
+      "id": "identity-1",
       "name": "Identity",
-      "value": 75,
-      "date": "2026-05-08",
-      "timestamp": "2026-05-08T10:00:00.000Z"
+      "value": 64,
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T11:00:00.000Z"
     },
     {
-      "id": "sample-2", 
+      "id": "identity-2",
       "name": "Identity",
-      "value": 82,
-      "date": "2026-05-09",
-      "timestamp": "2026-05-09T10:00:00.000Z"
+      "value": 65,
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T11:00:00.000Z"
     },
     {
-      "id": "sample-3",
-      "name": "Identity", 
-      "value": 78,
-      "date": "2026-05-10",
-      "timestamp": "2026-05-10T10:00:00.000Z"
+      "id": "identity-3",
+      "name": "Identity",
+      "value": 66,
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T11:00:00.000Z"
     },
     {
-      "id": "sample-4",
-      "name": "Data",
-      "value": 68,
-      "date": "2026-05-08",
-      "timestamp": "2026-05-08T11:00:00.000Z"
+      "id": "apps-1",
+      "name": "Apps",
+      "value": 64,
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T12:00:00.000Z"
     },
     {
-      "id": "sample-5",
-      "name": "Data",
-      "value": 72,
-      "date": "2026-05-09", 
-      "timestamp": "2026-05-09T11:00:00.000Z"
+      "id": "apps-2",
+      "name": "Apps",
+      "value": 65,
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T12:00:00.000Z"
     },
     {
-      "id": "sample-6",
-      "name": "Data",
-      "value": 85,
-      "date": "2026-05-10",
-      "timestamp": "2026-05-10T11:00:00.000Z"
+      "id": "apps-3",
+      "name": "Apps",
+      "value": 66,
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T12:00:00.000Z"
     },
     {
-      "id": "sample-7",
+      "id": "device-1",
       "name": "Device",
-      "value": 53,
-      "date": "2026-05-08",
-      "timestamp": "2026-05-08T12:00:00.000Z"
+      "value": 64,
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T13:00:00.000Z"
     },
     {
-      "id": "sample-8",
-      "name": "Device", 
-      "value": 85,
-      "date": "2026-05-09",
-      "timestamp": "2026-05-09T12:00:00.000Z"
-    },
-    {
-      "id": "sample-9",
+      "id": "device-2",
       "name": "Device",
-      "value": 88,
-      "date": "2026-05-10",
-      "timestamp": "2026-05-10T12:00:00.000Z"
+      "value": 65,
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T13:00:00.000Z"
     },
     {
-      "id": "sample-10",
-      "name": "Apps",
-      "value": 62,
-      "date": "2026-05-08",
-      "timestamp": "2026-05-08T13:00:00.000Z"
+      "id": "device-3",
+      "name": "Device",
+      "value": 66,
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T13:00:00.000Z"
     },
     {
-      "id": "sample-11",
-      "name": "Apps",
-      "value": 70,
-      "date": "2026-05-09",
-      "timestamp": "2026-05-09T13:00:00.000Z"
+      "id": "data-1",
+      "name": "Data",
+      "value": 64,
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T14:00:00.000Z"
     },
     {
-      "id": "sample-12",
-      "name": "Apps",
-      "value": 91,
-      "date": "2026-05-10",
-      "timestamp": "2026-05-10T13:00:00.000Z"
+      "id": "data-2",
+      "name": "Data",
+      "value": 65,
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T14:00:00.000Z"
+    },
+    {
+      "id": "data-3",
+      "name": "Data",
+      "value": 66,
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T14:00:00.000Z"
     }
   ],
-  "referenceValue": 50,
-  "lastUpdated": "2026-05-10T13:00:00.000Z",
+  "referenceValue": 65,
+  "lastUpdated": "2026-05-11T14:00:00.000Z",
   "version": "1.0.0"
 }

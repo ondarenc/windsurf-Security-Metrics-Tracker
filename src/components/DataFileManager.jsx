@@ -10,6 +10,18 @@ const DataFileManager = ({ onDataChanged }) => {
     setIsLoading(true)
     setMessage('')
     try {
+      // Check if there's existing data and warn user
+      const currentData = dataManager.getAllEntries()
+      if (currentData.length > 0) {
+        const confirmed = window.confirm(
+          'This action will remove your current data. Are you sure you exported your data BEFORE continuing?'
+        )
+        if (!confirmed) {
+          setIsLoading(false)
+          return
+        }
+      }
+      
       await dataManager.switchDataFile('sample-data.json')
       setMessage('Sample data loaded successfully!')
       if (onDataChanged) onDataChanged()
@@ -24,6 +36,18 @@ const DataFileManager = ({ onDataChanged }) => {
     setIsLoading(true)
     setMessage('')
     try {
+      // Check if there's existing data and warn user
+      const currentData = dataManager.getAllEntries()
+      if (currentData.length > 0) {
+        const confirmed = window.confirm(
+          'This action will remove your current data. Are you sure you exported your data BEFORE continuing?'
+        )
+        if (!confirmed) {
+          setIsLoading(false)
+          return
+        }
+      }
+      
       await dataManager.switchDataFile('empty-data.json')
       setMessage('Empty data loaded successfully!')
       if (onDataChanged) onDataChanged()

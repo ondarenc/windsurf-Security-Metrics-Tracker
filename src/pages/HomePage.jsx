@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Plus, Table, BarChart3, TrendingUp } from 'lucide-react'
+import { Plus, Table, BarChart3, TrendingUp, Settings, Trash2 } from 'lucide-react'
 import dataManager from '../data/dataManager'
+import DataFileManager from '../components/DataFileManager'
 
 const HomePage = () => {
   const navigate = useNavigate()
+  const [showSettings, setShowSettings] = useState(false)
+  const [tempReference, setTempReference] = useState(dataManager.getReferenceValue().toString())
   const entries = dataManager.getAllEntries()
   const referenceValue = dataManager.getReferenceValue()
 
@@ -14,21 +17,98 @@ const HomePage = () => {
     belowReference: entries.filter(e => e.value <= referenceValue).length
   }
 
+  const handleReferenceUpdate = () => {
+    const newValue = parseFloat(tempReference)
+    if (!isNaN(newValue) && newValue > 0) {
+      dataManager.setReferenceValue(newValue)
+      navigate(0) // Refresh the page to update stats
+    }
+  }
+
+  const handleClearAll = () => {
+    if (window.confirm('Are you sure you want to clear all data?')) {
+      dataManager.clearAllData()
+      navigate(0) // Refresh the page
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-              <BarChart3 className="w-8 h-8 text-white" />
+        <div className="flex justify-between items-center mb-12">
+          <div className="text-center flex-1">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                <BarChart3 className="w-8 h-8 text-white" />
+              </div>
+              <h1 className="text-4xl font-bold text-gray-900">M365 Metrics Tracker</h1>
             </div>
-            <h1 className="text-4xl font-bold text-gray-900">Metrics Tracker</h1>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              Track and analyze your M365 Score metrics with visual indicators based on reference values
+            </p>
           </div>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Track and analyze your metrics with visual indicators based on reference values
-          </p>
+          
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"
+          >
+            <Settings className="w-4 h-4" />
+            Settings
+          </button>
         </div>
+
+        {/* Settings Panel */}
+        {showSettings && (
+          <div className="space-y-6 mb-8">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Target Settings</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Target Value
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="number"
+                      value={tempReference}
+                      onChange={(e) => setTempReference(e.target.value)}
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter reference value"
+                    />
+                    <button
+                      onClick={handleReferenceUpdate}
+                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    >
+                      Update
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">
+                    Current target: {referenceValue}
+                  </p>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Quick Actions
+                  </label>
+                  <button
+                    onClick={handleClearAll}
+                    className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors flex items-center gap-2"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Clear All Data
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <DataFileManager onDataChanged={() => {
+              navigate(0) // Refresh the page
+            }} />
+          </div>
+        )}
 
         {/* Quick Stats */}
         {entries.length > 0 && (
@@ -51,6 +131,25 @@ const HomePage = () => {
         {/* Action Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           <button
+            onClick={() => navigate('/')}
+            className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-left hover:shadow-md transition-all duration-200"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
+                <Table className="w-6 h-6 text-green-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">View Data</h2>
+            </div>
+            <p className="text-gray-600 mb-4">
+              Browse all metric entries with detailed tables and charts
+            </p>
+            <div className="text-green-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+              View all data
+              <span className="text-xl">→</span>
+            </div>
+          </button>
+
+          <button
             onClick={() => navigate('/form')}
             className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-left hover:shadow-md transition-all duration-200"
           >
@@ -65,25 +164,6 @@ const HomePage = () => {
             </p>
             <div className="text-blue-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
               Create new entry
-              <span className="text-xl">→</span>
-            </div>
-          </button>
-
-          <button
-            onClick={() => navigate('/table')}
-            className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-left hover:shadow-md transition-all duration-200"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                <Table className="w-6 h-6 text-green-600" />
-              </div>
-              <h2 className="text-2xl font-bold text-gray-900">View Table</h2>
-            </div>
-            <p className="text-gray-600 mb-4">
-              View all entries in a table with visual indicators showing performance
-            </p>
-            <div className="text-green-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-              View data table
               <span className="text-xl">→</span>
             </div>
           </button>

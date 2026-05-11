@@ -1,8 +1,8 @@
 class DataManager {
   constructor() {
     this.data = [];
-    this.referenceValue = 50; // Reference parameter for comparison
-    this.metricTypes = ['Identity', 'Data', 'Device', 'Apps'];
+    this.referenceValue = 65; // Reference parameter for comparison
+    this.metricTypes = ['Identity', 'Data', 'Device', 'Apps', 'Secure Score'];
     this.dataFile = '/data/sample-data.json'; // Default to sample data
     this.initializeData();
   }

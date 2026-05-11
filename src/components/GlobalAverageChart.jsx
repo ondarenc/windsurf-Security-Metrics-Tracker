@@ -11,7 +11,7 @@ const GlobalAverageChart = ({ data }) => {
   if (!data || data.length === 0) {
     return (
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Global Average Values</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">M365 Score Health</h3>
         <div className="text-center py-8 text-gray-500">
           <p>No data available</p>
         </div>
@@ -21,7 +21,7 @@ const GlobalAverageChart = ({ data }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Global Average Values</h3>
+      <h3 className="text-lg font-semibold text-gray-900 mb-4">M365 Score Health</h3>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data} margin={{ top: 30, right: 30, left: 20, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
