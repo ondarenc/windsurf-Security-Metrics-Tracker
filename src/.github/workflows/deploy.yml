@@ -1,0 +1,30 @@
+name: Deploy Windsurf Page to Ubuntu Minimal
+
+on:
+  push:
+    branches:
+      - main # Triggers the deployment whenever you push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Optional: If your windsurf page requires a build step (e.g., Node/Vite)
+      # - name: Install Dependencies & Build
+      #   run: |
+      #     npm install
+      #     npm run build
+
+      をつ Deploy via rsync over SSH
+      - name: Deploy Files to Server
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.BWI_MTS_SSH_KEY }}
+          ARGS: "-rlgoDIVz --delete"
+          SOURCE: "." # Change to "dist/" or "build/" if using a framework compiler
+          REMOTE_HOST: ${{ secrets.SERVER_IP }}
+          REMOTE_USER: ${{ secrets.SERVER_USERNAME }}
+          TARGET: "/var/www/html"

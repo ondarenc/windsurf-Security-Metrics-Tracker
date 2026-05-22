@@ -3,8 +3,10 @@ import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import dataManager from '../data/dataManager'
 
 const MetricOverview = () => {
+  const CATEGORY = 'M365'
+
   const getLatestValue = (metricType) => {
-    const entries = dataManager.getEntriesByMetricType(metricType, 1)
+    const entries = dataManager.getEntriesByMetricType(metricType, 1, CATEGORY)
     return entries.length > 0 ? entries[0].value : 0
   }
 
@@ -17,8 +19,8 @@ const MetricOverview = () => {
   }
 
   const secureScoreValue = getLatestValue('Secure Score')
-  const secureScoreIndicator = getIndicator(secureScoreValue, dataManager.getReferenceValue())
-  const referenceValue = dataManager.getReferenceValue()
+  const secureScoreIndicator = getIndicator(secureScoreValue, dataManager.getReferenceValue(CATEGORY))
+  const referenceValue = dataManager.getReferenceValue(CATEGORY)
 
   const otherMetrics = ['Identity', 'Data', 'Device', 'Apps']
   const otherMetricsData = otherMetrics.map(metric => ({

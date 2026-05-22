@@ -3,13 +3,19 @@ import { useNavigate } from 'react-router-dom'
 import { Plus, Table, BarChart3, TrendingUp, Settings, Trash2 } from 'lucide-react'
 import dataManager from '../data/dataManager'
 import DataFileManager from '../components/DataFileManager'
+import MainTabs from '../components/MainTabs'
 
 const HomePage = () => {
   const navigate = useNavigate()
   const [showSettings, setShowSettings] = useState(false)
-  const [tempReference, setTempReference] = useState(dataManager.getReferenceValue().toString())
+  const [m365Target, setM365Target] = useState(dataManager.getReferenceValue('M365', 'Secure Score').toString())
+  const [purpleKnightADTargets, setPurpleKnightADTargets] = useState({
+    'Note': dataManager.getReferenceValue('Purple Knight AD', 'Note').toString(),
+    'IOEs Found': dataManager.getReferenceValue('Purple Knight AD', 'IOEs Found').toString(),
+    'Critical IOEs': dataManager.getReferenceValue('Purple Knight AD', 'Critical IOEs').toString()
+  })
   const entries = dataManager.getAllEntries()
-  const referenceValue = dataManager.getReferenceValue()
+  const referenceValue = dataManager.getReferenceValue('M365', 'Secure Score')
 
   const stats = {
     total: entries.length,
@@ -17,10 +23,30 @@ const HomePage = () => {
     belowReference: entries.filter(e => e.value <= referenceValue).length
   }
 
-  const handleReferenceUpdate = () => {
-    const newValue = parseFloat(tempReference)
+  const handleM365TargetUpdate = () => {
+    const newValue = parseFloat(m365Target)
     if (!isNaN(newValue) && newValue > 0) {
-      dataManager.setReferenceValue(newValue)
+      dataManager.getMetricTypes('M365').forEach(metric => {
+        dataManager.setReferenceValue('M365', metric, newValue)
+      })
+      navigate(0) // Refresh the page to update stats
+    }
+  }
+
+  const handlePurpleKnightADTargetChange = (metricName, value) => {
+    setPurpleKnightADTargets(prev => ({
+      ...prev,
+      [metricName]: value
+    }))
+  }
+
+  const handlePurpleKnightADTargetUpdate = () => {
+    const metricTypes = dataManager.getMetricTypes('Purple Knight AD')
+    const hasInvalidValue = metricTypes.some(metric => isNaN(parseFloat(purpleKnightADTargets[metric])))
+    if (!hasInvalidValue) {
+      metricTypes.forEach(metric => {
+        dataManager.setReferenceValue('Purple Knight AD', metric, purpleKnightADTargets[metric])
+      })
       navigate(0) // Refresh the page to update stats
     }
   }
@@ -35,6 +61,7 @@ const HomePage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <MainTabs />
         {/* Header */}
         <div className="flex justify-between items-center mb-12">
           <div className="text-center flex-1">
@@ -63,22 +90,23 @@ const HomePage = () => {
           <div className="space-y-6 mb-8">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Target Settings</h3>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
+
+              <div className="space-y-6">
+                <div className="border border-blue-100 rounded-lg p-4 bg-blue-50/40">
+                  <h4 className="font-semibold text-gray-900 mb-3">M365 Secure Score Targets</h4>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Target Value
+                    Target Value for all M365 metrics
                   </label>
                   <div className="flex gap-2">
                     <input
                       type="number"
-                      value={tempReference}
-                      onChange={(e) => setTempReference(e.target.value)}
+                      value={m365Target}
+                      onChange={(e) => setM365Target(e.target.value)}
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                      placeholder="Enter reference value"
+                      placeholder="Enter M365 target value"
                     />
                     <button
-                      onClick={handleReferenceUpdate}
+                      onClick={handleM365TargetUpdate}
                       className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
                     >
                       Update
@@ -88,7 +116,36 @@ const HomePage = () => {
                     Current target: {referenceValue}
                   </p>
                 </div>
-                
+
+                <div className="border border-purple-100 rounded-lg p-4 bg-purple-50/40">
+                  <h4 className="font-semibold text-gray-900 mb-3">Purple Knight AD Score Targets</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {dataManager.getMetricTypes('Purple Knight AD').map(metric => (
+                      <div key={metric}>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {metric} Target
+                        </label>
+                        <input
+                          type="number"
+                          value={purpleKnightADTargets[metric]}
+                          onChange={(e) => handlePurpleKnightADTargetChange(metric, e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                          placeholder={`Enter ${metric} target`}
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Current: {dataManager.getReferenceValue('Purple Knight AD', metric)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    onClick={handlePurpleKnightADTargetUpdate}
+                    className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+                  >
+                    Update Purple Knight AD Targets
+                  </button>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     Quick Actions
@@ -129,7 +186,7 @@ const HomePage = () => {
         )}
 
         {/* Action Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <button
             onClick={() => navigate('/')}
             className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-left hover:shadow-md transition-all duration-200"
@@ -138,13 +195,13 @@ const HomePage = () => {
               <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:bg-green-200 transition-colors">
                 <Table className="w-6 h-6 text-green-600" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">View Data</h2>
+              <h2 className="text-2xl font-bold text-gray-900">M365 Data</h2>
             </div>
             <p className="text-gray-600 mb-4">
-              Browse all metric entries with detailed tables and charts
+              Browse all M365 metric entries with detailed tables and charts
             </p>
             <div className="text-green-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-              View all data
+              View M365 data
               <span className="text-xl">→</span>
             </div>
           </button>
@@ -164,6 +221,25 @@ const HomePage = () => {
             </p>
             <div className="text-blue-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
               Create new entry
+              <span className="text-xl">→</span>
+            </div>
+          </button>
+
+          <button
+            onClick={() => navigate('/purple-knight-ad')}
+            className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-left hover:shadow-md transition-all duration-200"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                <BarChart3 className="w-6 h-6 text-purple-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Purple Knight AD</h2>
+            </div>
+            <p className="text-gray-600 mb-4">
+              View and analyze Purple Knight AD security metrics
+            </p>
+            <div className="text-purple-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+              View Purple Knight AD
               <span className="text-xl">→</span>
             </div>
           </button>
@@ -212,7 +288,7 @@ const HomePage = () => {
             <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Entries</h3>
             <div className="space-y-2">
               {entries.slice(0, 3).map((entry) => {
-                const indicator = dataManager.getIndicator(entry)
+                const indicator = dataManager.getIndicator(entry, entry.category || 'M365')
                 return (
                   <div key={entry.id} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
                     <div className="flex items-center gap-3">

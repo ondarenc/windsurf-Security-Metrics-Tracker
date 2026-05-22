@@ -3,11 +3,19 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { format, parseISO } from 'date-fns'
 import dataManager from '../data/dataManager'
 
-const CombinedMetricsChart = () => {
+const CombinedMetricsChart = ({ category = 'M365' }) => {
   const getChartData = () => {
-    const allEntries = dataManager.getAllEntries()
-    const metricTypes = ['Secure Score', 'Identity', 'Data', 'Device', 'Apps']
-    
+    const metricTypes = dataManager.getMetricTypes(category)
+    const allEntries = dataManager.getAllEntries().filter(entry => {
+      if (!metricTypes.includes(entry.name)) return false;
+      // If entry has a stored category, match exactly
+      if (entry.category) return entry.category === category;
+      // Legacy entries without category: infer from metric name
+      if (category === 'M365') return true; // M365 metrics are unique
+      // For shared Purple Knight metrics, legacy entries default to AD
+      return category === 'Purple Knight AD';
+    })
+
     // Get all entries and group by date
     const dateGroups = {}
     allEntries.forEach(entry => {
@@ -31,22 +39,35 @@ const CombinedMetricsChart = () => {
   }
 
   const getMetricColor = (metricType) => {
-    const colors = {
-      'Secure Score': '#dc2626', // Strong red for emphasis
-      'Identity': '#3b82f6',   // Blue
-      'Data': '#10b981',       // Green
-      'Device': '#f59e0b',     // Amber
-      'Apps': '#8b5cf6'        // Purple
+    if (category === 'M365') {
+      const colors = {
+        'Secure Score': '#dc2626', // Strong red for emphasis
+        'Identity': '#3b82f6',   // Blue
+        'Data': '#10b981',       // Green
+        'Device': '#f59e0b',     // Amber
+        'Apps': '#8b5cf6'        // Purple
+      }
+      return colors[metricType] || '#6b7280'
+    } else {
+      const colors = {
+        'Note': '#7c3aed',       // Purple for emphasis
+        'IOEs Found': '#8b5cf6',  // Light purple
+        'Critical IOEs': '#dc2626' // Red for critical
+      }
+      return colors[metricType] || '#6b7280'
     }
-    return colors[metricType] || '#6b7280'
   }
 
   const getMetricStrokeWidth = (metricType) => {
-    return metricType === 'Secure Score' ? 3 : 1.5
+    if (category === 'M365') {
+      return metricType === 'Secure Score' ? 3 : 1.5
+    } else {
+      return metricType === 'Note' ? 3 : 1.5
+    }
   }
 
   const chartData = getChartData()
-  const metricTypes = ['Secure Score', 'Identity', 'Data', 'Device', 'Apps']
+  const metricTypes = dataManager.getMetricTypes(category)
 
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -59,9 +80,10 @@ const CombinedMetricsChart = () => {
                 className="w-3 h-3 rounded-full" 
                 style={{ backgroundColor: getMetricColor(entry.dataKey) }}
               />
-              <span 
+              <span
                 className={`font-medium ${
-                  entry.dataKey === 'Secure Score' ? 'text-red-600 font-bold' : 'text-gray-700'
+                  category === 'M365' && entry.dataKey === 'Secure Score' ? 'text-red-600 font-bold' :
+                  (category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && entry.dataKey === 'Note' ? 'text-purple-600 font-bold' : 'text-gray-700'
                 }`}
               >
                 {entry.dataKey}: {entry.value}
@@ -79,7 +101,7 @@ const CombinedMetricsChart = () => {
       <div className="mb-6">
         <h3 className="text-lg font-semibold text-gray-900">Combined Metrics Trend</h3>
         <p className="text-sm text-gray-600 mt-1">
-          All metrics in one view (Secure Score highlighted)
+          All {category} metrics in one view ({category === 'M365' ? 'Secure Score' : 'Note'} highlighted)
         </p>
       </div>
       
@@ -88,8 +110,12 @@ const CombinedMetricsChart = () => {
           <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
           <XAxis 
             dataKey="date" 
-            tick={{ fontSize: 12, fill: '#6b7280' }}
+            tick={{ fontSize: 11, fill: '#6b7280' }}
             tickLine={{ stroke: '#e5e7eb' }}
+            interval={0}
+            angle={-45}
+            textAnchor="end"
+            height={60}
           />
           <YAxis 
             tick={{ fontSize: 12, fill: '#6b7280' }}
@@ -110,12 +136,13 @@ const CombinedMetricsChart = () => {
               dataKey={metric}
               stroke={getMetricColor(metric)}
               strokeWidth={getMetricStrokeWidth(metric)}
-              dot={{ 
-                r: metric === 'Secure Score' ? 5 : 3,
+              connectNulls
+              dot={{
+                r: (category === 'M365' && metric === 'Secure Score') || ((category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note') ? 5 : 3,
                 fill: getMetricColor(metric)
               }}
-              activeDot={{ 
-                r: metric === 'Secure Score' ? 7 : 5,
+              activeDot={{
+                r: (category === 'M365' && metric === 'Secure Score') || ((category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note') ? 7 : 5,
                 fill: getMetricColor(metric)
               }}
             />

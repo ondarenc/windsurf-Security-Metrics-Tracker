@@ -2,26 +2,47 @@ import React from 'react'
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 import dataManager from '../data/dataManager'
 
-const UnifiedMetricTable = () => {
+const UnifiedMetricTable = ({ category = 'M365' }) => {
   const getLatestEntries = (limit = 3) => {
     const allEntries = dataManager.getAllEntries()
-    const metricTypes = ['Secure Score', 'Identity', 'Data', 'Device', 'Apps']
-    
-    // Get latest entries for each metric type
+    const metricTypes = dataManager.getMetricTypes(category)
+
+    // Get latest entries for each metric type, filtered by category
     const latestByMetric = {}
     metricTypes.forEach(metric => {
-      const metricEntries = allEntries.filter(e => e.name === metric).slice(0, limit)
+      const metricEntries = allEntries.filter(e => {
+        if (e.name !== metric) return false;
+        // If entry has a stored category, match exactly
+        if (e.category) return e.category === category;
+        // Legacy entries without category: infer from metric name
+        if (category === 'M365') return true; // M365 metrics are unique
+        // For shared Purple Knight metrics, legacy entries default to AD
+        return category === 'Purple Knight AD';
+      }).slice(0, limit)
       latestByMetric[metric] = metricEntries
     })
-    
+
     return latestByMetric
   }
 
-  const getIndicator = (value, referenceValue) => {
-    if (value > referenceValue) {
-      return { type: 'good', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-100' }
+  const getIndicator = (value, referenceValue, metricName) => {
+    // For IOEs Found and Critical IOEs, lower is better (inverted logic)
+    const isInverted = metricName === 'IOEs Found' || metricName === 'Critical IOEs'
+    
+    if (isInverted) {
+      // For inverted metrics: lower is good, higher is bad
+      if (value <= referenceValue) {
+        return { type: 'good', icon: TrendingDown, color: 'text-green-600', bgColor: 'bg-green-100' }
+      } else {
+        return { type: 'poor', icon: TrendingUp, color: 'text-red-600', bgColor: 'bg-red-100' }
+      }
     } else {
-      return { type: 'poor', icon: TrendingDown, color: 'text-red-600', bgColor: 'bg-red-100' }
+      // Normal logic: higher is good
+      if (value > referenceValue) {
+        return { type: 'good', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-100' }
+      } else {
+        return { type: 'poor', icon: TrendingDown, color: 'text-red-600', bgColor: 'bg-red-100' }
+      }
     }
   }
 
@@ -35,8 +56,8 @@ const UnifiedMetricTable = () => {
   }
 
   const latestEntries = getLatestEntries(3)
-  const referenceValue = dataManager.getReferenceValue()
-  const metricTypes = ['Secure Score', 'Identity', 'Data', 'Device', 'Apps']
+  const referenceValue = dataManager.getReferenceValue(category, category === 'M365' ? 'Secure Score' : 'IOEs Found')
+  const metricTypes = dataManager.getMetricTypes(category)
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden mb-8">
@@ -58,7 +79,8 @@ const UnifiedMetricTable = () => {
                 <th 
                   key={metric} 
                   className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
-                    metric === 'Secure Score' ? 'text-red-600' : 'text-gray-500'
+                    category === 'M365' && metric === 'Secure Score' ? 'text-red-600' :
+                    (category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note' ? 'text-purple-600' : 'text-gray-500'
                   }`}
                 >
                   {metric}
@@ -70,8 +92,8 @@ const UnifiedMetricTable = () => {
             {[0, 1, 2].map(rowIndex => (
               <tr key={rowIndex} className="hover:bg-gray-50">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {latestEntries['Secure Score']?.[rowIndex] 
-                    ? formatDate(latestEntries['Secure Score'][rowIndex].date)
+                  {latestEntries[metricTypes[0]]?.[rowIndex] 
+                    ? formatDate(latestEntries[metricTypes[0]][rowIndex].date)
                     : '-'
                   }
                 </td>
@@ -80,17 +102,17 @@ const UnifiedMetricTable = () => {
                     {latestEntries[metric]?.[rowIndex] ? (
                       <div className="flex items-center gap-2">
                         <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                          getIndicator(latestEntries[metric][rowIndex].value, referenceValue).bgColor
+                          getIndicator(latestEntries[metric][rowIndex].value, dataManager.getReferenceValue(category, metric), metric).bgColor
                         }`}>
                           {React.createElement(
-                            getIndicator(latestEntries[metric][rowIndex].value, referenceValue).icon,
-                            { className: `w-3 h-3 ${getIndicator(latestEntries[metric][rowIndex].value, referenceValue).color}` }
+                            getIndicator(latestEntries[metric][rowIndex].value, dataManager.getReferenceValue(category, metric), metric).icon,
+                            { className: `w-3 h-3 ${getIndicator(latestEntries[metric][rowIndex].value, dataManager.getReferenceValue(category, metric), metric).color}` }
                           )}
                         </div>
                         <span className={`text-sm font-medium ${
-                          metric === 'Secure Score' ? 'text-red-600 font-bold' : 'text-gray-900'
+                          getIndicator(latestEntries[metric][rowIndex].value, dataManager.getReferenceValue(category, metric), metric).color
                         }`}>
-                          {latestEntries[metric][rowIndex].value}%
+                          {latestEntries[metric][rowIndex].value}{category === 'M365' ? '%' : ''}
                         </span>
                       </div>
                     ) : (

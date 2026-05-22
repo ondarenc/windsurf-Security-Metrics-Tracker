@@ -1,8 +1,16 @@
 class DataManager {
   constructor() {
     this.data = [];
-    this.referenceValue = 65; // Reference parameter for comparison
-    this.metricTypes = ['Identity', 'Data', 'Device', 'Apps', 'Secure Score'];
+    this.referenceValues = {
+      'M365': { 'Secure Score': 65, 'Identity': 65, 'Data': 65, 'Device': 65, 'Apps': 65 }, // Reference parameter for M365 metrics
+      'Purple Knight AD': { 'Note': 80, 'IOEs Found': 15, 'Critical IOEs': 0 }, // Reference values for Purple Knight AD
+      'Purple Knight Entra-ID': { 'Note': 80, 'IOEs Found': 15, 'Critical IOEs': 0 } // Reference values for Purple Knight Entra-ID
+    };
+    this.metricTypes = {
+      'M365': ['Identity', 'Data', 'Device', 'Apps', 'Secure Score'],
+      'Purple Knight AD': ['Note', 'IOEs Found', 'Critical IOEs'],
+      'Purple Knight Entra-ID': ['Note', 'IOEs Found', 'Critical IOEs']
+    };
     this.dataFile = '/data/sample-data.json'; // Default to sample data
     this.initializeData();
   }
@@ -13,6 +21,22 @@ class DataManager {
       const stored = localStorage.getItem('metricsData');
       if (stored) {
         this.data = JSON.parse(stored);
+        // Migrate legacy entries that don't have a category field
+        const needsMigration = this.data.some(entry => !entry.category);
+        if (needsMigration) {
+          this.data = this.data.map(entry => {
+            if (entry.category) return entry;
+            // Assign category based on metric name
+            const name = entry.name;
+            if (this.metricTypes['M365'].includes(name)) {
+              return { ...entry, category: 'M365' };
+            }
+            // For shared Purple Knight metrics, default to AD (the original category)
+            return { ...entry, category: 'Purple Knight AD' };
+          });
+          this.saveData();
+          console.log('Migrated existing entries to include category field');
+        }
       } else {
         // Load from JSON file
         await this.loadFromFile();
@@ -52,6 +76,7 @@ class DataManager {
       date: entry.date,
       name: entry.name,
       value: parseFloat(entry.value),
+      category: entry.category || 'M365',
       timestamp: new Date().toISOString()
     };
     this.data.push(newEntry);
@@ -63,35 +88,67 @@ class DataManager {
     return this.data.sort((a, b) => new Date(b.date) - new Date(a.date));
   }
 
-  getEntriesByName(name) {
+  getEntriesByName(name, category = null) {
     return this.data
-      .filter(entry => entry.name === name)
+      .filter(entry => {
+        if (entry.name !== name) return false;
+        if (!category) return true;
+        // If entry has a stored category, match exactly
+        if (entry.category) return entry.category === category;
+        // Legacy entries without category: infer from metric name
+        if (this.metricTypes['M365'].includes(name)) return category === 'M365';
+        // For shared Purple Knight metrics, default to 'Purple Knight AD' for legacy entries
+        return category === 'Purple Knight AD';
+      })
       .sort((a, b) => new Date(b.date) - new Date(a.date));
   }
 
-  getLastEntryByName(name) {
-    const entries = this.getEntriesByName(name);
+  getEntriesByCategory(category) {
+    return this.data
+      .filter(entry => {
+        // If entry has a stored category, match exactly
+        if (entry.category) {
+          return entry.category === category;
+        }
+        // Legacy entries without category: infer from metric name
+        if (!this.metricTypes[category].includes(entry.name)) return false;
+        if (this.metricTypes['M365'].includes(entry.name)) return category === 'M365';
+        // For shared Purple Knight metrics, default to 'Purple Knight AD' for legacy entries
+        return category === 'Purple Knight AD';
+      })
+      .sort((a, b) => new Date(b.date) - new Date(a.date));
+  }
+
+  getLastEntryByName(name, category = null) {
+    const entries = this.getEntriesByName(name, category);
     return entries.length > 0 ? entries[0] : null;
   }
 
-  setReferenceValue(value) {
-    this.referenceValue = parseFloat(value);
+  setReferenceValue(category, metricName, value) {
+    if (!this.referenceValues[category]) {
+      this.referenceValues[category] = {};
+    }
+    this.referenceValues[category][metricName] = parseFloat(value);
   }
 
-  getReferenceValue() {
-    return this.referenceValue;
+  getReferenceValue(category = 'M365', metricName = null) {
+    if (metricName && this.referenceValues[category] && this.referenceValues[category][metricName] !== undefined) {
+      return this.referenceValues[category][metricName];
+    }
+    // Return default reference for category if no specific metric
+    return this.referenceValues[category] && Object.values(this.referenceValues[category])[0] || 0;
   }
 
-  getIndicator(entry) {
+  getIndicator(entry, category = 'M365') {
     const value = entry.value;
-    const reference = this.referenceValue;
-    
-    // Get all entries for this metric type, sorted by date (newest first)
-    const allEntries = this.getEntriesByMetricType(entry.name, 100);
-    
+    const reference = this.getReferenceValue(category, entry.name);
+
+    // Get all entries for this metric type in this category, sorted by date (newest first)
+    const allEntries = this.getEntriesByMetricType(entry.name, 100, category);
+
     // Find the current entry's position
     const currentIndex = allEntries.findIndex(e => e.id === entry.id);
-    
+
     // Get the previous entry (one position below in the sorted list)
     const previousEntry = currentIndex < allEntries.length - 1 ? allEntries[currentIndex + 1] : null;
     const previousValue = previousEntry ? previousEntry.value : null;
@@ -107,16 +164,26 @@ class DataManager {
     }
   }
 
-  getEntriesByMetricType(metricType, limit = 3) {
+  getEntriesByMetricType(metricType, limit = 3, category = null) {
     return this.data
-      .filter(entry => entry.name === metricType)
+      .filter(entry => {
+        if (entry.name !== metricType) return false;
+        if (!category) return true;
+        // If entry has a stored category, match exactly
+        if (entry.category) return entry.category === category;
+        // Legacy entries without category: infer from metric name
+        if (this.metricTypes['M365'].includes(metricType)) return category === 'M365';
+        // For shared Purple Knight metrics, default to 'Purple Knight AD' for legacy entries
+        return category === 'Purple Knight AD';
+      })
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .slice(0, limit);
   }
 
-  getGlobalAverageData() {
-    return this.metricTypes.map(metricType => {
-      const entries = this.getEntriesByMetricType(metricType, 1);
+  getGlobalAverageData(category = 'M365') {
+    const metricTypes = this.getMetricTypes(category);
+    return metricTypes.map(metricType => {
+      const entries = this.getEntriesByMetricType(metricType, 1, category);
       const latestValue = entries.length > 0 ? entries[0].value : 0;
       return {
         name: metricType,
@@ -126,7 +193,10 @@ class DataManager {
     }).filter(item => item.hasData);
   }
 
-  getMetricTypes() {
+  getMetricTypes(category = null) {
+    if (category) {
+      return this.metricTypes[category] || [];
+    }
     return this.metricTypes;
   }
 
