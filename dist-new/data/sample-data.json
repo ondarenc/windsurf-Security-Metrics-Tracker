@@ -1,0 +1,367 @@
+{
+  "entries": [
+    {
+      "id": "secure-1",
+      "name": "Secure Score",
+      "value": 64,
+      "category": "M365",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T10:00:00.000Z"
+    },
+    {
+      "id": "secure-2",
+      "name": "Secure Score",
+      "value": 65,
+      "category": "M365",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T10:00:00.000Z"
+    },
+    {
+      "id": "secure-3",
+      "name": "Secure Score",
+      "value": 66,
+      "category": "M365",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T10:00:00.000Z"
+    },
+    {
+      "id": "identity-1",
+      "name": "Identity",
+      "value": 64,
+      "category": "M365",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T11:00:00.000Z"
+    },
+    {
+      "id": "identity-2",
+      "name": "Identity",
+      "value": 65,
+      "category": "M365",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T11:00:00.000Z"
+    },
+    {
+      "id": "identity-3",
+      "name": "Identity",
+      "value": 66,
+      "category": "M365",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T11:00:00.000Z"
+    },
+    {
+      "id": "apps-1",
+      "name": "Apps",
+      "value": 64,
+      "category": "M365",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T12:00:00.000Z"
+    },
+    {
+      "id": "apps-2",
+      "name": "Apps",
+      "value": 65,
+      "category": "M365",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T12:00:00.000Z"
+    },
+    {
+      "id": "apps-3",
+      "name": "Apps",
+      "value": 66,
+      "category": "M365",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T12:00:00.000Z"
+    },
+    {
+      "id": "device-1",
+      "name": "Device",
+      "value": 64,
+      "category": "M365",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T13:00:00.000Z"
+    },
+    {
+      "id": "device-2",
+      "name": "Device",
+      "value": 65,
+      "category": "M365",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T13:00:00.000Z"
+    },
+    {
+      "id": "device-3",
+      "name": "Device",
+      "value": 66,
+      "category": "M365",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T13:00:00.000Z"
+    },
+    {
+      "id": "data-1",
+      "name": "Data",
+      "value": 64,
+      "category": "M365",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T14:00:00.000Z"
+    },
+    {
+      "id": "data-2",
+      "name": "Data",
+      "value": 65,
+      "category": "M365",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T14:00:00.000Z"
+    },
+    {
+      "id": "data-3",
+      "name": "Data",
+      "value": 66,
+      "category": "M365",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T14:00:00.000Z"
+    },
+    {
+      "id": "pkad-note-1",
+      "name": "Note",
+      "value": 78,
+      "category": "Purple Knight AD",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T15:00:00.000Z"
+    },
+    {
+      "id": "pkad-note-2",
+      "name": "Note",
+      "value": 82,
+      "category": "Purple Knight AD",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T15:00:00.000Z"
+    },
+    {
+      "id": "pkad-note-3",
+      "name": "Note",
+      "value": 85,
+      "category": "Purple Knight AD",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T15:00:00.000Z"
+    },
+    {
+      "id": "pkad-ioes-1",
+      "name": "IOEs Found",
+      "value": 18,
+      "category": "Purple Knight AD",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T16:00:00.000Z"
+    },
+    {
+      "id": "pkad-ioes-2",
+      "name": "IOEs Found",
+      "value": 14,
+      "category": "Purple Knight AD",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T16:00:00.000Z"
+    },
+    {
+      "id": "pkad-ioes-3",
+      "name": "IOEs Found",
+      "value": 12,
+      "category": "Purple Knight AD",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T16:00:00.000Z"
+    },
+    {
+      "id": "pkad-crit-1",
+      "name": "Critical IOEs",
+      "value": 2,
+      "category": "Purple Knight AD",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T17:00:00.000Z"
+    },
+    {
+      "id": "pkad-crit-2",
+      "name": "Critical IOEs",
+      "value": 1,
+      "category": "Purple Knight AD",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T17:00:00.000Z"
+    },
+    {
+      "id": "pkad-crit-3",
+      "name": "Critical IOEs",
+      "value": 0,
+      "category": "Purple Knight AD",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T17:00:00.000Z"
+    },
+    {
+      "id": "pkent-note-1",
+      "name": "Note",
+      "value": 75,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T18:00:00.000Z"
+    },
+    {
+      "id": "pkent-note-2",
+      "name": "Note",
+      "value": 79,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T18:00:00.000Z"
+    },
+    {
+      "id": "pkent-note-3",
+      "name": "Note",
+      "value": 83,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T18:00:00.000Z"
+    },
+    {
+      "id": "pkent-ioes-1",
+      "name": "IOEs Found",
+      "value": 20,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T19:00:00.000Z"
+    },
+    {
+      "id": "pkent-ioes-2",
+      "name": "IOEs Found",
+      "value": 16,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T19:00:00.000Z"
+    },
+    {
+      "id": "pkent-ioes-3",
+      "name": "IOEs Found",
+      "value": 13,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T19:00:00.000Z"
+    },
+    {
+      "id": "pkent-crit-1",
+      "name": "Critical IOEs",
+      "value": 3,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T20:00:00.000Z"
+    },
+    {
+      "id": "pkent-crit-2",
+      "name": "Critical IOEs",
+      "value": 1,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T20:00:00.000Z"
+    },
+    {
+      "id": "pkent-crit-3",
+      "name": "Critical IOEs",
+      "value": 0,
+      "category": "Purple Knight Entra-ID",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T20:00:00.000Z"
+    },
+    {
+      "id": "ss-myscore-1",
+      "name": "My Score",
+      "value": 72,
+      "category": "Securityscorecard",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T21:00:00.000Z"
+    },
+    {
+      "id": "ss-myscore-2",
+      "name": "My Score",
+      "value": 78,
+      "category": "Securityscorecard",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T21:00:00.000Z"
+    },
+    {
+      "id": "ss-myscore-3",
+      "name": "My Score",
+      "value": 85,
+      "category": "Securityscorecard",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T21:00:00.000Z"
+    },
+    {
+      "id": "ss-high-1",
+      "name": "High breach risk issues",
+      "value": 5,
+      "category": "Securityscorecard",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T22:00:00.000Z"
+    },
+    {
+      "id": "ss-high-2",
+      "name": "High breach risk issues",
+      "value": 3,
+      "category": "Securityscorecard",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T22:00:00.000Z"
+    },
+    {
+      "id": "ss-high-3",
+      "name": "High breach risk issues",
+      "value": 1,
+      "category": "Securityscorecard",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T22:00:00.000Z"
+    },
+    {
+      "id": "ss-med-1",
+      "name": "Medium breach risk issues",
+      "value": 12,
+      "category": "Securityscorecard",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-11T23:00:00.000Z"
+    },
+    {
+      "id": "ss-med-2",
+      "name": "Medium breach risk issues",
+      "value": 8,
+      "category": "Securityscorecard",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-11T23:00:00.000Z"
+    },
+    {
+      "id": "ss-med-3",
+      "name": "Medium breach risk issues",
+      "value": 4,
+      "category": "Securityscorecard",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-11T23:00:00.000Z"
+    },
+    {
+      "id": "ss-low-1",
+      "name": "Low breach risk issues",
+      "value": 25,
+      "category": "Securityscorecard",
+      "date": "2026-03-11",
+      "timestamp": "2026-03-12T00:00:00.000Z"
+    },
+    {
+      "id": "ss-low-2",
+      "name": "Low breach risk issues",
+      "value": 18,
+      "category": "Securityscorecard",
+      "date": "2026-04-11",
+      "timestamp": "2026-04-12T00:00:00.000Z"
+    },
+    {
+      "id": "ss-low-3",
+      "name": "Low breach risk issues",
+      "value": 10,
+      "category": "Securityscorecard",
+      "date": "2026-05-11",
+      "timestamp": "2026-05-12T00:00:00.000Z"
+    }
+  ],
+  "referenceValue": 65,
+  "lastUpdated": "2026-05-12T00:00:00.000Z",
+  "version": "1.2.0"
+}
