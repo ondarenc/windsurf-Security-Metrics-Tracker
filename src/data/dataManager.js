@@ -4,12 +4,14 @@ class DataManager {
     this.referenceValues = {
       'M365': { 'Secure Score': 65, 'Identity': 65, 'Data': 65, 'Device': 65, 'Apps': 65 }, // Reference parameter for M365 metrics
       'Purple Knight AD': { 'Note': 80, 'IOEs Found': 15, 'Critical IOEs': 0 }, // Reference values for Purple Knight AD
-      'Purple Knight Entra-ID': { 'Note': 80, 'IOEs Found': 15, 'Critical IOEs': 0 } // Reference values for Purple Knight Entra-ID
+      'Purple Knight Entra-ID': { 'Note': 80, 'IOEs Found': 15, 'Critical IOEs': 0 }, // Reference values for Purple Knight Entra-ID
+      'Securityscorecard': { 'My Score': 80, 'High breach risk issues': 0, 'Medium breach risk issues': 5, 'Low breach risk issues': 10 }
     };
     this.metricTypes = {
       'M365': ['Identity', 'Data', 'Device', 'Apps', 'Secure Score'],
       'Purple Knight AD': ['Note', 'IOEs Found', 'Critical IOEs'],
-      'Purple Knight Entra-ID': ['Note', 'IOEs Found', 'Critical IOEs']
+      'Purple Knight Entra-ID': ['Note', 'IOEs Found', 'Critical IOEs'],
+      'Securityscorecard': ['My Score', 'High breach risk issues', 'Medium breach risk issues', 'Low breach risk issues']
     };
     this.dataFile = '/data/sample-data.json'; // Default to sample data
     this.initializeData();
@@ -30,6 +32,9 @@ class DataManager {
             const name = entry.name;
             if (this.metricTypes['M365'].includes(name)) {
               return { ...entry, category: 'M365' };
+            }
+            if (this.metricTypes['Securityscorecard'].includes(name)) {
+              return { ...entry, category: 'Securityscorecard' };
             }
             // For shared Purple Knight metrics, default to AD (the original category)
             return { ...entry, category: 'Purple Knight AD' };
@@ -97,6 +102,7 @@ class DataManager {
         if (entry.category) return entry.category === category;
         // Legacy entries without category: infer from metric name
         if (this.metricTypes['M365'].includes(name)) return category === 'M365';
+        if (this.metricTypes['Securityscorecard'].includes(name)) return category === 'Securityscorecard';
         // For shared Purple Knight metrics, default to 'Purple Knight AD' for legacy entries
         return category === 'Purple Knight AD';
       })
@@ -113,6 +119,7 @@ class DataManager {
         // Legacy entries without category: infer from metric name
         if (!this.metricTypes[category].includes(entry.name)) return false;
         if (this.metricTypes['M365'].includes(entry.name)) return category === 'M365';
+        if (this.metricTypes['Securityscorecard'].includes(entry.name)) return category === 'Securityscorecard';
         // For shared Purple Knight metrics, default to 'Purple Knight AD' for legacy entries
         return category === 'Purple Knight AD';
       })
@@ -173,6 +180,7 @@ class DataManager {
         if (entry.category) return entry.category === category;
         // Legacy entries without category: infer from metric name
         if (this.metricTypes['M365'].includes(metricType)) return category === 'M365';
+        if (this.metricTypes['Securityscorecard'].includes(metricType)) return category === 'Securityscorecard';
         // For shared Purple Knight metrics, default to 'Purple Knight AD' for legacy entries
         return category === 'Purple Knight AD';
       })

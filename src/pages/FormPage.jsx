@@ -26,6 +26,12 @@ const FormPage = () => {
     'IOEs Found': dataManager.getReferenceValue('Purple Knight Entra-ID', 'IOEs Found').toString(),
     'Critical IOEs': dataManager.getReferenceValue('Purple Knight Entra-ID', 'Critical IOEs').toString()
   })
+  const [securityscorecardReference, setSecurityscorecardReference] = useState({
+    'My Score': dataManager.getReferenceValue('Securityscorecard', 'My Score').toString(),
+    'High breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'High breach risk issues').toString(),
+    'Medium breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'Medium breach risk issues').toString(),
+    'Low breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'Low breach risk issues').toString()
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -79,7 +85,16 @@ const FormPage = () => {
     dataManager.setReferenceValue('Purple Knight Entra-ID', metricName, value)
   }
 
-  
+  const handleSecurityscorecardReferenceChange = (metricName, e) => {
+    const value = e.target.value
+    setSecurityscorecardReference(prev => ({
+      ...prev,
+      [metricName]: value
+    }))
+    dataManager.setReferenceValue('Securityscorecard', metricName, value)
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -162,6 +177,7 @@ const FormPage = () => {
               <option value="M365">M365 Metrics</option>
               <option value="Purple Knight AD">Purple Knight AD</option>
               <option value="Purple Knight Entra-ID">Purple Knight Entra-ID</option>
+              <option value="Securityscorecard">Security Scorecard</option>
             </select>
           </div>
         </div>
@@ -267,6 +283,77 @@ const FormPage = () => {
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Values above this will be marked as good
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {formData.category === 'Securityscorecard' && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-teal-600" />
+              Security Scorecard Reference Values
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  My Score Reference
+                </label>
+                <input
+                  type="number"
+                  value={securityscorecardReference['My Score']}
+                  onChange={(e) => handleSecurityscorecardReferenceChange('My Score', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="Enter My Score reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Target grade threshold (default 80 = B)
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  High breach risk issues Reference
+                </label>
+                <input
+                  type="number"
+                  value={securityscorecardReference['High breach risk issues']}
+                  onChange={(e) => handleSecurityscorecardReferenceChange('High breach risk issues', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="Enter High breach risk issues reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower is better
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Medium breach risk issues Reference
+                </label>
+                <input
+                  type="number"
+                  value={securityscorecardReference['Medium breach risk issues']}
+                  onChange={(e) => handleSecurityscorecardReferenceChange('Medium breach risk issues', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="Enter Medium breach risk issues reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower is better
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Low breach risk issues Reference
+                </label>
+                <input
+                  type="number"
+                  value={securityscorecardReference['Low breach risk issues']}
+                  onChange={(e) => handleSecurityscorecardReferenceChange('Low breach risk issues', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  placeholder="Enter Low breach risk issues reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower is better
                 </p>
               </div>
             </div>

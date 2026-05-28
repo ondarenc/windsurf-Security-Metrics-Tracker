@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { BarChart3, Shield, Cloud } from 'lucide-react'
+import { BarChart3, Shield, Cloud, ShieldCheck } from 'lucide-react'
 import MainTabs from '../components/MainTabs'
 
 const TabbedHomePage = () => {
@@ -21,7 +21,7 @@ const TabbedHomePage = () => {
 
         <MainTabs />
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <NavLink
             to="/m365"
             className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 hover:shadow-md transition-all duration-200"
@@ -63,6 +63,21 @@ const TabbedHomePage = () => {
             <p className="text-gray-600 mb-4">Review Note, IOEs Found, and Critical IOEs metrics for Entra-ID.</p>
             <div className="text-indigo-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
               Open Purple Knight Entra-ID
+              <span className="text-xl">→</span>
+            </div>
+          </NavLink>
+
+          <NavLink
+            to="/security-scorecard"
+            className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 hover:shadow-md transition-all duration-200"
+          >
+            <div className="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center group-hover:bg-teal-200 transition-colors mb-4">
+              <ShieldCheck className="w-6 h-6 text-teal-600" />
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">Security Scorecard</h2>
+            <p className="text-gray-600 mb-4">Review My Score and breach risk issues with grade indicators.</p>
+            <div className="text-teal-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+              Open Security Scorecard
               <span className="text-xl">→</span>
             </div>
           </NavLink>

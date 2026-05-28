@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { BarChart3, Home, Shield, Cloud } from 'lucide-react'
+import { BarChart3, Home, Shield, Cloud, ShieldCheck } from 'lucide-react'
 
 const MainTabs = () => {
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-2 mb-8 grid grid-cols-1 md:grid-cols-[auto_1fr_1fr_1fr] gap-2">
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-2 mb-8 grid grid-cols-1 md:grid-cols-[auto_1fr_1fr_1fr_1fr] gap-2">
       <NavLink
         to="/"
         end
@@ -44,6 +44,16 @@ const MainTabs = () => {
       >
         <Cloud className="w-5 h-5" />
         Purple Knight Entra-ID
+      </NavLink>
+
+      <NavLink
+        to="/security-scorecard"
+        className={({ isActive }) => `flex items-center justify-center gap-3 rounded-lg px-6 py-4 text-lg font-semibold transition-colors ${
+          isActive ? 'bg-teal-600 text-white' : 'text-gray-700 hover:bg-teal-50 hover:text-teal-700'
+        }`}
+      >
+        <ShieldCheck className="w-5 h-5" />
+        Security Scorecard
       </NavLink>
     </div>
   )

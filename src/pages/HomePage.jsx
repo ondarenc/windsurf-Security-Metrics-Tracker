@@ -14,6 +14,12 @@ const HomePage = () => {
     'IOEs Found': dataManager.getReferenceValue('Purple Knight AD', 'IOEs Found').toString(),
     'Critical IOEs': dataManager.getReferenceValue('Purple Knight AD', 'Critical IOEs').toString()
   })
+  const [securityscorecardTargets, setSecurityscorecardTargets] = useState({
+    'My Score': dataManager.getReferenceValue('Securityscorecard', 'My Score').toString(),
+    'High breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'High breach risk issues').toString(),
+    'Medium breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'Medium breach risk issues').toString(),
+    'Low breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'Low breach risk issues').toString()
+  })
   const entries = dataManager.getAllEntries()
   const referenceValue = dataManager.getReferenceValue('M365', 'Secure Score')
 
@@ -46,6 +52,24 @@ const HomePage = () => {
     if (!hasInvalidValue) {
       metricTypes.forEach(metric => {
         dataManager.setReferenceValue('Purple Knight AD', metric, purpleKnightADTargets[metric])
+      })
+      navigate(0) // Refresh the page to update stats
+    }
+  }
+
+  const handleSecurityscorecardTargetChange = (metricName, value) => {
+    setSecurityscorecardTargets(prev => ({
+      ...prev,
+      [metricName]: value
+    }))
+  }
+
+  const handleSecurityscorecardTargetUpdate = () => {
+    const metricTypes = dataManager.getMetricTypes('Securityscorecard')
+    const hasInvalidValue = metricTypes.some(metric => isNaN(parseFloat(securityscorecardTargets[metric])))
+    if (!hasInvalidValue) {
+      metricTypes.forEach(metric => {
+        dataManager.setReferenceValue('Securityscorecard', metric, securityscorecardTargets[metric])
       })
       navigate(0) // Refresh the page to update stats
     }
@@ -143,6 +167,35 @@ const HomePage = () => {
                     className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
                   >
                     Update Purple Knight AD Targets
+                  </button>
+                </div>
+
+                <div className="border border-teal-100 rounded-lg p-4 bg-teal-50/40">
+                  <h4 className="font-semibold text-gray-900 mb-3">Security Scorecard Targets</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {dataManager.getMetricTypes('Securityscorecard').map(metric => (
+                      <div key={metric}>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {metric} Target
+                        </label>
+                        <input
+                          type="number"
+                          value={securityscorecardTargets[metric]}
+                          onChange={(e) => handleSecurityscorecardTargetChange(metric, e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
+                          placeholder={`Enter ${metric} target`}
+                        />
+                        <p className="text-xs text-gray-500 mt-1">
+                          Current: {dataManager.getReferenceValue('Securityscorecard', metric)}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    onClick={handleSecurityscorecardTargetUpdate}
+                    className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 transition-colors"
+                  >
+                    Update Security Scorecard Targets
                   </button>
                 </div>
 
