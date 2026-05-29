@@ -11,7 +11,7 @@ const MetricOverview = () => {
   }
 
   const getIndicator = (value, referenceValue) => {
-    if (value > referenceValue) {
+    if (value >= referenceValue) {
       return { type: 'good', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-100' }
     } else {
       return { type: 'poor', icon: TrendingDown, color: 'text-red-600', bgColor: 'bg-red-100' }
@@ -49,7 +49,7 @@ const MetricOverview = () => {
               Target: {referenceValue}
             </div>
             <div className={`text-sm font-medium ${secureScoreIndicator.color} mt-2`}>
-              {secureScoreValue > referenceValue ? 'Above Target' : 'Below Target'}
+              {secureScoreValue >= referenceValue ? 'Above Target' : 'Below Target'}
             </div>
           </div>
         </div>
@@ -76,7 +76,7 @@ const MetricOverview = () => {
                     <metric.indicator.icon className={`w-5 h-5 ${metric.indicator.color}`} />
                   </div>
                   <div className={`text-xs font-medium ${metric.indicator.color} text-center`}>
-                    {metric.value > referenceValue ? 'Above' : 'Below'}
+                    {metric.value >= referenceValue ? 'Above' : 'Below'}
                   </div>
                 </div>
               </div>

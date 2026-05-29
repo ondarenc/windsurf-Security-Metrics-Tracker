@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { BarChart3, Shield, Cloud, ShieldCheck, Search, Calendar } from 'lucide-react'
+import { BarChart3, Calendar } from 'lucide-react'
 import MainTabs from '../components/MainTabs'
 import dataManager from '../data/dataManager'
 
@@ -19,16 +19,15 @@ const TabbedHomePage = () => {
     }
   }
 
-  const categories = [
+  const topRow = [
     {
       title: 'M365 Secure Score',
       mainMetric: 'Secure Score',
       category: 'M365',
       link: '/m365',
-      icon: BarChart3,
+      logo: '/logo-m365.png',
       iconBg: 'bg-blue-100',
       iconHover: 'group-hover:bg-blue-200',
-      iconColor: 'text-blue-600',
       scoreColor: 'text-blue-600'
     },
     {
@@ -36,10 +35,9 @@ const TabbedHomePage = () => {
       mainMetric: 'Note',
       category: 'Purple Knight AD',
       link: '/purple-knight-ad',
-      icon: Shield,
+      logo: '/logo-purpleknight-ad.png',
       iconBg: 'bg-purple-100',
       iconHover: 'group-hover:bg-purple-200',
-      iconColor: 'text-purple-600',
       scoreColor: 'text-purple-600'
     },
     {
@@ -47,21 +45,22 @@ const TabbedHomePage = () => {
       mainMetric: 'Note',
       category: 'Purple Knight Entra-ID',
       link: '/purple-knight-entra-id',
-      icon: Cloud,
+      logo: '/logo-purpleknight-entra.png',
       iconBg: 'bg-indigo-100',
       iconHover: 'group-hover:bg-indigo-200',
-      iconColor: 'text-indigo-600',
       scoreColor: 'text-indigo-600'
-    },
+    }
+  ]
+
+  const bottomRow = [
     {
       title: 'Security Scorecard',
       mainMetric: 'My Score',
       category: 'Securityscorecard',
       link: '/security-scorecard',
-      icon: ShieldCheck,
+      logo: '/logo-securityscorecard.png',
       iconBg: 'bg-teal-100',
       iconHover: 'group-hover:bg-teal-200',
-      iconColor: 'text-teal-600',
       scoreColor: 'text-teal-600'
     },
     {
@@ -69,13 +68,45 @@ const TabbedHomePage = () => {
       mainMetric: 'Security Score',
       category: 'ProjectDiscovery',
       link: '/project-discovery',
-      icon: Search,
+      logo: '/logo-projectdiscovery.png',
       iconBg: 'bg-cyan-100',
       iconHover: 'group-hover:bg-cyan-200',
-      iconColor: 'text-cyan-600',
       scoreColor: 'text-cyan-600'
     }
   ]
+
+  const renderCard = (cat) => {
+    const latest = getLatest(cat.mainMetric, cat.category)
+    return (
+      <NavLink
+        key={cat.title}
+        to={cat.link}
+        className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200"
+      >
+        <div className={`w-12 h-12 ${cat.iconBg} rounded-lg flex items-center justify-center ${cat.iconHover} transition-colors mb-4`}>
+          <img src={cat.logo} alt={cat.title} className="w-8 h-8 object-contain" />
+        </div>
+        <h3 className="text-xl font-bold text-gray-900 mb-4">{cat.title}</h3>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-500">Score</span>
+            <span className={`text-2xl font-bold ${cat.scoreColor}`}>
+              {latest.value === '-' ? '-' : latest.value}
+            </span>
+          </div>
+          {latest.status && (
+            <div className={`text-sm font-medium text-center ${latest.statusColor}`}>
+              {latest.status}
+            </div>
+          )}
+          <div className="flex items-center gap-2 text-sm text-gray-500">
+            <Calendar className="w-4 h-4" />
+            <span>last entry: {latest.date}</span>
+          </div>
+        </div>
+      </NavLink>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -98,40 +129,13 @@ const TabbedHomePage = () => {
 
         <h2 className="text-2xl font-bold text-gray-900 mb-6">Summary</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {categories.map((cat) => {
-            const Icon = cat.icon
-            const latest = getLatest(cat.mainMetric, cat.category)
-            return (
-              <NavLink
-                key={cat.title}
-                to={cat.link}
-                className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200"
-              >
-                <div className={`w-12 h-12 ${cat.iconBg} rounded-lg flex items-center justify-center ${cat.iconHover} transition-colors mb-4`}>
-                  <Icon className={`w-6 h-6 ${cat.iconColor}`} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{cat.title}</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Score</span>
-                    <span className={`text-2xl font-bold ${cat.scoreColor}`}>
-                      {latest.value === '-' ? '-' : latest.value}
-                    </span>
-                  </div>
-                  {latest.status && (
-                    <div className={`text-sm font-medium ${latest.statusColor}`}>
-                      {latest.status}
-                    </div>
-                  )}
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Calendar className="w-4 h-4" />
-                    <span>last entry: {latest.date}</span>
-                  </div>
-                </div>
-              </NavLink>
-            )
-          })}
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {topRow.map(renderCard)}
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {bottomRow.map(renderCard)}
+          </div>
         </div>
       </div>
     </div>

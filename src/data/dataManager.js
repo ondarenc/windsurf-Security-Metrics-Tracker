@@ -167,7 +167,7 @@ class DataManager {
     const previousEntry = currentIndex < allEntries.length - 1 ? allEntries[currentIndex + 1] : null;
     const previousValue = previousEntry ? previousEntry.value : null;
 
-    if (value > reference) {
+    if (value >= reference) {
       if (previousValue !== null && value > previousValue) {
         return { type: 'improving', icon: 'arrow-up', color: 'green' };
       } else {

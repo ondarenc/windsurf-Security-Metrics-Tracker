@@ -23,7 +23,7 @@ const PurpleKnightEntraIDOverview = () => {
       }
     } else {
       // Normal logic: higher is good (for Note)
-      if (value > referenceValue) {
+      if (value >= referenceValue) {
         return { type: 'good', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-100', status: 'Above Target' }
       } else {
         return { type: 'poor', icon: TrendingDown, color: 'text-red-600', bgColor: 'bg-red-100', status: 'Below Target' }

@@ -40,7 +40,7 @@ const UnifiedMetricTable = ({ category = 'M365' }) => {
       }
     } else {
       // Normal logic: higher is good
-      if (value > referenceValue) {
+      if (value >= referenceValue) {
         return { type: 'good', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-100' }
       } else {
         return { type: 'poor', icon: TrendingDown, color: 'text-red-600', bgColor: 'bg-red-100' }

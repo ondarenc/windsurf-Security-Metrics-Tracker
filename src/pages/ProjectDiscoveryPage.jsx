@@ -18,9 +18,12 @@ const ProjectDiscoveryPage = () => {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Project Discovery</h1>
-              <p className="text-gray-600 mt-2">View and analyze security vulnerabilities with posture scoring</p>
+            <div className="flex items-center gap-4">
+              <img src="/logo-projectdiscovery.png" alt="Project Discovery" className="w-10 h-10 object-contain" />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Project Discovery</h1>
+                <p className="text-gray-600 mt-2">View and analyze security vulnerabilities with posture scoring</p>
+              </div>
             </div>
 
             <div className="flex gap-3 print:hidden">

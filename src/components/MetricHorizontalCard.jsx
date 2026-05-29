@@ -48,7 +48,7 @@ const MetricHorizontalCard = ({ metricType, entries, referenceValue }) => {
   }
 
   const getStatusIndicator = (value) => {
-    if (value > referenceValue) return { type: 'good', color: 'text-green-600', text: 'Good' }
+    if (value >= referenceValue) return { type: 'good', color: 'text-green-600', text: 'Good' }
     return { type: 'poor', color: 'text-red-600', text: 'Poor' }
   }
 

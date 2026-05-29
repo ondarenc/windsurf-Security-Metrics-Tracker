@@ -18,9 +18,12 @@ const PurpleKnightEntraIDPage = () => {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">Purple Knight Entra-ID</h1>
-              <p className="text-gray-600 mt-2">View and analyze Purple Knight Entra-ID security metrics</p>
+            <div className="flex items-center gap-4">
+              <img src="/logo-purpleknight-entra.png" alt="Purple Knight Entra-ID" className="w-10 h-10 object-contain" />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">Purple Knight Entra-ID</h1>
+                <p className="text-gray-600 mt-2">View and analyze Purple Knight Entra-ID security metrics</p>
+              </div>
             </div>
 
             <div className="flex gap-3 print:hidden">

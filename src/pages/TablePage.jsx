@@ -55,9 +55,12 @@ const TablePage = () => {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">M365 Secure Score</h1>
-              <p className="text-gray-600 mt-2">View and analyze all metric entries by type</p>
+            <div className="flex items-center gap-4">
+              <img src="/logo-m365.png" alt="M365" className="w-10 h-10 object-contain" />
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">M365 Secure Score</h1>
+                <p className="text-gray-600 mt-2">View and analyze all metric entries by type</p>
+              </div>
             </div>
             
             <div className="flex gap-3 print:hidden">
