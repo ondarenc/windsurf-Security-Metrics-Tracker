@@ -44,9 +44,9 @@ const PurpleKnightEntraIDOverview = () => {
   return (
     <div className="space-y-6 mb-8">
       {/* Horizontal layout - 2:3 ratio like M365 */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 metric-overview-grid">
         {/* Note - Bigger on horizontal axis like Secure Score */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 print:col-span-2">
           <div className="bg-white rounded-lg shadow-lg border-2 border-indigo-200 p-8 text-center hover:shadow-xl transition-all duration-300 aspect-square flex flex-col justify-center metric-card">
             <div className="mb-4">
               <div className={`w-16 h-16 ${noteIndicator.bgColor} rounded-lg flex items-center justify-center mx-auto mb-4`}>
@@ -66,11 +66,11 @@ const PurpleKnightEntraIDOverview = () => {
           </div>
         </div>
 
-        {/* IOEs Found and Critical IOEs - Vertical info left + graphic/status right */}
-        <div className="lg:col-span-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 h-full">
+        {/* IOEs Found and Critical IOEs - aligned to main metric height */}
+        <div className="lg:col-span-3 print:col-span-3">
+          <div className="grid grid-cols-1 gap-3 h-full">
             {/* IOEs Found */}
-            <div className="bg-white rounded-lg shadow-lg border-2 border-indigo-200 p-4 hover:shadow-xl transition-all duration-300 flex aspect-square metric-card">
+            <div className="bg-white rounded-lg shadow-lg border-2 border-indigo-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full metric-card">
               {/* Left side - Vertical information */}
               <div className="flex-1 flex flex-col justify-center">
                 <h2 className="text-sm font-bold text-gray-900 mb-2">IOEs Found</h2>
@@ -81,7 +81,7 @@ const PurpleKnightEntraIDOverview = () => {
                   Target: {dataManager.getReferenceValue(CATEGORY, 'IOEs Found')}
                 </div>
               </div>
-              
+
               {/* Right side - Small graphic and status */}
               <div className="w-20 flex flex-col items-center justify-center">
                 <div className={`w-10 h-10 ${ioesFoundIndicator.bgColor} rounded-lg flex items-center justify-center mb-2`}>
@@ -94,7 +94,7 @@ const PurpleKnightEntraIDOverview = () => {
             </div>
 
             {/* Critical IOEs */}
-            <div className="bg-white rounded-lg shadow-lg border-2 border-indigo-200 p-4 hover:shadow-xl transition-all duration-300 flex aspect-square metric-card">
+            <div className="bg-white rounded-lg shadow-lg border-2 border-indigo-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full metric-card">
               {/* Left side - Vertical information */}
               <div className="flex-1 flex flex-col justify-center">
                 <h2 className="text-sm font-bold text-gray-900 mb-2">Critical IOEs</h2>
@@ -105,7 +105,7 @@ const PurpleKnightEntraIDOverview = () => {
                   Target: {dataManager.getReferenceValue(CATEGORY, 'Critical IOEs')}
                 </div>
               </div>
-              
+
               {/* Right side - Small graphic and status */}
               <div className="w-20 flex flex-col items-center justify-center">
                 <div className={`w-10 h-10 ${criticalIOEsIndicator.bgColor} rounded-lg flex items-center justify-center mb-2`}>

@@ -12,7 +12,9 @@ const SecurityScorecardPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <MainTabs />
+        <div className="print:hidden">
+          <MainTabs />
+        </div>
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -21,7 +23,7 @@ const SecurityScorecardPage = () => {
               <p className="text-gray-600 mt-2">View and analyze security scorecard metrics with grade indicators</p>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex gap-3 print:hidden">
               <button
                 onClick={() => navigate('/form')}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center gap-2"
@@ -41,7 +43,7 @@ const SecurityScorecardPage = () => {
         <CombinedMetricsChart category="Securityscorecard" />
 
         {/* Discrete Dashboard Link */}
-        <div className="text-center mt-12 mb-8">
+        <div className="text-center mt-12 mb-8 print:hidden">
           <button
             onClick={() => navigate('/dashboard')}
             className="text-gray-400 hover:text-gray-600 text-sm underline transition-colors"

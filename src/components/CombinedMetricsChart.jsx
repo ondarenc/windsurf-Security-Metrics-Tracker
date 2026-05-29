@@ -56,6 +56,15 @@ const CombinedMetricsChart = ({ category = 'M365' }) => {
         'Low breach risk issues': '#3b82f6'   // Blue
       }
       return colors[metricType] || '#6b7280'
+    } else if (category === 'ProjectDiscovery') {
+      const colors = {
+        'Security Score': '#0891b2',  // Cyan for emphasis
+        'Critical': '#dc2626',         // Red
+        'High': '#f59e0b',             // Amber
+        'Medium': '#3b82f6',           // Blue
+        'Low': '#10b981'               // Green
+      }
+      return colors[metricType] || '#6b7280'
     } else {
       const colors = {
         'Note': '#7c3aed',       // Purple for emphasis
@@ -71,6 +80,8 @@ const CombinedMetricsChart = ({ category = 'M365' }) => {
       return metricType === 'Secure Score' ? 3 : 1.5
     } else if (category === 'Securityscorecard') {
       return metricType === 'My Score' ? 3 : 1.5
+    } else if (category === 'ProjectDiscovery') {
+      return metricType === 'Security Score' ? 3 : 1.5
     } else {
       return metricType === 'Note' ? 3 : 1.5
     }
@@ -94,6 +105,7 @@ const CombinedMetricsChart = ({ category = 'M365' }) => {
                 className={`font-medium ${
                   category === 'M365' && entry.dataKey === 'Secure Score' ? 'text-red-600 font-bold' :
                   category === 'Securityscorecard' && entry.dataKey === 'My Score' ? 'text-teal-600 font-bold' :
+                  category === 'ProjectDiscovery' && entry.dataKey === 'Security Score' ? 'text-cyan-600 font-bold' :
                   (category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && entry.dataKey === 'Note' ? 'text-purple-600 font-bold' : 'text-gray-700'
                 }`}
               >
@@ -149,11 +161,11 @@ const CombinedMetricsChart = ({ category = 'M365' }) => {
               strokeWidth={getMetricStrokeWidth(metric)}
               connectNulls
               dot={{
-                r: (category === 'M365' && metric === 'Secure Score') || (category === 'Securityscorecard' && metric === 'My Score') || ((category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note') ? 5 : 3,
+                r: (category === 'M365' && metric === 'Secure Score') || (category === 'Securityscorecard' && metric === 'My Score') || (category === 'ProjectDiscovery' && metric === 'Security Score') || ((category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note') ? 5 : 3,
                 fill: getMetricColor(metric)
               }}
               activeDot={{
-                r: (category === 'M365' && metric === 'Secure Score') || (category === 'Securityscorecard' && metric === 'My Score') || ((category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note') ? 7 : 5,
+                r: (category === 'M365' && metric === 'Secure Score') || (category === 'Securityscorecard' && metric === 'My Score') || (category === 'ProjectDiscovery' && metric === 'Security Score') || ((category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note') ? 7 : 5,
                 fill: getMetricColor(metric)
               }}
             />

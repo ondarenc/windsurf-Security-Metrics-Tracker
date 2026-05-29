@@ -26,9 +26,10 @@ const UnifiedMetricTable = ({ category = 'M365' }) => {
   }
 
   const getIndicator = (value, referenceValue, metricName) => {
-    // For IOEs Found, Critical IOEs, and breach risk issues, lower is better (inverted logic)
+    // For IOEs Found, Critical IOEs, breach risk issues, and vulnerability counts, lower is better (inverted logic)
     const isInverted = metricName === 'IOEs Found' || metricName === 'Critical IOEs'
       || metricName === 'High breach risk issues' || metricName === 'Medium breach risk issues' || metricName === 'Low breach risk issues'
+      || metricName === 'Critical' || metricName === 'High' || metricName === 'Medium' || metricName === 'Low'
 
     if (isInverted) {
       // For inverted metrics: lower is good, higher is bad
@@ -82,6 +83,7 @@ const UnifiedMetricTable = ({ category = 'M365' }) => {
                   className={`px-6 py-3 text-left text-xs font-medium uppercase tracking-wider ${
                     category === 'M365' && metric === 'Secure Score' ? 'text-red-600' :
                     category === 'Securityscorecard' && metric === 'My Score' ? 'text-teal-600' :
+                    category === 'ProjectDiscovery' && metric === 'Security Score' ? 'text-cyan-600' :
                     (category === 'Purple Knight AD' || category === 'Purple Knight Entra-ID') && metric === 'Note' ? 'text-purple-600' : 'text-gray-500'
                   }`}
                 >

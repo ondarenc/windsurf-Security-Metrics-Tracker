@@ -1,12 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus } from 'lucide-react'
-import PurpleKnightEntraIDOverview from '../components/PurpleKnightEntraIDOverview'
+import ProjectDiscoveryOverview from '../components/ProjectDiscoveryOverview'
 import UnifiedMetricTable from '../components/UnifiedMetricTable'
 import CombinedMetricsChart from '../components/CombinedMetricsChart'
 import MainTabs from '../components/MainTabs'
 
-const PurpleKnightEntraIDPage = () => {
+const ProjectDiscoveryPage = () => {
   const navigate = useNavigate()
 
   return (
@@ -19,8 +19,8 @@ const PurpleKnightEntraIDPage = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Purple Knight Entra-ID</h1>
-              <p className="text-gray-600 mt-2">View and analyze Purple Knight Entra-ID security metrics</p>
+              <h1 className="text-3xl font-bold text-gray-900">Project Discovery</h1>
+              <p className="text-gray-600 mt-2">View and analyze security vulnerabilities with posture scoring</p>
             </div>
 
             <div className="flex gap-3 print:hidden">
@@ -35,12 +35,12 @@ const PurpleKnightEntraIDPage = () => {
           </div>
         </div>
 
-        {/* Purple Knight Entra-ID Overview */}
-        <PurpleKnightEntraIDOverview />
+        {/* Project Discovery Overview */}
+        <ProjectDiscoveryOverview />
 
         {/* Table and Charts */}
-        <UnifiedMetricTable category="Purple Knight Entra-ID" />
-        <CombinedMetricsChart category="Purple Knight Entra-ID" />
+        <UnifiedMetricTable category="ProjectDiscovery" />
+        <CombinedMetricsChart category="ProjectDiscovery" />
 
         {/* Discrete Dashboard Link */}
         <div className="text-center mt-12 mb-8 print:hidden">
@@ -56,4 +56,4 @@ const PurpleKnightEntraIDPage = () => {
   )
 }
 
-export default PurpleKnightEntraIDPage
+export default ProjectDiscoveryPage

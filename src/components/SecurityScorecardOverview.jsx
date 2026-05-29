@@ -56,9 +56,9 @@ const SecurityScorecardOverview = () => {
   return (
     <div className="space-y-6 mb-8">
       {/* Horizontal layout - 2:3 ratio */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 metric-overview-grid">
         {/* My Score - Bigger on horizontal axis */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 print:col-span-2">
           <div className={`bg-white rounded-lg shadow-lg border-2 ${myScoreGrade.borderColor} p-8 text-center hover:shadow-xl transition-all duration-300 aspect-square flex flex-col justify-center metric-card`}>
             <div className="mb-4">
               <div className={`w-20 h-20 ${myScoreGrade.bgColor} rounded-lg flex items-center justify-center mx-auto mb-4`}>
@@ -85,11 +85,11 @@ const SecurityScorecardOverview = () => {
           </div>
         </div>
 
-        {/* Breach Risk Issues - Vertical info left + graphic/status right */}
-        <div className="lg:col-span-3">
+        {/* Breach Risk Issues - aligned to main metric height */}
+        <div className="lg:col-span-3 print:col-span-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 h-full">
             {/* High breach risk issues */}
-            <div className="bg-white rounded-lg shadow-lg border-2 border-teal-200 p-4 hover:shadow-xl transition-all duration-300 flex aspect-square metric-card">
+            <div className="bg-white rounded-lg shadow-lg border-2 border-teal-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full metric-card">
               <div className="flex-1 flex flex-col justify-center">
                 <h2 className="text-sm font-bold text-gray-900 mb-2">High breach risk issues</h2>
                 <div className="text-3xl font-bold text-gray-800 mb-1">
@@ -110,7 +110,7 @@ const SecurityScorecardOverview = () => {
             </div>
 
             {/* Medium breach risk issues */}
-            <div className="bg-white rounded-lg shadow-lg border-2 border-teal-200 p-4 hover:shadow-xl transition-all duration-300 flex aspect-square metric-card">
+            <div className="bg-white rounded-lg shadow-lg border-2 border-teal-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full metric-card">
               <div className="flex-1 flex flex-col justify-center">
                 <h2 className="text-sm font-bold text-gray-900 mb-2">Medium breach risk issues</h2>
                 <div className="text-3xl font-bold text-gray-800 mb-1">
@@ -131,7 +131,7 @@ const SecurityScorecardOverview = () => {
             </div>
 
             {/* Low breach risk issues */}
-            <div className="bg-white rounded-lg shadow-lg border-2 border-teal-200 p-4 hover:shadow-xl transition-all duration-300 flex aspect-square metric-card sm:col-span-2">
+            <div className="bg-white rounded-lg shadow-lg border-2 border-teal-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full metric-card">
               <div className="flex-1 flex flex-col justify-center">
                 <h2 className="text-sm font-bold text-gray-900 mb-2">Low breach risk issues</h2>
                 <div className="text-3xl font-bold text-gray-800 mb-1">

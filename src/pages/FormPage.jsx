@@ -32,6 +32,13 @@ const FormPage = () => {
     'Medium breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'Medium breach risk issues').toString(),
     'Low breach risk issues': dataManager.getReferenceValue('Securityscorecard', 'Low breach risk issues').toString()
   })
+  const [projectDiscoveryReference, setProjectDiscoveryReference] = useState({
+    'Security Score': dataManager.getReferenceValue('ProjectDiscovery', 'Security Score').toString(),
+    'Critical': dataManager.getReferenceValue('ProjectDiscovery', 'Critical').toString(),
+    'High': dataManager.getReferenceValue('ProjectDiscovery', 'High').toString(),
+    'Medium': dataManager.getReferenceValue('ProjectDiscovery', 'Medium').toString(),
+    'Low': dataManager.getReferenceValue('ProjectDiscovery', 'Low').toString()
+  })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -94,6 +101,15 @@ const FormPage = () => {
     dataManager.setReferenceValue('Securityscorecard', metricName, value)
   }
 
+  const handleProjectDiscoveryReferenceChange = (metricName, e) => {
+    const value = e.target.value
+    setProjectDiscoveryReference(prev => ({
+      ...prev,
+      [metricName]: value
+    }))
+    dataManager.setReferenceValue('ProjectDiscovery', metricName, value)
+  }
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -144,12 +160,14 @@ const FormPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <MainTabs />
+        <div className="print:hidden">
+          <MainTabs />
+        </div>
         {/* Header */}
         <div className="mb-8">
           <button
             onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors print:hidden"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Dashboard
@@ -178,6 +196,7 @@ const FormPage = () => {
               <option value="Purple Knight AD">Purple Knight AD</option>
               <option value="Purple Knight Entra-ID">Purple Knight Entra-ID</option>
               <option value="Securityscorecard">Security Scorecard</option>
+              <option value="ProjectDiscovery">Project Discovery</option>
             </select>
           </div>
         </div>
@@ -351,6 +370,92 @@ const FormPage = () => {
                   onChange={(e) => handleSecurityscorecardReferenceChange('Low breach risk issues', e)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   placeholder="Enter Low breach risk issues reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower is better
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {formData.category === 'ProjectDiscovery' && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-cyan-600" />
+              Project Discovery Reference Values
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Security Score Reference
+                </label>
+                <input
+                  type="number"
+                  value={projectDiscoveryReference['Security Score']}
+                  onChange={(e) => handleProjectDiscoveryReferenceChange('Security Score', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  placeholder="Enter Security Score reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Target threshold (default 80 = Strong posture)
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Critical Vulnerabilities Reference
+                </label>
+                <input
+                  type="number"
+                  value={projectDiscoveryReference['Critical']}
+                  onChange={(e) => handleProjectDiscoveryReferenceChange('Critical', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  placeholder="Enter Critical reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower is better
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  High Vulnerabilities Reference
+                </label>
+                <input
+                  type="number"
+                  value={projectDiscoveryReference['High']}
+                  onChange={(e) => handleProjectDiscoveryReferenceChange('High', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  placeholder="Enter High reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower is better
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Medium Vulnerabilities Reference
+                </label>
+                <input
+                  type="number"
+                  value={projectDiscoveryReference['Medium']}
+                  onChange={(e) => handleProjectDiscoveryReferenceChange('Medium', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  placeholder="Enter Medium reference value"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Lower is better
+                </p>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Low Vulnerabilities Reference
+                </label>
+                <input
+                  type="number"
+                  value={projectDiscoveryReference['Low']}
+                  onChange={(e) => handleProjectDiscoveryReferenceChange('Low', e)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+                  placeholder="Enter Low reference value"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Lower is better

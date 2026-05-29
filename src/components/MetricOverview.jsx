@@ -34,7 +34,7 @@ const MetricOverview = () => {
       {/* Horizontal layout - 2:3 ratio */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 metric-overview-grid">
         {/* Secure Score - Bigger on horizontal axis */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 print:col-span-2">
           <div className="bg-white rounded-lg shadow-lg border-2 border-red-200 p-8 text-center hover:shadow-xl transition-all duration-300 aspect-square flex flex-col justify-center metric-card">
             <div className="mb-4">
               <div className={`w-16 h-16 ${secureScoreIndicator.bgColor} rounded-lg flex items-center justify-center mx-auto mb-4`}>
@@ -55,7 +55,7 @@ const MetricOverview = () => {
         </div>
 
         {/* Other 4 Metrics - Vertical info left + graphic/status right */}
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 print:col-span-3">
           <div className="grid grid-cols-2 gap-3 h-full">
             {otherMetricsData.map((metric) => (
               <div key={metric.name} className="bg-white rounded-lg shadow-lg border-2 border-gray-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full metric-card">

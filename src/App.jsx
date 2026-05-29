@@ -6,6 +6,7 @@ import TablePage from './pages/TablePage'
 import PurpleKnightADPage from './pages/PurpleKnightADPage'
 import PurpleKnightEntraIDPage from './pages/PurpleKnightEntraIDPage'
 import SecurityScorecardPage from './pages/SecurityScorecardPage'
+import ProjectDiscoveryPage from './pages/ProjectDiscoveryPage'
 import TabbedHomePage from './pages/TabbedHomePage'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/purple-knight-ad" element={<PurpleKnightADPage />} />
         <Route path="/purple-knight-entra-id" element={<PurpleKnightEntraIDPage />} />
         <Route path="/security-scorecard" element={<SecurityScorecardPage />} />
+        <Route path="/project-discovery" element={<ProjectDiscoveryPage />} />
       </Routes>
     </Router>
   )
