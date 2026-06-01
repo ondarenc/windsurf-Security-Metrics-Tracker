@@ -336,7 +336,7 @@ const HomePage = () => {
         )}
 
         {/* Cards Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           {/* Settings Card */}
           <button
             onClick={() => setShowSettings(!showSettings)}
@@ -379,6 +379,26 @@ const HomePage = () => {
             </p>
             <div className="text-blue-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
               Create new entry
+              <span className="text-xl">→</span>
+            </div>
+          </button>
+
+          {/* Print Card */}
+          <button
+            onClick={() => navigate('/print')}
+            className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-left hover:shadow-md transition-all duration-200 print:hidden"
+          >
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center group-hover:bg-purple-200 transition-colors">
+                <Printer className="w-6 h-6 text-purple-600" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900">Print All</h2>
+            </div>
+            <p className="text-gray-600 mb-4">
+              Generate a printable report with all metrics and trends
+            </p>
+            <div className="text-purple-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+              Open print view
               <span className="text-xl">→</span>
             </div>
           </button>
