@@ -3,36 +3,102 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --background: #f7f8f9;
+    --foreground: #2d333b;
+    --card: #ffffff;
+    --card-foreground: #2d333b;
+    --popover: #ffffff;
+    --popover-foreground: #2d333b;
+    --primary: #2d333b;
+    --primary-foreground: #fcfcfc;
+    --secondary: #f5f6f7;
+    --secondary-foreground: #3d444c;
+    --muted: #f3f4f5;
+    --muted-foreground: #767d85;
+    --accent: #e8b84d;
+    --accent-foreground: #5c4a1a;
+    --destructive: #c94040;
+    --destructive-foreground: #fcfcfc;
+    --border: #e5e7ea;
+    --input: #f5f6f7;
+    --ring: #6b7a8a;
+    --chart-1: #4a7ec7;
+    --chart-2: #5cb85c;
+    --chart-3: #9b7cc7;
+    --chart-4: #e8b84d;
+    --chart-5: #5a9aa0;
+    --radius: 0.75rem;
+    --success: #5cb85c;
+    --warning: #e8b84d;
+    --info: #4a7ec7;
+  }
+
   * {
-    @apply border-gray-200;
+    @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-background text-foreground;
   }
 }
 
 @layer components {
   .metric-card {
-    @apply bg-white rounded-lg shadow-sm border border-gray-200 p-6 transition-all duration-200 hover:shadow-md;
+    @apply bg-card rounded-2xl border border-border p-6 transition-all duration-200;
+    box-shadow: rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px;
   }
-  
+
+  .metric-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px -12px rgba(45, 51, 59, 0.15);
+  }
+
   .metric-value {
-    @apply text-3xl font-bold text-gray-900;
+    @apply text-3xl font-bold text-foreground;
   }
-  
+
   .metric-label {
-    @apply text-sm font-medium text-gray-600 mt-1;
+    @apply text-sm font-medium text-muted-foreground mt-1;
   }
-  
+
   .metric-change {
     @apply text-sm font-medium mt-2;
   }
-  
+
   .metric-change.positive {
-    @apply text-green-600;
+    @apply text-success;
   }
-  
+
   .metric-change.negative {
-    @apply text-red-600;
+    @apply text-destructive;
   }
 }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* Stagger delays */
+.stagger-1 { animation-delay: 0.05s; }
+.stagger-2 { animation-delay: 0.1s; }
+.stagger-3 { animation-delay: 0.15s; }
+.stagger-4 { animation-delay: 0.2s; }
+.stagger-5 { animation-delay: 0.25s; }

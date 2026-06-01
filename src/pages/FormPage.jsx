@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Calendar, TrendingUp, Save, ArrowLeft } from 'lucide-react'
+import { Calendar, TrendingUp, Save, ArrowLeft, Plus } from 'lucide-react'
 import dataManager from '../data/dataManager'
-import MainTabs from '../components/MainTabs'
+import { AppSidebar } from '../components/dashboard/AppSidebar'
+import { MainContent } from '../components/dashboard/MainContent'
+import { RightPanel } from '../components/dashboard/RightPanel'
 
 const FormPage = () => {
   const navigate = useNavigate()
@@ -158,34 +160,27 @@ const FormPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="print:hidden">
-          <MainTabs />
-        </div>
-        {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={() => navigate('/')}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors print:hidden"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Dashboard
-          </button>
-          
-          <h1 className="text-3xl font-bold text-gray-900">Add New Entry</h1>
-          <p className="text-gray-600 mt-2">Fill in the form to add a new metric entry</p>
-        </div>
+    <div className="flex h-screen bg-background overflow-hidden">
+      <AppSidebar />
+      <MainContent pageTitle="Add Entry" pageIcon={Plus}>
+        {/* Back button */}
+        <button
+          onClick={() => navigate('/')}
+          className="flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors print:hidden"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to Dashboard
+        </button>
 
         {/* Category Selection */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <TrendingUp className="w-5 h-5 text-blue-600" />
-            Category Selection
+            Select Category
           </h3>
           <div className="max-w-xs">
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Select Category
+              Solution
             </label>
             <select
               value={formData.category}
@@ -199,6 +194,87 @@ const FormPage = () => {
               <option value="ProjectDiscovery">Project Discovery</option>
             </select>
           </div>
+        </div>
+
+        {/* Main Form - Metric Values */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
+              For any solution, please, add all Metric values (no blank fields)
+            </p>
+
+            {/* Date Field */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-gray-400" />
+                Date
+              </label>
+              <input
+                type="date"
+                name="date"
+                value={formData.date}
+                onChange={handleInputChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-gray-400" />
+                Metric Values
+              </label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {dataManager.getMetricTypes(formData.category).map(metric => (
+                  <div key={metric}>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      {metric}
+                    </label>
+                    <input
+                      type="number"
+                      value={metricValues[metric] || ''}
+                      onChange={(e) => handleMetricValueChange(metric, e)}
+                      step="0.01"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder={`Enter ${metric} value`}
+                      required
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Message */}
+            {message && (
+              <div className={`p-3 rounded-md text-sm ${
+                message.includes('success') 
+                  ? 'bg-green-50 text-green-800 border border-green-200' 
+                  : 'bg-red-50 text-red-800 border border-red-200'
+              }`}>
+                {message}
+              </div>
+            )}
+
+            {/* Submit Button */}
+            <div className="flex gap-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <Save className="w-4 h-4" />
+                {isSubmitting ? 'Saving...' : 'Save Entries'}
+              </button>
+              
+              <button
+                type="button"
+                onClick={() => navigate('/table')}
+                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
+              >
+                View Table
+              </button>
+            </div>
+          </form>
         </div>
 
         {/* Reference Values - Dynamic based on category */}
@@ -464,84 +540,8 @@ const FormPage = () => {
             </div>
           </div>
         )}
-
-        {/* Main Form */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Date Field */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2 flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-gray-400" />
-                Date
-              </label>
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleInputChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-3 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-gray-400" />
-                Metric Values
-              </label>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {dataManager.getMetricTypes(formData.category).map(metric => (
-                  <div key={metric}>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {metric}
-                    </label>
-                    <input
-                      type="number"
-                      value={metricValues[metric] || ''}
-                      onChange={(e) => handleMetricValueChange(metric, e)}
-                      step="0.01"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder={`Enter ${metric} value`}
-                      required
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Message */}
-            {message && (
-              <div className={`p-3 rounded-md text-sm ${
-                message.includes('success') 
-                  ? 'bg-green-50 text-green-800 border border-green-200' 
-                  : 'bg-red-50 text-red-800 border border-red-200'
-              }`}>
-                {message}
-              </div>
-            )}
-
-            {/* Submit Button */}
-            <div className="flex gap-3">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                <Save className="w-4 h-4" />
-                {isSubmitting ? 'Saving...' : 'Save Entries'}
-              </button>
-              
-              <button
-                type="button"
-                onClick={() => navigate('/table')}
-                className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
-              >
-                View Table
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      </MainContent>
+      <RightPanel />
     </div>
   )
 }

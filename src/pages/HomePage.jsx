@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Plus, Table, BarChart3, TrendingUp, Settings, Trash2, ChevronDown, ChevronUp } from 'lucide-react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Plus, BarChart3, TrendingUp, Settings, Trash2, ChevronDown, ChevronUp, Printer } from 'lucide-react'
 import dataManager from '../data/dataManager'
 import DataFileManager from '../components/DataFileManager'
-import MainTabs from '../components/MainTabs'
+import { AppSidebar } from '../components/dashboard/AppSidebar'
+import { MainContent } from '../components/dashboard/MainContent'
+import { RightPanel } from '../components/dashboard/RightPanel'
 
 const HomePage = () => {
   const navigate = useNavigate()
-  const [showSettings, setShowSettings] = useState(false)
+  const [searchParams] = useSearchParams()
+  const [showSettings, setShowSettings] = useState(searchParams.get('settings') === 'open')
   const [showTargetSettings, setShowTargetSettings] = useState(false)
   const [m365Target, setM365Target] = useState(dataManager.getReferenceValue('M365', 'Secure Score').toString())
   const [purpleKnightADTargets, setPurpleKnightADTargets] = useState({
@@ -132,25 +135,20 @@ const HomePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="print:hidden">
-          <MainTabs />
-        </div>
-        {/* Header */}
-        <div className="flex justify-between items-center mb-12">
-          <div className="text-center flex-1">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
-                <BarChart3 className="w-8 h-8 text-white" />
-              </div>
-              <h1 className="text-4xl font-bold text-gray-900">Metrics Tracker Dashboard</h1>
-            </div>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Track and analyze your M365 Score metrics with visual indicators based on reference values
+    <div className="flex h-screen bg-background overflow-hidden">
+      <AppSidebar />
+      <MainContent>
+        {/* Dashboard Header */}
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+            <BarChart3 className="w-6 h-6 text-primary-foreground" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-foreground">Dashboard</h1>
+            <p className="text-sm text-muted-foreground">
+              Track and analyze your metrics with visual indicators
             </p>
           </div>
-
         </div>
 
         {/* Settings Panel */}
@@ -425,23 +423,23 @@ const HomePage = () => {
 
         {/* Recent Activity Preview */}
         {entries.length > 0 && (
-          <div className="mt-8 bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Entries</h3>
+          <div className="mt-8 bg-card rounded-2xl border border-border p-6">
+            <h3 className="text-lg font-semibold text-foreground mb-4">Recent Entries</h3>
             <div className="space-y-2">
               {entries.slice(0, 3).map((entry) => {
                 const indicator = dataManager.getIndicator(entry, entry.category || 'M365')
                 return (
-                  <div key={entry.id} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+                  <div key={entry.id} className="flex items-center justify-between py-2 border-b border-border/50 last:border-0">
                     <div className="flex items-center gap-3">
-                      <span className="text-sm font-medium text-gray-900">{entry.name}</span>
-                      <span className="text-sm text-gray-600">{entry.value}</span>
+                      <span className="text-sm font-medium text-foreground">{entry.name}</span>
+                      <span className="text-sm text-muted-foreground">{entry.value}</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-sm text-gray-500">
-                        {new Date(entry.date).toLocaleDateString()}
+                      <span className="text-sm text-muted-foreground">
+                        Last measurement: {new Date(entry.date).toLocaleDateString()}
                       </span>
                       <div className={`w-2 h-2 rounded-full ${
-                        indicator.color === 'green' ? 'bg-green-600' : 'bg-red-600'
+                        indicator.color === 'green' ? 'bg-success' : 'bg-destructive'
                       }`}></div>
                     </div>
                   </div>
@@ -451,14 +449,15 @@ const HomePage = () => {
             {entries.length > 3 && (
               <button
                 onClick={() => navigate('/table')}
-                className="mt-3 text-sm text-blue-600 hover:text-blue-700 font-medium"
+                className="mt-3 text-sm text-primary hover:text-primary/80 font-medium"
               >
                 View all {entries.length} entries →
               </button>
             )}
           </div>
         )}
-      </div>
+      </MainContent>
+      <RightPanel />
     </div>
   )
 }

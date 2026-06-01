@@ -1,87 +1,189 @@
 import React from 'react'
-import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
+import {
+  Clock,
+  TrendingUp,
+  TrendingDown,
+} from 'lucide-react'
+import {
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  LineChart,
+  Line,
+} from 'recharts'
 import dataManager from '../data/dataManager'
+import { cn } from '../lib/utils'
+
+const cardShadow = 'rgba(14, 63, 126, 0.04) 0px 0px 0px 1px, rgba(42, 51, 69, 0.04) 0px 1px 1px -0.5px, rgba(42, 51, 70, 0.04) 0px 3px 3px -1.5px, rgba(42, 51, 70, 0.04) 0px 6px 6px -3px, rgba(14, 63, 126, 0.04) 0px 12px 12px -6px, rgba(14, 63, 126, 0.04) 0px 24px 24px -12px'
 
 const MetricOverview = () => {
   const CATEGORY = 'M365'
 
-  const getLatestValue = (metricType) => {
-    const entries = dataManager.getEntriesByMetricType(metricType, 1, CATEGORY)
-    return entries.length > 0 ? entries[0].value : 0
+  const metrics = [
+    { id: 'secure-score', label: 'Secure Score', name: 'Secure Score', color: '#ef4444', main: true },
+    { id: 'identity', label: 'Identity', name: 'Identity', color: '#7c3aed' },
+    { id: 'data', label: 'Data', name: 'Data', color: '#06b6d4' },
+    { id: 'device', label: 'Device', name: 'Device', color: '#f97316' },
+    { id: 'apps', label: 'Apps', name: 'Apps', color: '#8b5cf6' },
+  ]
+
+  const getLatestValue = (metricName) => {
+    const entries = dataManager.getEntriesByName(metricName, CATEGORY)
+    return entries.length > 0 ? entries[0].value : null
+  }
+
+  const getLastDate = (metricName) => {
+    const entries = dataManager.getEntriesByName(metricName, CATEGORY)
+    return entries.length > 0 ? new Date(entries[0].date).toLocaleDateString() : '-'
   }
 
   const getIndicator = (value, referenceValue) => {
     if (value >= referenceValue) {
-      return { type: 'good', icon: TrendingUp, color: 'text-green-600', bgColor: 'bg-green-100' }
+      return { icon: TrendingUp, color: 'text-success', status: 'Above Target' }
     } else {
-      return { type: 'poor', icon: TrendingDown, color: 'text-red-600', bgColor: 'bg-red-100' }
+      return { icon: TrendingDown, color: 'text-destructive', status: 'Below Target' }
     }
   }
 
-  const secureScoreValue = getLatestValue('Secure Score')
-  const secureScoreIndicator = getIndicator(secureScoreValue, dataManager.getReferenceValue(CATEGORY))
-  const referenceValue = dataManager.getReferenceValue(CATEGORY)
+  const getChartData = () => {
+    const seriesData = {}
+    const seriesDates = {}
+    let maxLen = 0
+    metrics.forEach((m) => {
+      const entries = dataManager.getEntriesByName(m.name, CATEGORY)
+      const sorted = [...entries].sort((a, b) => new Date(a.date) - new Date(b.date))
+      seriesData[m.id] = sorted.map((entry) => entry.value)
+      seriesDates[m.id] = sorted.map((entry) => entry.date)
+      maxLen = Math.max(maxLen, seriesData[m.id].length)
+    })
+    const rows = []
+    for (let i = 0; i < maxLen; i++) {
+      let dateStr = ''
+      for (const m of metrics) {
+        if (seriesDates[m.id] && seriesDates[m.id][i]) {
+          dateStr = new Date(seriesDates[m.id][i]).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: '2-digit' })
+          break
+        }
+      }
+      const row = { date: dateStr || `Entry ${i + 1}` }
+      metrics.forEach((m) => {
+        row[m.id] = seriesData[m.id][i] ?? null
+      })
+      rows.push(row)
+    }
+    return rows
+  }
 
-  const otherMetrics = ['Identity', 'Data', 'Device', 'Apps']
-  const otherMetricsData = otherMetrics.map(metric => ({
-    name: metric,
-    value: getLatestValue(metric),
-    indicator: getIndicator(getLatestValue(metric), referenceValue)
-  }))
+  const getTableData = () => {
+    const dateSet = new Set()
+    const valueMap = {}
+    metrics.forEach((m) => {
+      const entries = dataManager.getEntriesByName(m.name, CATEGORY)
+      entries.forEach((entry) => {
+        dateSet.add(entry.date)
+        if (!valueMap[entry.date]) valueMap[entry.date] = {}
+        valueMap[entry.date][m.id] = entry.value
+      })
+    })
+    const dates = [...dateSet].sort((a, b) => new Date(b) - new Date(a)).slice(0, 3)
+    return dates.map((date) => ({
+      date: new Date(date).toLocaleDateString(),
+      ...valueMap[date],
+    }))
+  }
+
+  const chartData = getChartData()
+  const tableData = getTableData()
+  const defaultRef = dataManager.getReferenceValue(CATEGORY)
 
   return (
     <div className="space-y-6 mb-8">
-      {/* Horizontal layout - 2:3 ratio */}
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 metric-overview-grid">
-        {/* Secure Score - Bigger on horizontal axis */}
-        <div className="lg:col-span-2 print:col-span-2">
-          <div className="bg-white rounded-lg shadow-lg border-2 border-red-200 p-8 text-center hover:shadow-xl transition-all duration-300 aspect-square flex flex-col justify-center metric-card">
-            <div className="mb-4">
-              <div className={`w-16 h-16 ${secureScoreIndicator.bgColor} rounded-lg flex items-center justify-center mx-auto mb-4`}>
-                <secureScoreIndicator.icon className={`w-8 h-8 ${secureScoreIndicator.color}`} />
+      {/* Metric Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        {metrics.map((m) => {
+          const value = getLatestValue(m.name)
+          const ref = dataManager.getReferenceValue(CATEGORY, m.name) || defaultRef
+          const indicator = getIndicator(value ?? 0, ref)
+          const lastDate = getLastDate(m.name)
+          const Icon = indicator.icon
+          return (
+            <div
+              key={m.id}
+              className="bg-card rounded-2xl p-4 border border-border min-w-0"
+              style={{ boxShadow: cardShadow }}
+            >
+              <p className="text-xs font-bold text-foreground mb-2 truncate">{m.label}</p>
+              <div className="flex items-center justify-between mb-1 gap-2">
+                <p className="text-xl font-semibold text-foreground shrink-0">
+                  {value !== null ? `${value}%` : '-'}
+                </p>
+                <div className={cn('flex items-center gap-1 text-xs shrink-0', indicator.color)}>
+                  <Icon className="w-3 h-3" />
+                  <span className="font-medium whitespace-nowrap">{indicator.status}</span>
+                </div>
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Secure Score</h2>
+              <p className="text-[11px] text-muted-foreground flex items-center gap-1 truncate">
+                <Clock className="w-3 h-3 shrink-0" />
+                <span className="truncate">{lastDate}</span>
+              </p>
             </div>
-            <div className="text-5xl font-bold text-red-600 mb-3">
-              {secureScoreValue}%
-            </div>
-            <div className="text-sm text-gray-600">
-              Target: {referenceValue}
-            </div>
-            <div className={`text-sm font-medium ${secureScoreIndicator.color} mt-2`}>
-              {secureScoreValue >= referenceValue ? 'Above Target' : 'Below Target'}
-            </div>
-          </div>
-        </div>
+          )
+        })}
+      </div>
 
-        {/* Other 4 Metrics - Vertical info left + graphic/status right */}
-        <div className="lg:col-span-3 print:col-span-3">
-          <div className="grid grid-cols-2 gap-3 h-full">
-            {otherMetricsData.map((metric) => (
-              <div key={metric.name} className="bg-white rounded-lg shadow-lg border-2 border-gray-200 p-4 hover:shadow-xl transition-all duration-300 flex h-full metric-card">
-                {/* Left side - Vertical information */}
-                <div className="flex-1 flex flex-col justify-center">
-                  <h2 className="text-sm font-bold text-gray-900 mb-2">{metric.name}</h2>
-                  <div className="text-3xl font-bold text-gray-800 mb-1">
-                    {metric.value}%
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    Target: {referenceValue}
-                  </div>
-                </div>
-                
-                {/* Right side - Small graphic and status */}
-                <div className="w-20 flex flex-col items-center justify-center">
-                  <div className={`w-10 h-10 ${metric.indicator.bgColor} rounded-lg flex items-center justify-center mb-2`}>
-                    <metric.indicator.icon className={`w-5 h-5 ${metric.indicator.color}`} />
-                  </div>
-                  <div className={`text-xs font-medium ${metric.indicator.color} text-center`}>
-                    {metric.value >= referenceValue ? 'Above' : 'Below'}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Trend Chart */}
+      <div className="bg-card rounded-2xl p-6 border border-border" style={{ boxShadow: cardShadow }}>
+        <h3 className="text-base font-semibold text-foreground mb-6">Metric Trends</h3>
+        <div className="h-[280px]">
+          {chartData.length > 0 ? (
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7ea" />
+                <XAxis dataKey="date" tick={{ fill: '#767d85', fontSize: 10 }} axisLine={{ stroke: '#e5e7ea' }} label={{ value: 'Measurement dates', position: 'insideBottom', offset: -5, fill: '#767d85', fontSize: 10 }} />
+                <YAxis tick={{ fill: '#767d85', fontSize: 12 }} axisLine={{ stroke: '#e5e7ea' }} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7ea', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
+                  labelFormatter={(label) => label}
+                />
+                {metrics.map((m) => (
+                  <Line key={m.id} type="monotone" dataKey={m.id} stroke={m.color} strokeWidth={m.main ? 3 : 2} dot={false} connectNulls={true} />
+                ))}
+              </LineChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="flex items-center justify-center h-full text-muted-foreground">No trend data available</div>
+          )}
+        </div>
+      </div>
+
+      {/* Recent Measurements Table */}
+      <div className="bg-card rounded-2xl p-6 border border-border" style={{ boxShadow: cardShadow }}>
+        <h3 className="text-base font-semibold text-foreground mb-4">Recent Measurements</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-2 px-3 text-muted-foreground font-medium">Date</th>
+                {metrics.map((m) => (
+                  <th key={m.id} className="text-center py-2 px-3 text-muted-foreground font-medium">{m.label}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {tableData.map((row, i) => (
+                <tr key={i} className="border-b border-border/50 last:border-0">
+                  <td className="py-2 px-3 text-foreground font-medium">{row.date}</td>
+                  {metrics.map((m) => (
+                    <td key={m.id} className={`py-2 px-3 text-center font-semibold ${row[m.id] !== null && row[m.id] !== undefined ? 'text-foreground' : 'text-muted-foreground'}`}>
+                      {row[m.id] !== null && row[m.id] !== undefined ? `${row[m.id]}%` : '-'}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

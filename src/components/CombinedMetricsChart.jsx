@@ -28,7 +28,7 @@ const CombinedMetricsChart = ({ category = 'M365' }) => {
     // Convert to chart data and sort by date
     const chartData = Object.entries(dateGroups)
       .map(([date, metrics]) => ({
-        date: format(parseISO(allEntries.find(e => e.date === date)?.timestamp || `${date}T10:00:00.000Z`), 'MMM dd, yyyy'),
+        date: format(parseISO(date), 'MMM dd, yyyy'),
         fullDate: date,
         ...metrics
       }))

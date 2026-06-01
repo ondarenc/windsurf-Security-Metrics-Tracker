@@ -19,17 +19,18 @@ const TabbedHomePage = () => {
     }
   }
 
-  const topRow = [
-    {
-      title: 'M365 Secure Score',
-      mainMetric: 'Secure Score',
-      category: 'M365',
-      link: '/m365',
-      logo: '/logo-m365.png',
-      iconBg: 'bg-blue-100',
-      iconHover: 'group-hover:bg-blue-200',
-      scoreColor: 'text-blue-600'
-    },
+  const m365Card = {
+    title: 'M365 Secure Score',
+    mainMetric: 'Secure Score',
+    category: 'M365',
+    link: '/m365',
+    logo: '/logo-m365.png',
+    iconBg: 'bg-blue-100',
+    iconHover: 'group-hover:bg-blue-200',
+    scoreColor: 'text-blue-600'
+  }
+
+  const purpleRow = [
     {
       title: 'Purple Knight AD Score',
       mainMetric: 'Note',
@@ -81,16 +82,16 @@ const TabbedHomePage = () => {
       <NavLink
         key={cat.title}
         to={cat.link}
-        className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-all duration-200"
+        className="group bg-white rounded-lg shadow-sm border border-gray-200 p-8 hover:shadow-md transition-all duration-200"
       >
-        <div className={`w-12 h-12 ${cat.iconBg} rounded-lg flex items-center justify-center ${cat.iconHover} transition-colors mb-4`}>
-          <img src={cat.logo} alt={cat.title} className="w-8 h-8 object-contain" />
+        <div className={`w-16 h-16 ${cat.iconBg} rounded-lg flex items-center justify-center ${cat.iconHover} transition-colors mb-6`}>
+          <img src={cat.logo} alt={cat.title} className="w-10 h-10 object-contain" />
         </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-4">{cat.title}</h3>
-        <div className="space-y-3">
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">{cat.title}</h3>
+        <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">Score</span>
-            <span className={`text-2xl font-bold ${cat.scoreColor}`}>
+            <span className="text-base text-gray-500">Score</span>
+            <span className={`text-3xl font-bold ${cat.scoreColor}`}>
               {latest.value === '-' ? '-' : latest.value}
             </span>
           </div>
@@ -109,16 +110,16 @@ const TabbedHomePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-background py-8">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
               <BarChart3 className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900">Security Metrics Tracker</h1>
+            <h1 className="text-4xl font-bold text-foreground">Security Metrics Tracker</h1>
           </div>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Select the metric area you want to review.
           </p>
         </div>
@@ -127,13 +128,24 @@ const TabbedHomePage = () => {
           <MainTabs />
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">Summary</h2>
+        <div className="flex items-center justify-between mb-6">
+          <h2 className="text-2xl font-bold text-foreground">Summary</h2>
+          <a href="/overview" className="text-sm text-chart-1 hover:text-chart-1/80 font-medium">
+            Open Dashboard →
+          </a>
+        </div>
 
-        <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {topRow.map(renderCard)}
+        <div className="space-y-8">
+          {/* Row 1 — M365 alone */}
+          <div className="grid grid-cols-1 md:grid-cols-1 gap-6 max-w-xl mx-auto">
+            {renderCard(m365Card)}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          {/* Row 2 — Purple Knight cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {purpleRow.map(renderCard)}
+          </div>
+          {/* Row 3 — Security Scorecard + Project Discovery */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {bottomRow.map(renderCard)}
           </div>
         </div>

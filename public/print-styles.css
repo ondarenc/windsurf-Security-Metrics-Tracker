@@ -1,22 +1,71 @@
 @media print {
-  .metric-overview-grid {
-    width: 100% !important;
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 8px !important;
-    display: grid !important;
-    grid-template-columns: repeat(5, 1fr) !important;
-    gap: 2px !important;
+  /* Hide sidebar and right panel on metric pages */
+  .print\:hidden {
+    display: none !important;
   }
-  
-  .metric-card {
+
+  /* Main content takes full width when sidebar/right are hidden */
+  .print\:flex-1 {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+  }
+
+  /* Remove card shadows for cleaner print */
+  .bg-card {
     box-shadow: none !important;
-    padding: 8px !important;
+    border: 1px solid #e5e7ea !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
-  
-  .page-container {
-    max-width: none !important;
-    margin: 0 !important;
-    padding: 8px !important;
+
+  /* Ensure charts and tables don't overflow */
+  .recharts-wrapper,
+  .recharts-responsive-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Hide interactive elements */
+  button,
+  .no-print,
+  [class*="no-print"] {
+    display: none !important;
+  }
+
+  /* Charts: never break mid-chart */
+  .recharts-wrapper,
+  .recharts-responsive-container,
+  [class*="recharts"] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Chart containers get their own page if too tall */
+  div[style*="box-shadow"],
+  .space-y-6 > div {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Overview components should not split */
+  .space-y-6 {
+    break-inside: auto;
+  }
+
+  .space-y-6 > * {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Ensure body and html allow printing */
+  html, body, #root {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* SVG elements inside charts must not break */
+  svg {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 }
