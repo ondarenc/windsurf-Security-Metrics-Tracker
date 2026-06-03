@@ -14,13 +14,19 @@ import {
   AlertTriangle,
 } from 'lucide-react'
 
-const mainMenu = [
+const overviewMenu = [
   { id: 'overview', label: 'Overview', path: '/', icon: Gauge },
+]
+
+const mainMenu = [
   { id: 'm365', label: 'M365 Secure Score', path: '/m365', icon: Shield },
   { id: 'purple-knight-ad', label: 'Purple Knight AD', path: '/purple-knight-ad', icon: Server },
   { id: 'purple-knight-entra-id', label: 'Purple Knight Entra-ID', path: '/purple-knight-entra-id', icon: Cloud },
   { id: 'security-scorecard', label: 'Security Scorecard', path: '/security-scorecard', icon: BarChart3 },
   { id: 'project-discovery', label: 'Project Discovery', path: '/project-discovery', icon: Search },
+]
+
+const vulnerabilitiesMenu = [
   { id: 'followup', label: 'Follow-up', path: '/followup', icon: AlertTriangle },
 ]
 
@@ -49,11 +55,34 @@ export function AppSidebar({ className }) {
 
       {/* Main Menu */}
       <div className="px-4 py-4 flex-1 overflow-y-auto">
+        <nav className="space-y-0.5 mb-6">
+          {overviewMenu.map((item) => (
+            <SidebarLink
+              key={item.id}
+              item={item}
+              isActive={location.pathname === item.path}
+            />
+          ))}
+        </nav>
+
         <p className="px-2 mb-2 text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
           Metrics
         </p>
-        <nav className="space-y-0.5">
+        <nav className="space-y-0.5 mb-6">
           {mainMenu.map((item) => (
+            <SidebarLink
+              key={item.id}
+              item={item}
+              isActive={location.pathname === item.path}
+            />
+          ))}
+        </nav>
+
+        <p className="px-2 mb-2 text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
+          Vulnerabilities
+        </p>
+        <nav className="space-y-0.5">
+          {vulnerabilitiesMenu.map((item) => (
             <SidebarLink
               key={item.id}
               item={item}
