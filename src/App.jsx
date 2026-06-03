@@ -9,6 +9,8 @@ import SecurityScorecardPage from './pages/SecurityScorecardPage'
 import ProjectDiscoveryPage from './pages/ProjectDiscoveryPage'
 import PrintAllPage from './pages/PrintAllPage'
 import DashboardOverviewPage from './pages/DashboardOverviewPage'
+import ReportEditorPage from './pages/ReportEditorPage'
+import ReportPage from './pages/ReportPage'
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path="/security-scorecard" element={<SecurityScorecardPage />} />
         <Route path="/project-discovery" element={<ProjectDiscoveryPage />} />
         <Route path="/print" element={<PrintAllPage />} />
+        <Route path="/report-editor" element={<ReportEditorPage />} />
+        <Route path="/report" element={<ReportPage />} />
       </Routes>
     </Router>
   )

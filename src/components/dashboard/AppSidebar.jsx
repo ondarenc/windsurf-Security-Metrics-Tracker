@@ -10,6 +10,7 @@ import {
   Settings,
   Home,
   BarChart3,
+  FileText,
 } from 'lucide-react'
 
 const mainMenu = [
@@ -19,6 +20,7 @@ const mainMenu = [
   { id: 'purple-knight-entra-id', label: 'Purple Knight Entra-ID', path: '/purple-knight-entra-id', icon: Cloud },
   { id: 'security-scorecard', label: 'Security Scorecard', path: '/security-scorecard', icon: BarChart3 },
   { id: 'project-discovery', label: 'Project Discovery', path: '/project-discovery', icon: Search },
+  { id: 'report', label: 'Report', path: '/report', icon: FileText },
 ]
 
 const bottomMenu = [

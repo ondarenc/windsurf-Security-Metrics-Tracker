@@ -42,10 +42,10 @@ function MetricSummaryCards() {
         const status = latest ? getStatus(latest.value, target, card.metric) : { status: 'No data', color: 'text-muted-foreground' }
         const c = colorMap[card.color]
         return (
-          <button
+          <div
             key={card.category}
             onClick={() => navigate(card.path)}
-            className={`group bg-card rounded-xl border ${c.border} p-5 text-center hover:shadow-md transition-all duration-200`}
+            className={`group bg-card rounded-xl border ${c.border} p-5 text-center hover:shadow-md transition-all duration-200 cursor-pointer`}
           >
             <div className="flex items-center justify-center gap-2 mb-3">
               {card.logo && <img src={card.logo} alt={card.label} className="w-8 h-8 object-contain" />}
@@ -63,7 +63,7 @@ function MetricSummaryCards() {
             <div className="text-sm text-muted-foreground">
               Last measurement: {latest ? new Date(latest.date).toLocaleDateString() : '—'}
             </div>
-          </button>
+          </div>
         )
       })}
     </div>

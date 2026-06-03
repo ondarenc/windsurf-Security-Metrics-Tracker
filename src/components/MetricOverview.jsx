@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
   LineChart,
   Line,
+  Legend,
 } from 'recharts'
 import dataManager from '../data/dataManager'
 import { cn } from '../lib/utils'
@@ -141,12 +142,13 @@ const MetricOverview = () => {
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e5e7ea" />
-                <XAxis dataKey="date" tick={{ fill: '#767d85', fontSize: 10 }} axisLine={{ stroke: '#e5e7ea' }} label={{ value: 'Measurement dates', position: 'insideBottom', offset: -5, fill: '#767d85', fontSize: 10 }} />
+                <XAxis dataKey="date" tick={{ fill: '#767d85', fontSize: 10 }} axisLine={{ stroke: '#e5e7ea' }} />
                 <YAxis tick={{ fill: '#767d85', fontSize: 12 }} axisLine={{ stroke: '#e5e7ea' }} />
                 <Tooltip
                   contentStyle={{ backgroundColor: 'white', border: '1px solid #e5e7ea', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}
                   labelFormatter={(label) => label}
                 />
+                <Legend />
                 {metrics.map((m) => (
                   <Line key={m.id} type="monotone" dataKey={m.id} stroke={m.color} strokeWidth={m.main ? 3 : 2} dot={false} connectNulls={true} />
                 ))}
