@@ -1,9 +1,79 @@
 import React, { useEffect } from 'react'
+import { TrendingUp, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react'
+import dataManager from '../data/dataManager'
 import MetricOverview from '../components/MetricOverview'
 import PurpleKnightADOverview from '../components/PurpleKnightADOverview'
 import PurpleKnightEntraIDOverview from '../components/PurpleKnightEntraIDOverview'
 import SecurityScorecardOverview from '../components/SecurityScorecardOverview'
 import ProjectDiscoveryOverview from '../components/ProjectDiscoveryOverview'
+
+function getStatus(value, referenceValue, metricName) {
+  if (value === null) return { status: 'No data', color: 'text-gray-500' }
+  const invertedMetrics = ['IOEs Found', 'Critical IOEs', 'High breach risk issues', 'Medium breach risk issues', 'Low breach risk issues', 'Critical', 'High', 'Medium', 'Low']
+  const isInverted = invertedMetrics.includes(metricName)
+  const isGood = isInverted ? value <= referenceValue : value >= referenceValue
+  if (isGood) {
+    return { status: 'Above target', color: 'text-green-600' }
+  }
+  return { status: 'Below target', color: 'text-red-600' }
+}
+
+function getTrendExplanation(category, metricName) {
+  const entries = dataManager.getEntriesByName(metricName, category)
+  if (entries.length < 2) return null
+
+  const latest = entries[0]
+  const previous = entries[1]
+  const diff = latest.value - previous.value
+  const absDiff = Math.abs(diff)
+  const reference = dataManager.getReferenceValue(category, metricName)
+  const invertedMetrics = ['IOEs Found', 'Critical IOEs', 'High breach risk issues', 'Medium breach risk issues', 'Low breach risk issues', 'Critical', 'High', 'Medium', 'Low']
+  const isInverted = invertedMetrics.includes(metricName)
+
+  let direction, icon, color
+  if (diff > 0) {
+    direction = 'up'
+    icon = <ArrowUpRight className="w-4 h-4" />
+    color = isInverted ? 'text-red-600' : 'text-green-600'
+  } else if (diff < 0) {
+    direction = 'down'
+    icon = <ArrowDownRight className="w-4 h-4" />
+    color = isInverted ? 'text-green-600' : 'text-red-600'
+  } else {
+    direction = 'stable'
+    icon = <Minus className="w-4 h-4" />
+    color = 'text-gray-500'
+  }
+
+  const isGood = isInverted ? latest.value <= reference : latest.value >= reference
+  const wasGood = isInverted ? previous.value <= reference : previous.value >= reference
+
+  let text = ''
+  if (direction === 'stable') {
+    text = `remained stable at ${latest.value}.`
+  } else {
+    const changeWord = direction === 'up' ? 'increased' : 'decreased'
+    text = `${changeWord} from ${previous.value} to ${latest.value} (${absDiff > 0 ? 'by ' + absDiff : 'no change'}).`
+  }
+
+  let statusText = ''
+  let statusColor = ''
+  if (isGood && wasGood) {
+    statusText = ' It stays above target.'
+    statusColor = 'text-green-600'
+  } else if (isGood && !wasGood) {
+    statusText = ' It is now above target. Good progress!'
+    statusColor = 'text-green-600'
+  } else if (!isGood && wasGood) {
+    statusText = ' It dropped below target. Attention needed.'
+    statusColor = 'text-red-600'
+  } else {
+    statusText = ' It remains below target.'
+    statusColor = 'text-red-600'
+  }
+
+  return { text, statusText, statusColor, icon, color, direction }
+}
 
 const PrintAllPage = () => {
   useEffect(() => {
@@ -62,6 +132,82 @@ const PrintAllPage = () => {
               return `${dayName} the ${dateNum}${suffix(dateNum)} ${monthName} ${year} - Confidential`
             })()}
           </p>
+        </div>
+
+        {/* Overview Section */}
+        <div className="print-page-break">
+          <h1 className="text-3xl font-bold text-gray-900 mb-6">Overview</h1>
+          
+          {/* Metric Summary Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+            {[
+              { category: 'M365', metric: 'Secure Score', label: 'M365 Secure Score', logo: '/logo-m365.png' },
+              { category: 'Purple Knight AD', metric: 'Note', label: 'Purple Knight AD', logo: '/logo-purpleknight-ad.png' },
+              { category: 'Purple Knight Entra-ID', metric: 'Note', label: 'Purple Knight Entra-ID', logo: '/logo-purpleknight-entra.png' },
+              { category: 'Securityscorecard', metric: 'My Score', label: 'Security Scorecard', logo: '/logo-securityscorecard.png' },
+              { category: 'ProjectDiscovery', metric: 'Security Score', label: 'Project Discovery', logo: '/logo-projectdiscovery.png' },
+            ].map((card) => {
+              const latest = dataManager.getLastEntryByName(card.metric, card.category)
+              const target = dataManager.getReferenceValue(card.category, card.metric)
+              const status = latest ? getStatus(latest.value, target, card.metric) : { status: 'No data', color: 'text-gray-500' }
+              return (
+                <div
+                  key={card.category}
+                  className="bg-white rounded-lg border border-gray-200 p-4 text-center"
+                >
+                  <div className="flex items-center justify-center gap-2 mb-3">
+                    {card.logo && <img src={card.logo} alt={card.label} className="w-8 h-8 object-contain" />}
+                    <h2 className="text-base font-bold text-gray-900">{card.label}</h2>
+                  </div>
+                  <div className="text-lg text-gray-600 mb-1">
+                    Score: <span className="font-bold text-gray-900">{latest ? latest.value : '—'}</span>
+                  </div>
+                  <div className={`text-sm font-medium mb-1 ${status.color}`}>
+                    {status.status}
+                  </div>
+                  <div className="text-sm text-gray-600 mb-1">
+                    Target: <span className="font-medium text-gray-900">{target}</span>
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    Last: {latest ? new Date(latest.date).toLocaleDateString() : '—'}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Trends Explanation */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6">
+            <h3 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-gray-600" />
+              Latest Trends
+            </h3>
+            <div className="space-y-4">
+              {[
+                { category: 'M365', metric: 'Secure Score', label: 'M365 Secure Score' },
+                { category: 'Purple Knight AD', metric: 'Note', label: 'Purple Knight AD' },
+                { category: 'Purple Knight Entra-ID', metric: 'Note', label: 'Purple Knight Entra-ID' },
+                { category: 'Securityscorecard', metric: 'My Score', label: 'Security Scorecard' },
+                { category: 'ProjectDiscovery', metric: 'Security Score', label: 'Project Discovery' },
+              ].map(item => {
+                const trend = getTrendExplanation(item.category, item.metric)
+                if (!trend) return null
+                return (
+                  <div key={item.category} className="flex items-start gap-3 p-3 bg-gray-50 rounded-lg">
+                    <div className={`mt-0.5 ${trend.color}`}>
+                      {trend.icon}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-medium text-gray-900 mb-1">{item.label}</div>
+                      <div className="text-sm text-gray-600">
+                        {trend.text}<span className={trend.statusColor}>{trend.statusText}</span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
         </div>
 
         <Section title="M365 Secure Score" logo="/logo-m365.png">

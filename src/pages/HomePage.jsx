@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Plus, BarChart3, TrendingUp, Settings, Trash2, ChevronDown, ChevronUp, Printer, FileEdit } from 'lucide-react'
+import { Plus, BarChart3, TrendingUp, Settings, Trash2, ChevronDown, ChevronUp, Printer, FileEdit, AlertTriangle } from 'lucide-react'
 import dataManager from '../data/dataManager'
 import DataFileManager from '../components/DataFileManager'
 import { AppSidebar } from '../components/dashboard/AppSidebar'
@@ -403,22 +403,22 @@ const HomePage = () => {
             </div>
           </button>
 
-          {/* Report Editor Card */}
+          {/* Follow-up Console Card */}
           <button
-            onClick={() => navigate('/report-editor')}
+            onClick={() => navigate('/followup-console')}
             className="group bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-left hover:shadow-md transition-all duration-200 print:hidden"
           >
             <div className="flex items-center gap-4 mb-4">
-              <div className="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center group-hover:bg-amber-200 transition-colors">
-                <FileEdit className="w-6 h-6 text-amber-600" />
+              <div className="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center group-hover:bg-rose-200 transition-colors">
+                <AlertTriangle className="w-6 h-6 text-rose-600" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900">Report Editor</h2>
+              <h2 className="text-2xl font-bold text-gray-900">Follow-up Console</h2>
             </div>
             <p className="text-gray-600 mb-4">
-              Write and edit report content
+              Manage and track vulnerability follow-up items
             </p>
-            <div className="text-amber-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
-              Open editor
+            <div className="text-rose-600 font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+              Open console
               <span className="text-xl">→</span>
             </div>
           </button>
