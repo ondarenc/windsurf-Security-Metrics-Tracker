@@ -208,9 +208,9 @@ app.post('/api/import', (req, res) => {
       	insertFollowup.run(
         	f.level,
         	f.vulnerability,
-        	f.service_ip,
+        	f.service_ip || f.serviceIp || '',
         	f.source,
-        	f.remediation_task,
+        	f.remediation_task || f.remediationTask || '',
         	f.ticket,
         	f.status,
         	f.hidden ? 1 : 0
@@ -225,6 +225,6 @@ app.post('/api/import', (req, res) => {
 
   } catch (error) {
 	console.error(error);
-	res.status(500).json({ error: 'Import failed' });
+	res.status(500).json({ error: error.message || 'Import failed' });
   }
 });
