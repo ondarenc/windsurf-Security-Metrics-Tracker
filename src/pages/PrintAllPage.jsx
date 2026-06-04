@@ -254,6 +254,10 @@ const PrintAllPage = () => {
             break-after: auto;
             page-break-after: auto;
           }
+          /* Force 3-column grid for metric squares in print */
+          .grid.grid-cols-1.md\\:grid-cols-3.lg\\:grid-cols-5 {
+            grid-template-columns: repeat(3, 1fr) !important;
+          }
         }
         @media screen {
           .print-only-header {

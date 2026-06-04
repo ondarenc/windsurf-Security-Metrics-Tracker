@@ -1,11 +1,12 @@
-import React from 'react'
-import { Gauge, TrendingUp, TrendingDown, Minus, ArrowUpRight, ArrowDownRight } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Gauge, TrendingUp, TrendingDown, Minus, ArrowUpRight, ArrowDownRight, AlertTriangle } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import dataManager from '../data/dataManager'
 import { AppSidebar } from '../components/dashboard/AppSidebar'
 import { MainContent } from '../components/dashboard/MainContent'
 import { RightPanel } from '../components/dashboard/RightPanel'
 import { OverviewContent } from '../components/dashboard/content/OverviewContent'
+import { followupApi } from '../lib/api'
 
 function getStatus(value, referenceValue, metricName) {
   if (value === null) return { status: 'No data', color: 'text-muted-foreground' }
@@ -20,6 +21,23 @@ function getStatus(value, referenceValue, metricName) {
 
 function MetricSummaryCards() {
   const navigate = useNavigate()
+  const [vulnerabilityLevels, setVulnerabilityLevels] = useState({ critical: 0, high: 0, medium: 0 })
+
+  useEffect(() => {
+    const loadVulnerabilityCounts = async () => {
+      try {
+        const followup = await followupApi.getAll()
+        const critical = followup.filter(f => f.level === 'CRITICAL').length
+        const high = followup.filter(f => f.level === 'HIGH').length
+        const medium = followup.filter(f => f.level === 'MEDIUM').length
+        setVulnerabilityLevels({ critical, high, medium })
+      } catch (error) {
+        console.error('Error loading vulnerability counts:', error)
+      }
+    }
+    loadVulnerabilityCounts()
+  }, [])
+
   const metricCards = [
     { category: 'M365', metric: 'Secure Score', label: 'M365 Secure Score', logo: '/logo-m365.png', color: 'blue', path: '/m365' },
     { category: 'Purple Knight AD', metric: 'Note', label: 'Purple Knight AD', logo: '/logo-purpleknight-ad.png', color: 'purple', path: '/purple-knight-ad' },
@@ -33,9 +51,10 @@ function MetricSummaryCards() {
     indigo: { border: 'border-indigo-200' },
     teal: { border: 'border-teal-200' },
     cyan: { border: 'border-cyan-200' },
+    yellow: { border: 'border-yellow-200' },
   }
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-6">
       {metricCards.map((card) => {
         const latest = dataManager.getLastEntryByName(card.metric, card.category)
         const target = dataManager.getReferenceValue(card.category, card.metric)
@@ -66,6 +85,27 @@ function MetricSummaryCards() {
           </div>
         )
       })}
+      {/* Vulnerabilities Card */}
+      <div
+        onClick={() => navigate('/all-vulnerabilities')}
+        className={`group bg-card rounded-xl border ${colorMap.yellow.border} p-5 text-center hover:shadow-md transition-all duration-200 cursor-pointer`}
+      >
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <AlertTriangle className="w-6 h-6 text-yellow-600" />
+          <h2 className="text-base font-bold text-foreground text-center">Vulnerabilities</h2>
+        </div>
+        <div className="space-y-1">
+          <div className="text-sm text-muted-foreground">
+            Critical: <span className="font-bold text-red-600">{vulnerabilityLevels.critical}</span>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            High: <span className="font-bold text-fuchsia-600">{vulnerabilityLevels.high}</span>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            Medium: <span className="font-bold text-orange-600">{vulnerabilityLevels.medium}</span>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
