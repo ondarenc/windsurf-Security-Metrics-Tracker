@@ -16,3 +16,7 @@ database.sqlite-wal
 # Keep data folder but not DB
 server/data/*.db
 server/data/*.sqlite
+
+
+dist/
+node_modules/
