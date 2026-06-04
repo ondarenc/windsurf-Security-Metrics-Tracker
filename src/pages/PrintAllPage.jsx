@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react'
-import { TrendingUp, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react'
+import React, { useEffect, useState } from 'react'
+import { TrendingUp, ArrowUpRight, ArrowDownRight, Minus, AlertTriangle } from 'lucide-react'
 import dataManager from '../data/dataManager'
+import followupManager from '../data/followupManager'
 import MetricOverview from '../components/MetricOverview'
 import PurpleKnightADOverview from '../components/PurpleKnightADOverview'
 import PurpleKnightEntraIDOverview from '../components/PurpleKnightEntraIDOverview'
@@ -76,7 +77,23 @@ function getTrendExplanation(category, metricName) {
 }
 
 const PrintAllPage = () => {
+  const [vulnerabilityLevels, setVulnerabilityLevels] = useState({ critical: 0, high: 0, medium: 0 })
+
   useEffect(() => {
+    // Load vulnerability counts using followupManager
+    const loadVulnerabilityCounts = async () => {
+      try {
+        const followupItems = await followupManager.getAllItems()
+        const critical = followupItems.filter(f => f.level === 'CRITICAL').length
+        const high = followupItems.filter(f => f.level === 'HIGH').length
+        const medium = followupItems.filter(f => f.level === 'MEDIUM').length
+        setVulnerabilityLevels({ critical, high, medium })
+      } catch (error) {
+        console.error('Error loading vulnerability counts:', error)
+      }
+    }
+    loadVulnerabilityCounts()
+
     // Wait for charts to fully render before triggering print
     // Recharts ResponsiveContainer needs time to measure its container
     const timer = setTimeout(() => {
@@ -137,9 +154,9 @@ const PrintAllPage = () => {
         {/* Overview Section */}
         <div className="print-page-break">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Overview</h1>
-          
+
           {/* Metric Summary Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-6 print-grid-5">
             {[
               { category: 'M365', metric: 'Secure Score', label: 'M365 Secure Score', logo: '/logo-m365.png' },
               { category: 'Purple Knight AD', metric: 'Note', label: 'Purple Knight AD', logo: '/logo-purpleknight-ad.png' },
@@ -174,6 +191,28 @@ const PrintAllPage = () => {
                 </div>
               )
             })}
+          </div>
+
+          {/* Vulnerabilities Summary */}
+          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
+            <h3 className="text-base font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <AlertTriangle className="w-5 h-5 text-yellow-600" />
+              Vulnerability Summary
+            </h3>
+            <div className="grid grid-cols-3 gap-4">
+              <div className="text-center p-3 bg-red-50 rounded-lg">
+                <div className="text-2xl font-bold text-red-600">{vulnerabilityLevels.critical}</div>
+                <div className="text-sm text-gray-600">Critical</div>
+              </div>
+              <div className="text-center p-3 bg-fuchsia-50 rounded-lg">
+                <div className="text-2xl font-bold text-fuchsia-600">{vulnerabilityLevels.high}</div>
+                <div className="text-sm text-gray-600">High</div>
+              </div>
+              <div className="text-center p-3 bg-orange-50 rounded-lg">
+                <div className="text-2xl font-bold text-orange-600">{vulnerabilityLevels.medium}</div>
+                <div className="text-sm text-gray-600">Medium</div>
+              </div>
+            </div>
           </div>
 
           {/* Trends Explanation */}
@@ -255,7 +294,7 @@ const PrintAllPage = () => {
             page-break-after: auto;
           }
           /* Force 3-column grid for metric squares in print */
-          .grid.grid-cols-1.md\\:grid-cols-3.lg\\:grid-cols-5 {
+          .print-grid-5 {
             grid-template-columns: repeat(3, 1fr) !important;
           }
         }
