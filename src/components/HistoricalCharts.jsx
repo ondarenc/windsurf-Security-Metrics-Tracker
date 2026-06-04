@@ -6,6 +6,7 @@ const HistoricalCharts = ({ data }) => {
   const formatChartData = (entries) => {
     return entries
       .sort((a, b) => new Date(a.date) - new Date(b.date))
+      .slice(-5)
       .map(entry => ({
         date: format(parseISO(entry.date), 'MMM dd'),
         fullDate: entry.date,

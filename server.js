@@ -85,6 +85,16 @@ app.post('/api/metrics', (req, res) => {
   }
 });
 
+app.delete('/api/metrics/:id', (req, res) => {
+  try {
+    const stmt = db.prepare('DELETE FROM metrics WHERE id = ?');
+    stmt.run(req.params.id);
+    res.json({ message: 'Deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // API Routes for Followup
 app.get('/api/followup', (req, res) => {
   try {

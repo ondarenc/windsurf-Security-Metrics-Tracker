@@ -54,7 +54,7 @@ const MetricOverview = () => {
     let maxLen = 0
     metrics.forEach((m) => {
       const entries = dataManager.getEntriesByName(m.name, CATEGORY)
-      const sorted = [...entries].sort((a, b) => new Date(a.date) - new Date(b.date))
+      const sorted = [...entries].sort((a, b) => new Date(a.date) - new Date(b.date)).slice(-5)
       seriesData[m.id] = sorted.map((entry) => entry.value)
       seriesDates[m.id] = sorted.map((entry) => entry.date)
       maxLen = Math.max(maxLen, seriesData[m.id].length)

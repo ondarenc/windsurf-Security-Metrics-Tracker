@@ -30,6 +30,9 @@ export const metricsApi = {
     method: 'POST',
     body: JSON.stringify(data),
   }),
+  delete: (id) => apiRequest(`/metrics/${id}`, {
+    method: 'DELETE',
+  }),
 };
 
 // Follow-up API
