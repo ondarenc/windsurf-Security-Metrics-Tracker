@@ -1,5 +1,5 @@
 import React from 'react'
-import { AlertCircle } from 'lucide-react'
+import { AlertCircle, Shield } from 'lucide-react'
 import { Button } from '../ui/button'
 
 export function MainContent({ children, pageTitle, pageIcon }) {
@@ -29,11 +29,17 @@ export function MainContent({ children, pageTitle, pageIcon }) {
             </div>
           )}
 
-          {/* Primary Action */}
-          <Button size="sm" className="gap-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground" onClick={() => window.location.href = '/form'}>
-            <AlertCircle className="w-4 h-4" />
-            <span>Add Entry</span>
-          </Button>
+          {/* Primary Actions */}
+          <div className="flex items-center gap-2">
+            <Button size="sm" className="gap-2 bg-destructive hover:bg-destructive/90 text-destructive-foreground" onClick={() => window.location.href = '/form'}>
+              <AlertCircle className="w-4 h-4" />
+              <span>Add Metric</span>
+            </Button>
+            <Button size="sm" className="gap-2 bg-blue-600 hover:bg-blue-700 text-white" onClick={() => window.location.href = '/followup-console'}>
+              <Shield className="w-4 h-4" />
+              <span>Add Vulnerability</span>
+            </Button>
+          </div>
         </div>
       </header>
 

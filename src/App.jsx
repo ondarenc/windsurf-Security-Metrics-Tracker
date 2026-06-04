@@ -11,6 +11,9 @@ import PrintAllPage from './pages/PrintAllPage'
 import DashboardOverviewPage from './pages/DashboardOverviewPage'
 import FollowupConsolePage from './pages/FollowupConsolePage'
 import FollowupPage from './pages/FollowupPage'
+import MetricTargetSetup from './pages/MetricTargetSetup'
+import AllMetricsPage from './pages/AllMetricsPage'
+import AllVulnerabilitiesPage from './pages/AllVulnerabilitiesPage'
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
         <Route path="/print" element={<PrintAllPage />} />
         <Route path="/followup-console" element={<FollowupConsolePage />} />
         <Route path="/followup" element={<FollowupPage />} />
+        <Route path="/metric-target-setup" element={<MetricTargetSetup />} />
+        <Route path="/all-metrics" element={<AllMetricsPage />} />
+        <Route path="/all-vulnerabilities" element={<AllVulnerabilitiesPage />} />
       </Routes>
     </Router>
   )

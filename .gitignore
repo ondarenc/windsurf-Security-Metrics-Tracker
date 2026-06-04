@@ -1,1 +1,18 @@
 node_modules
+database.sqlite
+database.sqlite-shm
+database.sqlite-wal
+
+# Logs
+*.log
+
+# Environment
+.env
+
+# SQLite DBs (protect all runtime DBs)
+*.db
+*.sqlite
+
+# Keep data folder but not DB
+server/data/*.db
+server/data/*.sqlite

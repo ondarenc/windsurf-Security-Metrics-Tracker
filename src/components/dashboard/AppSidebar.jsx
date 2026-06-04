@@ -32,7 +32,6 @@ const vulnerabilitiesMenu = [
 
 const bottomMenu = [
   { id: 'dashboard', label: 'Dashboard', path: '/dashboard', icon: Home },
-  { id: 'settings', label: 'Settings', path: '/dashboard?settings=open', icon: Settings },
 ]
 
 export function AppSidebar({ className }) {

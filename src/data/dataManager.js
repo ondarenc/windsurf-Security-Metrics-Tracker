@@ -1,3 +1,5 @@
+import { metricsApi } from '../lib/api';
+
 class DataManager {
   constructor() {
     this.data = [];
@@ -16,44 +18,66 @@ class DataManager {
       'ProjectDiscovery': ['Security Score', 'Critical', 'High', 'Medium', 'Low']
     };
     this.dataFile = '/data/sample-data.json'; // Default to sample data
+    this.useApi = true; // Set to false to fallback to localStorage
     this.initializeData();
   }
 
   async initializeData() {
     try {
-      // Try to load from localStorage first (for existing data)
-      const stored = localStorage.getItem('metricsData');
-      if (stored) {
-        this.data = JSON.parse(stored);
-        // Migrate legacy entries that don't have a category field
-        const needsMigration = this.data.some(entry => !entry.category);
-        if (needsMigration) {
-          this.data = this.data.map(entry => {
-            if (entry.category) return entry;
-            // Assign category based on metric name
-            const name = entry.name;
-            if (this.metricTypes['M365'].includes(name)) {
-              return { ...entry, category: 'M365' };
-            }
-            if (this.metricTypes['Securityscorecard'].includes(name)) {
-              return { ...entry, category: 'Securityscorecard' };
-            }
-            if (this.metricTypes['ProjectDiscovery'].includes(name)) {
-              return { ...entry, category: 'ProjectDiscovery' };
-            }
-            // For shared Purple Knight metrics, default to AD (the original category)
-            return { ...entry, category: 'Purple Knight AD' };
-          });
-          this.saveData();
-          console.log('Migrated existing entries to include category field');
-        }
+      if (this.useApi) {
+        // Load from API
+        const apiData = await metricsApi.getAll();
+        // Transform API data to match local format
+        this.data = apiData.map(item => ({
+          id: item.id,
+          date: item.date,
+          name: item.metric_name,
+          value: item.value,
+          category: item.metric_type,
+          timestamp: item.created_at
+        }));
       } else {
-        // Load from JSON file
-        await this.loadFromFile();
+        // Try to load from localStorage first (for existing data)
+        const stored = localStorage.getItem('metricsData');
+        if (stored) {
+          this.data = JSON.parse(stored);
+          // Migrate legacy entries that don't have a category field
+          const needsMigration = this.data.some(entry => !entry.category);
+          if (needsMigration) {
+            this.data = this.data.map(entry => {
+              if (entry.category) return entry;
+              // Assign category based on metric name
+              const name = entry.name;
+              if (this.metricTypes['M365'].includes(name)) {
+                return { ...entry, category: 'M365' };
+              }
+              if (this.metricTypes['Securityscorecard'].includes(name)) {
+                return { ...entry, category: 'Securityscorecard' };
+              }
+              if (this.metricTypes['ProjectDiscovery'].includes(name)) {
+                return { ...entry, category: 'ProjectDiscovery' };
+              }
+              // For shared Purple Knight metrics, default to AD (the original category)
+              return { ...entry, category: 'Purple Knight AD' };
+            });
+            this.saveData();
+            console.log('Migrated existing entries to include category field');
+          }
+        } else {
+          // Load from JSON file
+          await this.loadFromFile();
+        }
       }
     } catch (error) {
       console.error('Error initializing data:', error);
-      this.data = [];
+      // Fallback to localStorage if API fails
+      if (this.useApi) {
+        console.log('Falling back to localStorage');
+        this.useApi = false;
+        await this.initializeData();
+      } else {
+        this.data = [];
+      }
     }
   }
 
@@ -76,11 +100,15 @@ class DataManager {
     await this.loadFromFile();
   }
 
-  saveData() {
+  async saveData() {
+    if (this.useApi) {
+      // Data is already synced with API via addEntry
+      return;
+    }
     localStorage.setItem('metricsData', JSON.stringify(this.data));
   }
 
-  addEntry(entry) {
+  async addEntry(entry) {
     const newEntry = {
       id: Date.now(),
       date: entry.date,
@@ -89,8 +117,27 @@ class DataManager {
       category: entry.category || 'M365',
       timestamp: new Date().toISOString()
     };
+
+    if (this.useApi) {
+      try {
+        const result = await metricsApi.add({
+          metric_name: entry.name,
+          metric_type: entry.category || 'M365',
+          value: parseFloat(entry.value),
+          date: entry.date
+        });
+        newEntry.id = result.id;
+      } catch (error) {
+        console.error('Error adding entry via API:', error);
+        // Fallback to local storage
+        this.useApi = false;
+        this.data.push(newEntry);
+        localStorage.setItem('metricsData', JSON.stringify(this.data));
+        return newEntry;
+      }
+    }
+
     this.data.push(newEntry);
-    this.saveData();
     return newEntry;
   }
 

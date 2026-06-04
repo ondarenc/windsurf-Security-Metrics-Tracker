@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Plus, Trash2, ArrowLeft } from 'lucide-react'
 import followupManager from '../data/followupManager'
@@ -7,7 +7,15 @@ import { MainContent } from '../components/dashboard/MainContent'
 
 const FollowupConsolePage = () => {
   const navigate = useNavigate()
-  const [items, setItems] = useState(followupManager.getAllItems())
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    const loadItems = async () => {
+      const allItems = await followupManager.getAllItems()
+      setItems(allItems)
+    }
+    loadItems()
+  }, [])
 
   const [formData, setFormData] = useState({
     level: '',
@@ -19,15 +27,16 @@ const FollowupConsolePage = () => {
     status: ''
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.level || !formData.vulnerability || !formData.source || !formData.status) {
       alert('Please fill in all required fields')
       return
     }
 
-    followupManager.addItem(formData)
-    setItems(followupManager.getAllItems())
+    await followupManager.addItem(formData)
+    const allItems = await followupManager.getAllItems()
+    setItems(allItems)
     setFormData({
       level: '',
       vulnerability: '',
@@ -39,16 +48,24 @@ const FollowupConsolePage = () => {
     })
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (confirm('Are you sure you want to delete this item?')) {
-      followupManager.deleteItem(id)
-      setItems(followupManager.getAllItems())
+      await followupManager.deleteItem(id)
+      const allItems = await followupManager.getAllItems()
+      setItems(allItems)
     }
   }
 
-  const handleToggleHidden = (id) => {
-    followupManager.toggleHidden(id)
-    setItems(followupManager.getAllItems())
+  const handleToggleHidden = async (id) => {
+    await followupManager.toggleHidden(id)
+    const allItems = await followupManager.getAllItems()
+    setItems(allItems)
+  }
+
+  const handleStatusChange = async (id, newStatus) => {
+    await followupManager.updateItem(id, { status: newStatus })
+    const allItems = await followupManager.getAllItems()
+    setItems(allItems)
   }
 
   const getLevelColor = (level) => {
@@ -203,8 +220,8 @@ const FollowupConsolePage = () => {
 
           {/* Table */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Vulnerabilities</h2>
-            {items.length === 0 ? (
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">Current Vulnerabilities</h2>
+            {items.filter(item => item.status !== 'Archived').length === 0 ? (
               <p className="text-gray-500 text-center py-8">No vulnerabilities added yet</p>
             ) : (
               <div className="overflow-x-auto">
@@ -223,7 +240,7 @@ const FollowupConsolePage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {items.map((item) => (
+                    {items.filter(item => item.status !== 'Archived').map((item) => (
                       <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
                         <td className="py-3 px-4">
                           <input
@@ -248,7 +265,20 @@ const FollowupConsolePage = () => {
                         </td>
                         <td className="py-3 px-4 text-gray-700">{item.remediationTask || '-'}</td>
                         <td className="py-3 px-4 text-gray-700">{item.ticket || '-'}</td>
-                        <td className="py-3 px-4 text-gray-700">{item.status}</td>
+                        <td className="py-3 px-4">
+                          <select
+                            value={item.status}
+                            onChange={(e) => handleStatusChange(item.id, e.target.value)}
+                            className="px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                          >
+                            <option value="Discovered">Discovered</option>
+                            <option value="Open">Open</option>
+                            <option value="Fix in progress">Fix in progress</option>
+                            <option value="Accepted risk">Accepted risk</option>
+                            <option value="Fixed">Fixed</option>
+                            <option value="Archived">Archived</option>
+                          </select>
+                        </td>
                         <td className="py-3 px-4">
                           <button
                             onClick={() => handleDelete(item.id)}

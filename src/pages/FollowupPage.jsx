@@ -4,10 +4,14 @@ import { AppSidebar } from '../components/dashboard/AppSidebar'
 import { MainContent } from '../components/dashboard/MainContent'
 
 const FollowupPage = () => {
-  const [items, setItems] = useState(followupManager.getVisibleItems())
+  const [items, setItems] = useState([])
 
   useEffect(() => {
-    setItems(followupManager.getVisibleItems())
+    const loadItems = async () => {
+      const visibleItems = await followupManager.getVisibleItems()
+      setItems(visibleItems)
+    }
+    loadItems()
   }, [])
 
   const getLevelColor = (level) => {
