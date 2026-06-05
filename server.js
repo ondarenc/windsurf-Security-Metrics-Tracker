@@ -50,11 +50,60 @@ const initDatabase = () => {
     )
   `);
 
+  // Create reports table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      section TEXT NOT NULL,
+      title TEXT,
+      content TEXT NOT NULL,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+
   console.log('Database initialized successfully');
 };
 
 // Initialize database on startup
 initDatabase();
+
+// Auto-hide function to hide items based on status and time
+const autoHideItems = () => {
+  try {
+    // Hide items with status 'Fixed' after 60 days
+    const hideFixed = db.prepare(`
+      UPDATE followup
+      SET hidden = 1
+      WHERE status = 'Fixed' 
+        AND hidden = 0
+        AND status_updated_at < datetime('now', '-60 days')
+    `);
+    const fixedCount = hideFixed.run();
+    
+    // Hide items with status 'Accepted risk' after 90 days
+    const hideAcceptedRisk = db.prepare(`
+      UPDATE followup
+      SET hidden = 1
+      WHERE status = 'Accepted risk' 
+        AND hidden = 0
+        AND status_updated_at < datetime('now', '-90 days')
+    `);
+    const acceptedRiskCount = hideAcceptedRisk.run();
+    
+    if (fixedCount.changes > 0 || acceptedRiskCount.changes > 0) {
+      console.log(`Auto-hide: ${fixedCount.changes} Fixed items hidden (60 days), ${acceptedRiskCount.changes} Accepted risk items hidden (90 days)`);
+    }
+  } catch (error) {
+    console.error('Error in auto-hide function:', error);
+  }
+};
+
+// Run auto-hide on startup
+autoHideItems();
+
+// Schedule auto-hide to run every hour
+setInterval(autoHideItems, 60 * 60 * 1000);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -117,8 +166,8 @@ app.post('/api/followup', (req, res) => {
   try {
     const { level, vulnerability, service_ip, source, remediation_task, ticket, status } = req.body;
     const stmt = db.prepare(`
-      INSERT INTO followup (level, vulnerability, service_ip, source, remediation_task, ticket, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO followup (level, vulnerability, service_ip, source, remediation_task, ticket, status, status_updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
     `);
     const result = stmt.run(level, vulnerability, service_ip, source, remediation_task, ticket, status);
     res.json({ id: result.lastInsertRowid, ...req.body });
@@ -130,10 +179,16 @@ app.post('/api/followup', (req, res) => {
 app.put('/api/followup/:id', (req, res) => {
   try {
     const { level, vulnerability, service_ip, source, remediation_task, ticket, status, hidden } = req.body;
+    
+    // Check if status is changing
+    const current = db.prepare('SELECT status FROM followup WHERE id = ?').get(req.params.id);
+    const statusChanged = current && current.status !== status;
+    
     const stmt = db.prepare(`
       UPDATE followup
       SET level = ?, vulnerability = ?, service_ip = ?, source = ?, 
-          remediation_task = ?, ticket = ?, status = ?, hidden = ?
+          remediation_task = ?, ticket = ?, status = ?, hidden = ?,
+          status_updated_at = ${statusChanged ? 'CURRENT_TIMESTAMP' : 'status_updated_at'}
       WHERE id = ?
     `);
     stmt.run(level, vulnerability, service_ip, source, remediation_task, ticket, status, hidden, req.params.id);
@@ -236,5 +291,89 @@ app.post('/api/import', (req, res) => {
   } catch (error) {
 	console.error(error);
 	res.status(500).json({ error: error.message || 'Import failed' });
+  }
+});
+
+// API Routes for Reports
+app.get('/api/reports', (req, res) => {
+  try {
+    const { section } = req.query;
+    let query = 'SELECT * FROM reports ORDER BY updated_at DESC';
+    const params = [];
+    
+    if (section) {
+      query = 'SELECT * FROM reports WHERE section = ? ORDER BY updated_at DESC';
+      params.push(section);
+    }
+    
+    const reports = db.prepare(query).all(...params);
+    res.json(reports);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.get('/api/reports/:id', (req, res) => {
+  try {
+    const report = db.prepare('SELECT * FROM reports WHERE id = ?').get(req.params.id);
+    if (!report) {
+      return res.status(404).json({ error: 'Report not found' });
+    }
+    res.json(report);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/reports', (req, res) => {
+  try {
+    const { section, title, content } = req.body;
+    
+    if (!section || !content) {
+      return res.status(400).json({ error: 'Section and content are required' });
+    }
+    
+    const stmt = db.prepare(`
+      INSERT INTO reports (section, title, content)
+      VALUES (?, ?, ?)
+    `);
+    const result = stmt.run(section, title || null, content);
+    
+    // Get the inserted report
+    const insertedReport = db.prepare('SELECT * FROM reports WHERE id = ?').get(result.lastInsertRowid);
+    
+    res.json(insertedReport);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/api/reports/:id', (req, res) => {
+  try {
+    const { section, title, content } = req.body;
+    
+    const stmt = db.prepare(`
+      UPDATE reports
+      SET section = ?, title = ?, content = ?, updated_at = CURRENT_TIMESTAMP
+      WHERE id = ?
+    `);
+    stmt.run(section, title || null, content, req.params.id);
+    
+    // Get the updated report
+    const updatedReport = db.prepare('SELECT * FROM reports WHERE id = ?').get(req.params.id);
+    
+    res.json(updatedReport);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/api/reports/:id', (req, res) => {
+  try {
+    const stmt = db.prepare('DELETE FROM reports WHERE id = ?');
+    stmt.run(req.params.id);
+    res.json({ message: 'Deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });

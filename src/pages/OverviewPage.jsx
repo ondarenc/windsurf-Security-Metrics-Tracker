@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Gauge, TrendingUp, TrendingDown, Minus, ArrowUpRight, ArrowDownRight, AlertTriangle } from 'lucide-react'
+import { Gauge, TrendingUp, TrendingDown, Minus, ArrowUpRight, ArrowDownRight, AlertTriangle, FileText, CheckCircle, TrendingDown as TrendingDownIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import dataManager from '../data/dataManager'
 import { AppSidebar } from '../components/dashboard/AppSidebar'
@@ -205,16 +205,139 @@ function TrendsExplanation() {
   )
 }
 
+function RemediationStatistics() {
+  const [remediationStats, setRemediationStats] = useState([])
+
+  useEffect(() => {
+    const calculateRemediationStats = async () => {
+      try {
+        const followup = await followupApi.getAll()
+        const stats = []
+        const now = new Date()
+        const oneWeekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+        const oneMonthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+
+        // Count fixed vulnerabilities in the last week
+        const fixedLastWeek = followup.filter(f => 
+          f.status === 'Fixed' && 
+          new Date(f.created_at) >= oneWeekAgo
+        ).length
+        if (fixedLastWeek > 0) {
+          stats.push({
+            icon: <CheckCircle className="w-4 h-4 text-success" />,
+            text: `Fixed ${fixedLastWeek} vulnerabilities in the last week`,
+            color: 'text-success'
+          })
+        }
+
+        // Count fixed critical vulnerabilities
+        const fixedCritical = followup.filter(f => 
+          f.status === 'Fixed' && 
+          f.level === 'CRITICAL'
+        ).length
+        if (fixedCritical > 0) {
+          stats.push({
+            icon: <CheckCircle className="w-4 h-4 text-success" />,
+            text: `Fixed ${fixedCritical} CRITICAL vulnerabilities overall`,
+            color: 'text-success'
+          })
+        }
+
+        // Count vulnerabilities that changed to "Fixed" from other statuses
+        const recentlyFixed = followup.filter(f => 
+          f.status === 'Fixed' && 
+          new Date(f.created_at) >= oneMonthAgo
+        ).length
+        if (recentlyFixed > 0) {
+          stats.push({
+            icon: <TrendingDownIcon className="w-4 h-4 text-success" />,
+            text: `${recentlyFixed} vulnerabilities resolved in the last month`,
+            color: 'text-success'
+          })
+        }
+
+        // Count "Accepted risk" status (shows risk management)
+        const acceptedRisk = followup.filter(f => f.status === 'Accepted risk').length
+        if (acceptedRisk > 0) {
+          stats.push({
+            icon: <CheckCircle className="w-4 h-4 text-blue-600" />,
+            text: `${acceptedRisk} risks properly assessed and accepted`,
+            color: 'text-blue-600'
+          })
+        }
+
+        // Count current critical vulnerabilities (show progress if low)
+        const currentCritical = followup.filter(f => f.level === 'CRITICAL' && f.status !== 'Fixed').length
+        if (currentCritical === 0) {
+          stats.push({
+            icon: <CheckCircle className="w-4 h-4 text-success" />,
+            text: 'No active CRITICAL vulnerabilities - excellent security posture',
+            color: 'text-success'
+          })
+        } else if (currentCritical <= 3) {
+          stats.push({
+            icon: <CheckCircle className="w-4 h-4 text-success" />,
+            text: `Only ${currentCritical} active CRITICAL vulnerabilities - manageable`,
+            color: 'text-success'
+          })
+        }
+
+        // Compare high vs critical (show positive if critical is lower)
+        const currentHigh = followup.filter(f => f.level === 'HIGH' && f.status !== 'Fixed').length
+        if (currentHigh > currentCritical) {
+          stats.push({
+            icon: <TrendingDownIcon className="w-4 h-4 text-success" />,
+            text: `CRITICAL count (${currentCritical}) lower than HIGH (${currentHigh}) - prioritization working`,
+            color: 'text-success'
+          })
+        }
+
+        setRemediationStats(stats)
+      } catch (error) {
+        console.error('Error calculating remediation stats:', error)
+      }
+    }
+    calculateRemediationStats()
+  }, [])
+
+  if (remediationStats.length === 0) return null
+
+  return (
+    <div className="bg-card rounded-xl border border-border p-6 mb-6">
+      <h3 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+        <CheckCircle className="w-5 h-5 text-success" />
+        Remediation Progress
+      </h3>
+      <div className="space-y-3">
+        {remediationStats.map((stat, index) => (
+          <div key={index} className="flex items-start gap-3 text-sm">
+            <span className={`mt-0.5 ${stat.color}`}>{stat.icon}</span>
+            <p className="text-muted-foreground">
+              {stat.text}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function DashboardOverviewPage() {
   return (
     <div className="flex h-screen bg-background overflow-hidden">
       <AppSidebar className="print:hidden" />
       <MainContent pageTitle="Overview" pageIcon={Gauge}>
         <MetricSummaryCards />
-        <TrendsExplanation />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <TrendsExplanation />
+          <RemediationStatistics />
+        </div>
         <OverviewContent />
       </MainContent>
       <RightPanel className="print:hidden" />
     </div>
   )
 }
+
+// Export components for use in ReportPage
+export { MetricSummaryCards, TrendsExplanation, RemediationStatistics }

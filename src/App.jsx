@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import HomePage from './pages/HomePage'
+import DashboardPage from './pages/DashboardPage'
 import FormPage from './pages/FormPage'
 import TablePage from './pages/TablePage'
 import PurpleKnightADPage from './pages/PurpleKnightADPage'
@@ -8,22 +8,24 @@ import PurpleKnightEntraIDPage from './pages/PurpleKnightEntraIDPage'
 import SecurityScorecardPage from './pages/SecurityScorecardPage'
 import ProjectDiscoveryPage from './pages/ProjectDiscoveryPage'
 import PrintAllPage from './pages/PrintAllPage'
-import DashboardOverviewPage from './pages/DashboardOverviewPage'
+import OverviewPage from './pages/OverviewPage'
 import FollowupConsolePage from './pages/FollowupConsolePage'
 import FollowupPage from './pages/FollowupPage'
 import MetricTargetSetup from './pages/MetricTargetSetup'
 import AllMetricsPage from './pages/AllMetricsPage'
 import AllVulnerabilitiesPage from './pages/AllVulnerabilitiesPage'
+import ReportEditorPage from './pages/ReportEditorPage'
+import ReportPage from './pages/ReportPage'
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<DashboardOverviewPage />} />
+        <Route path="/" element={<OverviewPage />} />
         <Route path="/overview" element={<Navigate to="/" replace />} />
         <Route path="/m365" element={<TablePage />} />
         <Route path="/form" element={<FormPage />} />
-        <Route path="/dashboard" element={<HomePage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/settings" element={<Navigate to="/dashboard" replace />} />
         <Route path="/purple-knight-ad" element={<PurpleKnightADPage />} />
         <Route path="/purple-knight-entra-id" element={<PurpleKnightEntraIDPage />} />
@@ -35,6 +37,8 @@ function App() {
         <Route path="/metric-target-setup" element={<MetricTargetSetup />} />
         <Route path="/all-metrics" element={<AllMetricsPage />} />
         <Route path="/all-vulnerabilities" element={<AllVulnerabilitiesPage />} />
+        <Route path="/report-editor" element={<ReportEditorPage />} />
+        <Route path="/report" element={<ReportPage />} />
       </Routes>
     </Router>
   )

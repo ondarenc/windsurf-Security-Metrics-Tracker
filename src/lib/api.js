@@ -56,3 +56,21 @@ export const followupApi = {
 
 // Health check
 export const healthCheck = () => apiRequest('/health');
+
+// Reports API
+export const reportsApi = {
+  getAll: () => apiRequest('/reports'),
+  getById: (id) => apiRequest(`/reports/${id}`),
+  getBySection: (section) => apiRequest(`/reports?section=${encodeURIComponent(section)}`),
+  add: (data) => apiRequest('/reports', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  }),
+  update: (id, data) => apiRequest(`/reports/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  }),
+  delete: (id) => apiRequest(`/reports/${id}`, {
+    method: 'DELETE',
+  }),
+};

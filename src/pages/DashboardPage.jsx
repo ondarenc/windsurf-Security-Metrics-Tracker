@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { BarChart3, Database, Printer, AlertTriangle, DatabaseBackup, Plus, Table, Target, Shield } from 'lucide-react'
+import { BarChart3, Database, Printer, AlertTriangle, DatabaseBackup, Plus, Table, Target, Shield, FileText } from 'lucide-react'
 import dataManager from '../data/dataManager'
 import DataFileManager from '../components/DataFileManager'
 import { AppSidebar } from '../components/dashboard/AppSidebar'
@@ -126,6 +126,22 @@ const HomePage = () => {
                 </div>
                 <p className="text-gray-600 text-sm">
                   Generate a printable report with all metrics and trends
+                </p>
+              </button>
+
+              {/* Report Editor Button */}
+              <button
+                onClick={() => navigate('/report-editor')}
+                className="w-full bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-left hover:shadow-md transition-all duration-200"
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">Report Editor</h3>
+                </div>
+                <p className="text-gray-600 text-sm">
+                  Create and manage security reports with rich text editor
                 </p>
               </button>
             </div>
