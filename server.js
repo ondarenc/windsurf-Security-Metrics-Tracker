@@ -57,6 +57,11 @@ const initDatabase = () => {
       section TEXT NOT NULL,
       title TEXT,
       content TEXT NOT NULL,
+      header TEXT,
+      logo BLOB,
+      client_name TEXT,
+      report_date TEXT,
+      document_version TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
@@ -327,17 +332,17 @@ app.get('/api/reports/:id', (req, res) => {
 
 app.post('/api/reports', (req, res) => {
   try {
-    const { section, title, content } = req.body;
+    const { section, title, content, header, logo, client_name, report_date, document_version } = req.body;
     
     if (!section || !content) {
       return res.status(400).json({ error: 'Section and content are required' });
     }
     
     const stmt = db.prepare(`
-      INSERT INTO reports (section, title, content)
-      VALUES (?, ?, ?)
+      INSERT INTO reports (section, title, content, header, logo, client_name, report_date, document_version)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `);
-    const result = stmt.run(section, title || null, content);
+    const result = stmt.run(section, title || null, content, header || null, logo || null, client_name || null, report_date || null, document_version || null);
     
     // Get the inserted report
     const insertedReport = db.prepare('SELECT * FROM reports WHERE id = ?').get(result.lastInsertRowid);
@@ -350,14 +355,14 @@ app.post('/api/reports', (req, res) => {
 
 app.put('/api/reports/:id', (req, res) => {
   try {
-    const { section, title, content } = req.body;
+    const { section, title, content, header, logo, client_name, report_date, document_version } = req.body;
     
     const stmt = db.prepare(`
       UPDATE reports
-      SET section = ?, title = ?, content = ?, updated_at = CURRENT_TIMESTAMP
+      SET section = ?, title = ?, content = ?, header = ?, logo = ?, client_name = ?, report_date = ?, document_version = ?, updated_at = CURRENT_TIMESTAMP
       WHERE id = ?
     `);
-    stmt.run(section, title || null, content, req.params.id);
+    stmt.run(section, title || null, content, header || null, logo || null, client_name || null, report_date || null, document_version || null, req.params.id);
     
     // Get the updated report
     const updatedReport = db.prepare('SELECT * FROM reports WHERE id = ?').get(req.params.id);

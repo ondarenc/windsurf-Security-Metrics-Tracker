@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Save, FileText, Upload } from 'lucide-react'
+import { ArrowLeft, Save, FileText, Upload, X } from 'lucide-react'
 import RichTextEditor from '../components/RichTextEditor'
 
 const reportSections = [
@@ -17,6 +17,12 @@ function ReportEditorPage() {
   const [section, setSection] = useState('Introduction')
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [header, setHeader] = useState('')
+  const [logo, setLogo] = useState(null)
+  const [logoPreview, setLogoPreview] = useState(null)
+  const [clientName, setClientName] = useState('')
+  const [reportDate, setReportDate] = useState('')
+  const [documentVersion, setDocumentVersion] = useState('')
   const [savedReports, setSavedReports] = useState([])
   const [selectedReportId, setSelectedReportId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +31,26 @@ function ReportEditorPage() {
   // Load saved reports when component mounts
   useEffect(() => {
     loadSavedReports()
+    // Load Report Parameters from Introduction section
+    loadReportParameters()
   }, [])
+
+  const loadReportParameters = async () => {
+    try {
+      const response = await fetch('/api/reports?section=Introduction')
+      const reports = await response.json()
+      if (reports.length > 0) {
+        const firstReport = reports[0]
+        setLogo(firstReport.logo || null)
+        setLogoPreview(firstReport.logo || null)
+        setClientName(firstReport.client_name || '')
+        setReportDate(firstReport.report_date || '')
+        setDocumentVersion(firstReport.document_version || '')
+      }
+    } catch (error) {
+      console.error('Error loading report parameters:', error)
+    }
+  }
 
   // Load saved reports from API
   const loadSavedReports = async () => {
@@ -53,6 +78,19 @@ function ReportEditorPage() {
       setSelectedReportId(null)
       setTitle('')
       setContent('')
+      setHeader('')
+      
+      // Load Report Parameters from Introduction section to keep them persistent
+      const introResponse = await fetch('/api/reports?section=Introduction')
+      const introReports = await introResponse.json()
+      if (introReports.length > 0) {
+        const firstIntroReport = introReports[0]
+        setLogo(firstIntroReport.logo || null)
+        setLogoPreview(firstIntroReport.logo || null)
+        setClientName(firstIntroReport.client_name || '')
+        setReportDate(firstIntroReport.report_date || '')
+        setDocumentVersion(firstIntroReport.document_version || '')
+      }
     } catch (error) {
       console.error('Error loading reports for section:', error)
     }
@@ -66,7 +104,12 @@ function ReportEditorPage() {
       const reportData = {
         section,
         title: title || section,
-        content
+        content,
+        header,
+        logo,
+        client_name: clientName,
+        report_date: reportDate,
+        document_version: documentVersion
       }
 
       let response
@@ -109,8 +152,17 @@ function ReportEditorPage() {
       setSelectedReportId(report.id)
       setTitle(report.title || '')
       setContent(report.content)
+      setHeader(report.header || '')
+      setLogo(report.logo || null)
+      setLogoPreview(report.logo || null)
+      setClientName(report.client_name || '')
+      setReportDate(report.report_date || '')
+      setDocumentVersion(report.document_version || '')
       setSection(report.section)
       setSaveMessage('')
+      
+      // Load Report Parameters from Introduction section to ensure they're up-to-date
+      loadReportParameters()
     }
   }
 
@@ -118,7 +170,31 @@ function ReportEditorPage() {
     setSelectedReportId(null)
     setTitle('')
     setContent('')
+    setHeader('')
+    setLogo(null)
+    setLogoPreview(null)
+    setClientName('')
+    setReportDate('')
+    setDocumentVersion('')
     setSaveMessage('')
+  }
+
+  const handleLogoUpload = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        const base64String = reader.result
+        setLogo(base64String)
+        setLogoPreview(base64String)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const handleLogoRemove = () => {
+    setLogo(null)
+    setLogoPreview(null)
   }
 
   return (
@@ -178,6 +254,91 @@ function ReportEditorPage() {
                   ))}
                 </select>
 
+                {/* Report Parameters Section */}
+                <div className="mb-6">
+                  <h2 className="font-semibold mb-4">Report Parameters</h2>
+                  
+                  {/* Title */}
+                  <div className="mb-3">
+                    <label className="block text-sm font-medium mb-1">Report Title</label>
+                    <input
+                      type="text"
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                      placeholder="Enter report title..."
+                    />
+                  </div>
+
+                  {/* Client Name */}
+                  <div className="mb-3">
+                    <label className="block text-sm font-medium mb-1">Client Name</label>
+                    <input
+                      type="text"
+                      value={clientName}
+                      onChange={(e) => setClientName(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                      placeholder="Enter client name..."
+                    />
+                  </div>
+
+                  {/* Report Date */}
+                  <div className="mb-3">
+                    <label className="block text-sm font-medium mb-1">Report Date</label>
+                    <input
+                      type="date"
+                      value={reportDate}
+                      onChange={(e) => setReportDate(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                    />
+                  </div>
+
+                  {/* Document Version */}
+                  <div className="mb-3">
+                    <label className="block text-sm font-medium mb-1">Document Version</label>
+                    <input
+                      type="text"
+                      value={documentVersion}
+                      onChange={(e) => setDocumentVersion(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                      placeholder="e.g. 1.0"
+                    />
+                  </div>
+
+                  {/* Logo Upload */}
+                  <div className="mb-3">
+                    <label className="block text-sm font-medium mb-1">Report Logo</label>
+                    <div className="flex items-center gap-4">
+                      {logoPreview ? (
+                        <div className="relative">
+                          <img
+                            src={logoPreview}
+                            alt="Logo preview"
+                            className="h-16 w-auto border rounded-lg"
+                          />
+                          <button
+                            onClick={handleLogoRemove}
+                            className="absolute -top-2 -right-2 bg-destructive text-destructive-foreground rounded-full p-1 hover:bg-destructive/90"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="flex items-center gap-2 px-4 py-2 border border-dashed rounded-lg cursor-pointer hover:bg-muted transition-colors">
+                          <Upload className="w-4 h-4" />
+                          <span className="text-sm">Upload logo</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleLogoUpload}
+                            className="hidden"
+                          />
+                        </label>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
                 <h2 className="font-semibold mb-4">Saved Reports</h2>
                 {savedReports.length === 0 ? (
                   <p className="text-sm text-muted-foreground">No saved reports for this section</p>
@@ -209,15 +370,16 @@ function ReportEditorPage() {
             {/* Right Panel - Editor */}
             <div className="lg:col-span-2">
               <div className="bg-card border rounded-lg p-4">
-                {/* Title Input */}
+
+                {/* Header Input */}
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-2">Report Title</label>
-                  <input
-                    type="text"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                  <label className="block text-sm font-medium mb-2">Report Header</label>
+                  <textarea
+                    value={header}
+                    onChange={(e) => setHeader(e.target.value)}
                     className="w-full px-4 py-2 border rounded-lg bg-background focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Enter report title..."
+                    placeholder="Enter report header text..."
+                    rows={2}
                   />
                 </div>
 
@@ -246,6 +408,8 @@ function ReportEditorPage() {
                   <h3 className="font-semibold mb-2">Tips for using the editor:</h3>
                   <ul className="text-sm text-muted-foreground space-y-1">
                     <li>• Select a report section from the dropdown</li>
+                    <li>• Add a custom header text for the report</li>
+                    <li>• Upload a logo that will be stored in the database</li>
                     <li>• Use the toolbar buttons to format text (Bold, Italic, Underline)</li>
                     <li>• Add headings using H1, H2, H3 buttons for structure</li>
                     <li>• Use alignment buttons to position text</li>

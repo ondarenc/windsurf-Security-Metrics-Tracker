@@ -366,3 +366,170 @@
 .rich-text-editor .ProseMirror:focus {
   outline: none;
 }
+
+/* Report Page Styles */
+.report-title {
+  text-align: center;
+  border-top: 2px solid var(--foreground);
+  border-bottom: 2px solid var(--foreground);
+  padding: 0.5rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: fit-content;
+}
+
+.report-field {
+  margin-bottom: 0.5rem;
+}
+
+.report-field-label {
+  font-weight: 700;
+}
+
+.report-field-value {
+  font-weight: normal;
+}
+
+/* Print-specific page breaks */
+@media print {
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto !important;
+    overflow: visible !important;
+    font-size: 11pt;
+  }
+
+  .h-screen {
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  .overflow-hidden {
+    overflow: visible !important;
+  }
+
+  .print-hidden {
+    display: none !important;
+  }
+
+  /* Hide MainContent header */
+  header {
+    display: none !important;
+  }
+
+  /* Remove padding and margins for print */
+  .p-6 {
+    padding: 0.25rem !important;
+  }
+
+  .mb-4, .mb-6, .mb-8 {
+    margin-bottom: 0.25rem !important;
+  }
+
+  .space-y-8 > * + * {
+    margin-top: 0.5rem !important;
+  }
+
+  /* Remove borders by default */
+  .bg-card {
+    background: none !important;
+    border: none !important;
+    margin-bottom: 0.5rem !important;
+    padding: 0 !important;
+  }
+
+  section {
+    margin-bottom: 0.5rem !important;
+    page-break-inside: auto;
+  }
+
+  /* Remove margins for first sections to keep them together */
+  .space-y-8 > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  .space-y-8 > *:nth-child(2),
+  .space-y-8 > *:nth-child(3) {
+    margin-top: 0.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  /* 3-column grid for cards */
+  .grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.25rem !important;
+  }
+
+  .lg\\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  /* Scale down dashboard content */
+  .print\\:scale-95 {
+    transform: scale(0.75) !important;
+    transform-origin: top left !important;
+  }
+
+  /* Reduce header sizes */
+  h1 {
+    font-size: 1.5rem !important;
+  }
+
+  h2 {
+    font-size: 1.25rem !important;
+    margin-bottom: 0.25rem !important;
+  }
+
+  h3 {
+    font-size: 1rem !important;
+    margin-bottom: 0.125rem !important;
+  }
+
+  /* Compact tables */
+  table {
+    font-size: 8pt !important;
+  }
+
+  .print-footer {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 15px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 9pt;
+    border-top: 1px solid #ccc;
+    background: white;
+  }
+
+  body {
+    counter-reset: page;
+  }
+
+  .page-number::after {
+    counter-increment: page;
+    content: "Page " counter(page);
+  }
+
+  .page-break-before {
+    page-break-before: always !important;
+  }
+
+  .page-break-after {
+    page-break-after: always !important;
+  }
+}

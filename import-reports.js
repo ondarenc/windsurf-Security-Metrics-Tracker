@@ -78,16 +78,16 @@ try {
         // Update existing report
         db.prepare(`
           UPDATE reports
-          SET title = ?, content = ?, updated_at = CURRENT_TIMESTAMP
+          SET title = ?, content = ?, header = ?, client_name = ?, report_date = ?, document_version = ?, updated_at = CURRENT_TIMESTAMP
           WHERE section = ?
-        `).run(report.title || null, report.content, report.section);
+        `).run(report.title || null, report.content, report.header || null, report.client_name || null, report.report_date || null, report.document_version || null, report.section);
         updatedCount++;
       } else {
         // Insert new report
         db.prepare(`
-          INSERT INTO reports (section, title, content)
-          VALUES (?, ?, ?)
-        `).run(report.section, report.title || null, report.content);
+          INSERT INTO reports (section, title, content, header, client_name, report_date, document_version)
+          VALUES (?, ?, ?, ?, ?, ?, ?)
+        `).run(report.section, report.title || null, report.content, report.header || null, report.client_name || null, report.report_date || null, report.document_version || null);
         insertedCount++;
       }
     });

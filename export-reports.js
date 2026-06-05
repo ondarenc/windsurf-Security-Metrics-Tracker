@@ -10,8 +10,8 @@ const db = new Database(dbPath);
 console.log(`Exporting reports from: ${dbPath}`);
 
 try {
-  // Export all reports
-  const reports = db.prepare('SELECT * FROM reports ORDER BY section, id').all();
+  // Export all reports (without logo blob to keep JSON readable)
+  const reports = db.prepare('SELECT id, section, title, content, header, client_name, report_date, document_version, created_at, updated_at FROM reports ORDER BY section, id').all();
   
   if (reports.length === 0) {
     console.log('No reports found in the database.');
