@@ -26,7 +26,7 @@ A comprehensive, modern metrics tracking dashboard built with React, Vite, and T
 
 ### Prerequisites
 
-- Node.js 16+ 
+- Node.js 24.16.0
 - npm or yarn
 
 ### Installation
