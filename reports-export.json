@@ -1,0 +1,55 @@
+{
+  "reports": [
+    {
+      "id": 3,
+      "section": "Action Plan & Remediation Road-map",
+      "title": "Action Plan & Remediation Road-map",
+      "content": "<h1>Action Plan &amp; Remediation Road-map</h1><p>Below is the consolidated list of security findings identified across our platforms, prioritized by criticality and business risk.</p>",
+      "created_at": "2026-06-04 20:39:17",
+      "updated_at": "2026-06-04 20:59:10"
+    },
+    {
+      "id": 5,
+      "section": "Appendix",
+      "title": "Appendix ",
+      "content": "<h1>Appendix: Detailed Analysis by Tool</h1><p>This appendix contains the full, system-generated technical data, risk scoring, and individual metrics from our security tools (SecurityScorecard, Nuclei/PDCP, Purple Knight, and Microsoft Secure Score).</p>",
+      "created_at": "2026-06-04 20:44:29",
+      "updated_at": "2026-06-04 20:59:28"
+    },
+    {
+      "id": 4,
+      "section": "Conclusion",
+      "title": "Conclusion",
+      "content": "<h1>Conclusion</h1><p>This multi-tool audit provides a clear baseline of our security posture. While our core infrastructure is actively defended, targeted actions are required immediately to eliminate key vulnerabilities and meet industry standards.</p><h3><strong>Strategic Priorities &amp; Commitments</strong></h3><p>· <strong>Identity Security (Top Priority):</strong> We are prioritizing the remediation of active gaps in Active Directory and Microsoft Entra ID, as identity remains our highest-risk attack surface.</p><p>· <strong>30-Day Critical Fixes:</strong> All critical and high-priority vulnerabilities identified in the action plan will be resolved within the next 30 days.</p><p>· <strong>Perimeter Hardening</strong>: Network configurations are being updated to improve our external security scores and deter perimeter intrusion attempts.</p><p>· <strong>Continuous Monitoring</strong>: We have scheduled automated monthly audits for the next 6 months to track remediation progress and ensure our security scores consistently improve.</p><h3>Final Takeaway</h3><p>The risks identified in this report are manageable. By executing this structured roadmap, we will align our hybrid cloud environment with industry’s best practices, significantly reducing our operational risk and ensuring business continuity.</p>",
+      "created_at": "2026-06-04 20:42:04",
+      "updated_at": "2026-06-04 20:59:20"
+    },
+    {
+      "id": 2,
+      "section": "Executive Dashboard",
+      "title": "Executive Dashboard",
+      "content": "<h1>Executive Dashboard</h1><p>The following dashboard provides a high-level view of our current security scores and performance metrics across all evaluated platforms:</p>",
+      "created_at": "2026-06-04 20:35:33",
+      "updated_at": "2026-06-04 20:59:02"
+    },
+    {
+      "id": 1,
+      "section": "Introduction",
+      "title": "Cybersecurity Audit Report",
+      "content": "<h1>Introduction</h1><p style=\"text-align: justify;\">To protect our organization against evolving cyber threats, our defense strategy focuses on three core pillars: external visibility, internal vulnerability management, and identity infrastructure security. This report provides a clear overview of our current security posture across these areas.</p><h1>Objectives</h1><p style=\"text-align: justify;\">Our main goal is to identify and fix potential attack pathways before malicious actors can exploit them. To achieve this, we combined an \"attacker’s view\" (external scanning) with an \"administrator’s view\" (internal systems and identity controls) to give a complete 360-degree view of our current risks.</p><h1>Methodology &amp; Tools</h1><p style=\"text-align: justify;\">We utilized four industry-standard tools to assess our defenses:</p><p style=\"text-align: justify;\">- <strong>External Exposure (SecurityScorecard):</strong> Evaluates our public internet presence (such as DNS health and network security) and provides an overall letter grade or score based on our external risk factors.</p><p style=\"text-align: justify;\">· <strong>Internal Vulnerability Scanning (Nuclei &amp; Project Discovery):</strong> Scans our internal, non-public network segments to find hidden weaknesses, centralizing the results into a single dashboard to track fixes.</p><p style=\"text-align: justify;\">· <strong>Identity Services Audit (Purple Knight):</strong> Reviews our identity systems—both on-premise (Active Directory) and in the cloud (Microsoft Entra ID)—to detect security gaps and misconfigurations.</p><p style=\"text-align: justify;\">· <strong>Cloud Security Posture (Microsoft Secure Score):</strong> Measures how well we configure our Microsoft 365 environment (including email and employee devices) against security best practices like Multi-Factor Authentication (MFA).</p><p style=\"text-align: justify;\"><strong><u>Board Takeaway:</u></strong> This methodology allows us to continuously measure our security against real-world attack methods, ensuring budget and engineering efforts are targeted at our highest-risk areas.</p><p></p>",
+      "created_at": "2026-06-04 20:34:28",
+      "updated_at": "2026-06-04 20:34:28"
+    },
+    {
+      "id": 6,
+      "section": "Technical Glossary",
+      "title": "Technical Glossary",
+      "content": "<h1>Technical Glossary</h1><p>· <strong>Active Directory (AD): </strong>A Microsoft service used to manage identities and access controls on a local network (on premises). It is frequently the primary target for cyberattacks.</p><p>· <strong>CVE (Common Vulnerabilities and Exposures):</strong> A global registry system for public cybersecurity vulnerabilities. Every identified flaw receives a unique tracking ID (e.g., CVE-2023-XXXX).</p><p>· <strong>Entra ID: </strong>Microsoft’s cloud-based identity and access management solution (formerly known as Azure Active Directory).</p><p>·<strong> Indicator of Exposure (IoE):</strong> A configuration flaw or structural weakness that shows a system is vulnerable before an attack even occurs.</p><p>· <strong>Indicator of Compromise (IoC)</strong>: Digital evidence (such as a rogue file, log trace, or suspicious behavior) suggesting that an intrusion or attack has already succeeded.</p><p>· <strong>MFA (Multi-Factor Authentication):</strong> A security method requiring users to provide at least two different verification factors to gain access (e.g., a password plus a code sent to a mobile app).</p><p>· <strong>Attack Surface:</strong> The sum total of all digital entry points (software, network ports, exposed servers) that an attacker could attempt to exploit.</p><p>· <strong>Nuclei (Local Engine)</strong>: An open-source scanning engine used to detect vulnerabilities, misconfigurations, and data exposure directly inside our internal network.</p><p>· <strong>PDCP Centralization (Cloud)</strong>: The central cloud platform used to consolidate findings from our local Nuclei scanners, allowing us to prioritize fixes and track our security progress over time via visual dashboards.</p><p></p>",
+      "created_at": "2026-06-04 20:46:26",
+      "updated_at": "2026-06-04 20:59:36"
+    }
+  ],
+  "exportedAt": "2026-06-05T06:26:10.726Z",
+  "sourceDatabase": "./database.sqlite",
+  "version": "1.0"
+}
