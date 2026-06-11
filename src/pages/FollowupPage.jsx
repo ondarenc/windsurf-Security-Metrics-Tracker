@@ -24,6 +24,16 @@ const FollowupPage = () => {
     }
   }
 
+  const getRowBackgroundColor = (status) => {
+    if (status === 'Fixed') return 'bg-green-50'
+    return ''
+  }
+
+  const getStatusColor = (status) => {
+    if (status === 'Fixed') return 'text-green-600 font-semibold'
+    return 'text-gray-700'
+  }
+
   const getSourceLogo = (source) => {
     switch (source) {
       case 'Purple Knight AD': return '/logo-purpleknight-ad.png'
@@ -67,7 +77,7 @@ const FollowupPage = () => {
                     </thead>
                     <tbody>
                       {items.map((item) => (
-                        <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <tr key={item.id} className={`border-b border-gray-100 hover:bg-gray-50 ${getRowBackgroundColor(item.status)}`}>
                           <td className="py-3 px-4">
                             <span className={getLevelColor(item.level)}>{item.level}</span>
                           </td>
@@ -83,7 +93,9 @@ const FollowupPage = () => {
                           </td>
                           <td className="py-3 px-4 text-gray-700 print-remediation-cell">{item.remediationTask || '-'}</td>
                           <td className="py-3 px-4 text-gray-700">{item.ticket || '-'}</td>
-                          <td className="py-3 px-4 text-gray-700">{item.status}</td>
+                          <td className="py-3 px-4">
+                            <span className={getStatusColor(item.status)}>{item.status}</span>
+                          </td>
                         </tr>
                       ))}
                     </tbody>

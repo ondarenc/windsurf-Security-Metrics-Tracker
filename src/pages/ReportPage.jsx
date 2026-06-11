@@ -19,6 +19,7 @@ function ReportPage() {
   const [followupData, setFollowupData] = useState([])
   const [reportParams, setReportParams] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [printMode, setPrintMode] = useState('main')
 
   useEffect(() => {
     loadReportData()
@@ -27,7 +28,7 @@ function ReportPage() {
   const loadReportData = async () => {
     try {
       // Load all report sections
-      const sections = ['Introduction', 'Executive Dashboard', 'Action Plan & Remediation Road-map', 'Conclusion', 'Appendix', 'Technical Glossary']
+      const sections = ['Introduction', 'Executive Dashboard', 'Action Plan & Remediation Road-map', 'Conclusion', 'Appendix', 'Technical Glossary', 'Technical Glossary ', 'Technical glossary', 'technical glossary']
       const reports = await reportsApi.getAll()
       
       const sectionsMap = {}
@@ -64,7 +65,23 @@ function ReportPage() {
   }
 
   const handlePrint = () => {
+    setPrintMode('main')
     window.print()
+  }
+
+  const handlePrintAppendix = () => {
+    setPrintMode('appendix')
+    window.print()
+  }
+
+  const getRowBackgroundColor = (status) => {
+    if (status === 'Fixed') return 'bg-green-50'
+    return ''
+  }
+
+  const getStatusColor = (status) => {
+    if (status === 'Fixed') return 'text-green-600 font-semibold'
+    return ''
   }
 
   if (isLoading) {
@@ -85,7 +102,7 @@ function ReportPage() {
     <div className="flex h-screen bg-background overflow-hidden">
       <AppSidebar className="print:hidden" />
       <MainContent pageTitle="Report" pageIcon={FileText}>
-        {/* Print Button */}
+        {/* Print Buttons */}
         <div className="mb-6 flex items-center gap-4 print:hidden">
           <button
             onClick={() => navigate('/dashboard')}
@@ -99,7 +116,14 @@ function ReportPage() {
             className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors ml-auto"
           >
             <Printer className="w-4 h-4" />
-            Print Report
+            Print Main Report
+          </button>
+          <button
+            onClick={handlePrintAppendix}
+            className="flex items-center gap-2 px-4 py-2 bg-secondary text-secondary-foreground rounded-lg hover:bg-secondary/90 transition-colors"
+          >
+            <Printer className="w-4 h-4" />
+            Print Appendix Only
           </button>
         </div>
 
@@ -150,8 +174,10 @@ function ReportPage() {
             </section>
           )}
 
+          <div className="executive-dashboard-spacer"></div>
+
           {/* Executive Dashboard & Overview */}
-          <section className="bg-card border rounded-lg p-6 print:p-0 page-break-after">
+          <section className="bg-card border rounded-lg p-6 print:p-0 page-break-after executive-dashboard">
             {reportSections['Executive Dashboard'] && reportSections['Executive Dashboard'].map(report => (
               <div key={report.id} className="mb-6">
                 <div className="ProseMirror" dangerouslySetInnerHTML={{ __html: report.content }} />
@@ -192,7 +218,7 @@ function ReportPage() {
                 </thead>
                 <tbody>
                   {followupData.map(item => (
-                    <tr key={item.id} className="border-b print:border-t">
+                    <tr key={item.id} className={`border-b print:border-t ${getRowBackgroundColor(item.status)}`}>
                       <td className="p-2">
                         <span className={`px-2 py-1 rounded text-xs font-medium ${
                           item.level === 'CRITICAL' ? 'bg-red-100 text-red-700' :
@@ -205,7 +231,9 @@ function ReportPage() {
                       </td>
                       <td className="p-2">{item.vulnerability}</td>
                       <td className="p-2">{item.source}</td>
-                      <td className="p-2">{item.status}</td>
+                      <td className="p-2">
+                        <span className={getStatusColor(item.status)}>{item.status}</span>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -215,7 +243,7 @@ function ReportPage() {
 
           {/* Conclusion */}
           {reportSections['Conclusion'] && (
-            <section className="bg-card border rounded-lg p-6 print:p-0 page-break-after">
+            <section className="bg-card border rounded-lg p-6 print:p-0 page-break-after conclusion-section" style={{ pageBreakAfter: 'always', breakAfter: 'always' }}>
               {reportSections['Conclusion'].map(report => (
                 <div key={report.id} className="mb-4">
                   <div className="ProseMirror" dangerouslySetInnerHTML={{ __html: report.content }} />
@@ -224,10 +252,21 @@ function ReportPage() {
             </section>
           )}
 
+          {/* Spacer for page break */}
+          <div style={{ pageBreakAfter: 'always', breakAfter: 'always', height: 0 }}></div>
+
+          {/* Technical Glossary */}
+          <section className="bg-card border rounded-lg p-6 print:p-0 page-break-after" style={{ pageBreakBefore: 'always', breakBefore: 'always' }}>
+            {reportSections['Technical Glossary']?.map(report => (
+              <div key={report.id} className="mb-4">
+                <div className="ProseMirror" dangerouslySetInnerHTML={{ __html: report.content }} />
+              </div>
+            ))}
+          </section>
+
           {/* Appendix: Detailed Analysis by Tool */}
-          <section className="bg-card border rounded-lg p-6 print:p-0">
-            <h2 className="text-2xl font-bold mb-4">Appendix: Detailed Analysis by Tool</h2>
-            
+          {printMode !== 'main' && (
+            <section className="bg-card border rounded-lg p-6 print:p-0">
             {reportSections['Appendix'] && (
               <div className="mb-6">
                 {reportSections['Appendix'].map(report => (
@@ -241,53 +280,33 @@ function ReportPage() {
             {/* Security Scorecard */}
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-3">Security Scorecard</h3>
-              <div className="print:scale-95 print:origin-top-left">
-                <SecurityScorecardOverview />
-              </div>
+              <SecurityScorecardOverview />
             </div>
 
             {/* Project Discovery */}
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-3">Project Discovery</h3>
-              <div className="print:scale-95 print:origin-top-left">
-                <ProjectDiscoveryOverview />
-              </div>
+              <ProjectDiscoveryOverview />
             </div>
 
             {/* Purple Knight AD */}
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-3">Purple Knight AD</h3>
-              <div className="print:scale-95 print:origin-top-left">
-                <PurpleKnightADOverview />
-              </div>
+              <PurpleKnightADOverview />
             </div>
 
             {/* Purple Knight Entra-ID */}
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-3">Purple Knight Entra-ID</h3>
-              <div className="print:scale-95 print:origin-top-left">
-                <PurpleKnightEntraIDOverview />
-              </div>
+              <PurpleKnightEntraIDOverview />
             </div>
 
             {/* M365 Secure Score */}
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-3">M365 Secure Score</h3>
-              <div className="print:scale-95 print:origin-top-left">
-                <MetricOverview />
-              </div>
+              <MetricOverview />
             </div>
           </section>
-
-          {/* Technical Glossary */}
-          {reportSections['Technical Glossary'] && (
-            <section className="bg-card border rounded-lg p-6 print:p-0">
-              {reportSections['Technical Glossary'].map(report => (
-                <div key={report.id} className="mb-4">
-                  <div className="ProseMirror" dangerouslySetInnerHTML={{ __html: report.content }} />
-                </div>
-              ))}
-            </section>
           )}
         </div>
       </MainContent>
