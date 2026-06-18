@@ -1,0 +1,1795 @@
+{
+  "metrics": [
+    {
+      "id": 335,
+      "metric_name": "Security Score",
+      "metric_type": "ProjectDiscovery",
+      "value": 53,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 336,
+      "metric_name": "Critical",
+      "metric_type": "ProjectDiscovery",
+      "value": 0,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 337,
+      "metric_name": "High",
+      "metric_type": "ProjectDiscovery",
+      "value": 4,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 338,
+      "metric_name": "Medium",
+      "metric_type": "ProjectDiscovery",
+      "value": 9,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 339,
+      "metric_name": "Low",
+      "metric_type": "ProjectDiscovery",
+      "value": 28,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 343,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 84,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 344,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 9,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 345,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 0,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 346,
+      "metric_name": "My Score",
+      "metric_type": "Securityscorecard",
+      "value": 59,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 347,
+      "metric_name": "High breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 3,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 348,
+      "metric_name": "Medium breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 1,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 349,
+      "metric_name": "Low breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 8,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 350,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 77,
+      "date": "2026-06-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 351,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 89,
+      "date": "2026-06-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 352,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 55,
+      "date": "2026-06-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 353,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 87,
+      "date": "2026-06-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 354,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 61,
+      "date": "2026-06-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 355,
+      "metric_name": "My Score",
+      "metric_type": "Securityscorecard",
+      "value": 55,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 356,
+      "metric_name": "High breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 4,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 357,
+      "metric_name": "Medium breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 1,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 358,
+      "metric_name": "Low breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 8,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 359,
+      "metric_name": "Security Score",
+      "metric_type": "ProjectDiscovery",
+      "value": 54,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 360,
+      "metric_name": "Critical",
+      "metric_type": "ProjectDiscovery",
+      "value": 0,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 361,
+      "metric_name": "High",
+      "metric_type": "ProjectDiscovery",
+      "value": 4,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 362,
+      "metric_name": "Medium",
+      "metric_type": "ProjectDiscovery",
+      "value": 8,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 363,
+      "metric_name": "Low",
+      "metric_type": "ProjectDiscovery",
+      "value": 27,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 364,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 84,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 365,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 10,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 366,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 0,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 367,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight AD",
+      "value": 80,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 368,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight AD",
+      "value": 22,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 369,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight AD",
+      "value": 0,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 370,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 76,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 371,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 89,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 372,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 55,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 373,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 86,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 374,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 61,
+      "date": "2026-05-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 375,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 61,
+      "date": "2026-05-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 376,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 76,
+      "date": "2026-05-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 377,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 89,
+      "date": "2026-05-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 378,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 55,
+      "date": "2026-05-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 379,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 87,
+      "date": "2026-05-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 380,
+      "metric_name": "My Score",
+      "metric_type": "Securityscorecard",
+      "value": 51,
+      "date": "2026-05-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 381,
+      "metric_name": "High breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 3,
+      "date": "2026-05-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 382,
+      "metric_name": "Medium breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 1,
+      "date": "2026-05-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 383,
+      "metric_name": "Low breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 8,
+      "date": "2026-05-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 384,
+      "metric_name": "My Score",
+      "metric_type": "Securityscorecard",
+      "value": 73,
+      "date": "2026-05-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 385,
+      "metric_name": "High breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 2,
+      "date": "2026-05-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 386,
+      "metric_name": "Medium breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 1,
+      "date": "2026-05-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 387,
+      "metric_name": "Low breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 8,
+      "date": "2026-05-02",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 388,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 61,
+      "date": "2026-01-22",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 389,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 77,
+      "date": "2026-01-22",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 390,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 89,
+      "date": "2026-01-22",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 391,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 55,
+      "date": "2026-01-22",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 392,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 86,
+      "date": "2026-01-22",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 393,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight AD",
+      "value": 75,
+      "date": "2026-01-21",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 394,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight AD",
+      "value": 24,
+      "date": "2026-01-21",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 395,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight AD",
+      "value": 2,
+      "date": "2026-01-21",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 396,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 64,
+      "date": "2025-10-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 397,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 73,
+      "date": "2025-10-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 398,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 89,
+      "date": "2025-10-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 399,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 58,
+      "date": "2025-10-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 400,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2025-10-03",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 401,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 62,
+      "date": "2025-08-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 402,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 72,
+      "date": "2025-08-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 403,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 87,
+      "date": "2025-08-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 404,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 56,
+      "date": "2025-08-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 405,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2025-08-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 406,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight AD",
+      "value": 73,
+      "date": "2025-07-08",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 407,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight AD",
+      "value": 23,
+      "date": "2025-07-08",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 408,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight AD",
+      "value": 3,
+      "date": "2025-07-08",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 409,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight AD",
+      "value": 79,
+      "date": "2025-03-10",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 410,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight AD",
+      "value": 21,
+      "date": "2025-03-10",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 411,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight AD",
+      "value": 2,
+      "date": "2025-03-10",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 412,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 65,
+      "date": "2025-01-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 413,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 72,
+      "date": "2025-01-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 414,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 85,
+      "date": "2025-01-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 415,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 59,
+      "date": "2025-01-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 416,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2025-01-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 417,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 65,
+      "date": "2024-10-24",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 418,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 82,
+      "date": "2024-10-24",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 419,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 84,
+      "date": "2024-10-24",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 420,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 59,
+      "date": "2024-10-24",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 421,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2024-10-24",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 422,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 60,
+      "date": "2024-07-05",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 423,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 75,
+      "date": "2024-07-05",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 424,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 85,
+      "date": "2024-07-05",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 425,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 59,
+      "date": "2024-07-05",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 426,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2024-07-05",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 427,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 60,
+      "date": "2024-04-18",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 428,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 75,
+      "date": "2024-04-18",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 429,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2024-04-18",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 430,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 60,
+      "date": "2024-04-18",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 431,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2024-04-18",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 432,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 56,
+      "date": "2023-08-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 433,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 72,
+      "date": "2023-08-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 434,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 83,
+      "date": "2023-08-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 435,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2023-08-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 436,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2023-08-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 437,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 56,
+      "date": "2023-07-20",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 438,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 72,
+      "date": "2023-07-20",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 439,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 91,
+      "date": "2023-07-20",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 440,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2023-07-20",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 441,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2023-07-20",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 442,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 52,
+      "date": "2023-04-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 443,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 78,
+      "date": "2023-04-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 444,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 85,
+      "date": "2023-04-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 445,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2023-04-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 446,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2023-04-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 447,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 60,
+      "date": "2023-01-04",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 448,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 75,
+      "date": "2023-01-04",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 449,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2023-01-04",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 450,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 54,
+      "date": "2023-01-04",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 451,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2023-01-04",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 452,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 79,
+      "date": "2022-12-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 453,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 61,
+      "date": "2022-12-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 454,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 84,
+      "date": "2022-12-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 455,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-12-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 456,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-12-19",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 457,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 75,
+      "date": "2022-12-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 458,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 61,
+      "date": "2022-12-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 459,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 84,
+      "date": "2022-12-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 460,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-12-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 461,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-12-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 462,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 58,
+      "date": "2022-11-17",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 463,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 51,
+      "date": "2022-11-17",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 464,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 64,
+      "date": "2022-11-17",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 465,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-11-17",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 466,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-11-17",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 467,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 71,
+      "date": "2022-07-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 468,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 53,
+      "date": "2022-07-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 469,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 91,
+      "date": "2022-07-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 470,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-07-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 471,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-07-11",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 472,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 69,
+      "date": "2022-06-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 473,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 47,
+      "date": "2022-06-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 474,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 91,
+      "date": "2022-06-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 475,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-06-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 476,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-06-23",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 477,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 65,
+      "date": "2022-06-16",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 478,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 39,
+      "date": "2022-06-16",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 479,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 91,
+      "date": "2022-06-16",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 480,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-06-16",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 481,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-06-16",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 482,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 35,
+      "date": "2022-04-14",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 483,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 26,
+      "date": "2022-04-14",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 484,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 45,
+      "date": "2022-04-14",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 485,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-04-14",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 486,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-04-14",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 487,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 31,
+      "date": "2022-04-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 488,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 26,
+      "date": "2022-04-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 489,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 36,
+      "date": "2022-04-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 490,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-04-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 491,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-04-07",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 492,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 31,
+      "date": "2022-03-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 493,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 26,
+      "date": "2022-03-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 494,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 36,
+      "date": "2022-03-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 495,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-03-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 496,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-03-31",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 497,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 27,
+      "date": "2022-03-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 498,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 26,
+      "date": "2022-03-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 499,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 28,
+      "date": "2022-03-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 500,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 48,
+      "date": "2022-03-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 501,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 88,
+      "date": "2022-03-29",
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 502,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 77,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:38:45"
+    },
+    {
+      "id": 503,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 89,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:38:45"
+    },
+    {
+      "id": 504,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 55,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:38:45"
+    },
+    {
+      "id": 505,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 87,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:38:45"
+    },
+    {
+      "id": 506,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 61,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 08:38:45"
+    },
+    {
+      "id": 507,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight AD",
+      "value": 80,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 09:21:33"
+    },
+    {
+      "id": 508,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight AD",
+      "value": 22,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 09:21:33"
+    },
+    {
+      "id": 509,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight AD",
+      "value": 2,
+      "date": "2026-06-03",
+      "created_at": "2026-06-04 09:21:33"
+    },
+    {
+      "id": 510,
+      "metric_name": "My Score",
+      "metric_type": "Securityscorecard",
+      "value": 82,
+      "date": "2026-06-11",
+      "created_at": "2026-06-09 13:01:31"
+    },
+    {
+      "id": 511,
+      "metric_name": "High breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 1,
+      "date": "2026-06-11",
+      "created_at": "2026-06-09 13:01:31"
+    },
+    {
+      "id": 512,
+      "metric_name": "Medium breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 1,
+      "date": "2026-06-11",
+      "created_at": "2026-06-09 13:01:31"
+    },
+    {
+      "id": 513,
+      "metric_name": "Low breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 8,
+      "date": "2026-06-11",
+      "created_at": "2026-06-09 13:01:31"
+    },
+    {
+      "id": 514,
+      "metric_name": "Security Score",
+      "metric_type": "ProjectDiscovery",
+      "value": 53,
+      "date": "2026-06-09",
+      "created_at": "2026-06-09 13:14:59"
+    },
+    {
+      "id": 515,
+      "metric_name": "Critical",
+      "metric_type": "ProjectDiscovery",
+      "value": 0,
+      "date": "2026-06-09",
+      "created_at": "2026-06-09 13:14:59"
+    },
+    {
+      "id": 516,
+      "metric_name": "High",
+      "metric_type": "ProjectDiscovery",
+      "value": 4,
+      "date": "2026-06-09",
+      "created_at": "2026-06-09 13:14:59"
+    },
+    {
+      "id": 517,
+      "metric_name": "Medium",
+      "metric_type": "ProjectDiscovery",
+      "value": 9,
+      "date": "2026-06-09",
+      "created_at": "2026-06-09 13:14:59"
+    },
+    {
+      "id": 518,
+      "metric_name": "Low",
+      "metric_type": "ProjectDiscovery",
+      "value": 27,
+      "date": "2026-06-09",
+      "created_at": "2026-06-09 13:14:59"
+    },
+    {
+      "id": 519,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight AD",
+      "value": 85,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 12:53:30"
+    },
+    {
+      "id": 520,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight AD",
+      "value": 21,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 12:53:30"
+    },
+    {
+      "id": 521,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight AD",
+      "value": 1,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 12:53:30"
+    },
+    {
+      "id": 522,
+      "metric_name": "Security Score",
+      "metric_type": "ProjectDiscovery",
+      "value": 53,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:05"
+    },
+    {
+      "id": 523,
+      "metric_name": "Critical",
+      "metric_type": "ProjectDiscovery",
+      "value": 0,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:05"
+    },
+    {
+      "id": 524,
+      "metric_name": "Medium",
+      "metric_type": "ProjectDiscovery",
+      "value": 9,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:05"
+    },
+    {
+      "id": 525,
+      "metric_name": "High",
+      "metric_type": "ProjectDiscovery",
+      "value": 4,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:05"
+    },
+    {
+      "id": 526,
+      "metric_name": "Low",
+      "metric_type": "ProjectDiscovery",
+      "value": 27,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:05"
+    },
+    {
+      "id": 527,
+      "metric_name": "Identity",
+      "metric_type": "M365",
+      "value": 77,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:41"
+    },
+    {
+      "id": 528,
+      "metric_name": "Device",
+      "metric_type": "M365",
+      "value": 53,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:41"
+    },
+    {
+      "id": 529,
+      "metric_name": "Data",
+      "metric_type": "M365",
+      "value": 89,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:41"
+    },
+    {
+      "id": 530,
+      "metric_name": "Apps",
+      "metric_type": "M365",
+      "value": 87,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:41"
+    },
+    {
+      "id": 531,
+      "metric_name": "Secure Score",
+      "metric_type": "M365",
+      "value": 62,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:09:41"
+    },
+    {
+      "id": 532,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 84,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:13:59"
+    },
+    {
+      "id": 533,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 9,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:13:59"
+    },
+    {
+      "id": 534,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight Entra-ID",
+      "value": 0,
+      "date": "2026-06-11",
+      "created_at": "2026-06-11 13:13:59"
+    },
+    {
+      "id": 535,
+      "metric_name": "Note",
+      "metric_type": "Purple Knight AD",
+      "value": 85,
+      "date": "2026-06-18",
+      "created_at": "2026-06-18 09:26:42"
+    },
+    {
+      "id": 536,
+      "metric_name": "IOEs Found",
+      "metric_type": "Purple Knight AD",
+      "value": 19,
+      "date": "2026-06-18",
+      "created_at": "2026-06-18 09:26:42"
+    },
+    {
+      "id": 537,
+      "metric_name": "Critical IOEs",
+      "metric_type": "Purple Knight AD",
+      "value": 1,
+      "date": "2026-06-18",
+      "created_at": "2026-06-18 09:26:42"
+    },
+    {
+      "id": 538,
+      "metric_name": "My Score",
+      "metric_type": "Securityscorecard",
+      "value": 67,
+      "date": "2026-06-18",
+      "created_at": "2026-06-18 09:29:42"
+    },
+    {
+      "id": 539,
+      "metric_name": "High breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 3,
+      "date": "2026-06-18",
+      "created_at": "2026-06-18 09:29:42"
+    },
+    {
+      "id": 540,
+      "metric_name": "Medium breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 1,
+      "date": "2026-06-18",
+      "created_at": "2026-06-18 09:29:42"
+    },
+    {
+      "id": 541,
+      "metric_name": "Low breach risk issues",
+      "metric_type": "Securityscorecard",
+      "value": 8,
+      "date": "2026-06-18",
+      "created_at": "2026-06-18 09:29:42"
+    }
+  ],
+  "followup": [
+    {
+      "id": 27,
+      "level": "HIGH",
+      "vulnerability": "Vulnerability 1",
+      "service_ip": "web",
+      "source": "SecurityScorecard",
+      "remediation_task": "Fix",
+      "ticket": "001",
+      "status": "Open",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 28,
+      "level": "HIGH",
+      "vulnerability": "Session Cookie Missing 'HttpOnly' Attribute",
+      "service_ip": "bwint.org",
+      "source": "SecurityScorecard",
+      "remediation_task": "Modify Cookies",
+      "ticket": "INC-156275",
+      "status": "Fix in progress",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 29,
+      "level": "HIGH",
+      "vulnerability": "Session Cookie Missing 'Secure' Attribute",
+      "service_ip": "bwint.org",
+      "source": "SecurityScorecard",
+      "remediation_task": "Some actions pending",
+      "ticket": "INC-156275",
+      "status": "Fix in progress",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 30,
+      "level": "HIGH",
+      "vulnerability": "SSL/TLS Service Supports Weak Protocol",
+      "service_ip": "WPMD",
+      "source": "SecurityScorecard",
+      "remediation_task": "Disable weak services",
+      "ticket": "n/a",
+      "status": "Fixed",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 31,
+      "level": "MEDIUM",
+      "vulnerability": "TLS Service Supports Weak Cipher Suite",
+      "service_ip": "wpmd",
+      "source": "SecurityScorecard",
+      "remediation_task": "Disable weak services",
+      "ticket": "n/a",
+      "status": "Discovered",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 32,
+      "level": "HIGH",
+      "vulnerability": "Top 38 parameters – Cross-Site Scripting bwiconnect",
+      "service_ip": "bwiconnect/congress",
+      "source": "Project Discovery",
+      "remediation_task": "Looking for a solution",
+      "ticket": "not yet ticket",
+      "status": "Discovered",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 33,
+      "level": "MEDIUM",
+      "vulnerability": "OpenSSH Terrapin Attack – Detection",
+      "service_ip": "bwiconnect",
+      "source": "Project Discovery",
+      "remediation_task": "Evaluating impact",
+      "ticket": "no ticket yet",
+      "status": "Discovered",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 34,
+      "level": "HIGH",
+      "vulnerability": "Exposed Internal PKI Infrastructure",
+      "service_ip": "Palantir",
+      "source": "Project Discovery",
+      "remediation_task": "Remove certification service",
+      "ticket": "n/a",
+      "status": "Fix in progress",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 35,
+      "level": "MEDIUM",
+      "vulnerability": "Odoo CMS – Open Redirect",
+      "service_ip": "Odoo server",
+      "source": "Project Discovery",
+      "remediation_task": "Server not in internet / expect to power off soon",
+      "ticket": "n/a",
+      "status": "Accepted risk",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 36,
+      "level": "HIGH",
+      "vulnerability": "Git Configuration - Detect",
+      "service_ip": "team.bwint.org",
+      "source": "Project Discovery",
+      "remediation_task": "Remove information",
+      "ticket": "INC-156153",
+      "status": "Open",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 37,
+      "level": "MEDIUM",
+      "vulnerability": "Users or devices inactive for at least 90 days",
+      "service_ip": "Entra-ID",
+      "source": "Purple Knight Entra-ID",
+      "remediation_task": "Review list of computers",
+      "ticket": "INC-156289",
+      "status": "Open",
+      "hidden": 0,
+      "created_at": "2026-06-04 08:29:35"
+    },
+    {
+      "id": 40,
+      "level": "CRITICAL",
+      "vulnerability": "Non-default principals with DC Sync rights on the domain",
+      "service_ip": "Active Directory",
+      "source": "Purple Knight AD",
+      "remediation_task": "Ensure that there are no unnecessary replication permissions",
+      "ticket": "INC-156293",
+      "status": "Open",
+      "hidden": 0,
+      "created_at": "2026-06-04 10:18:45"
+    },
+    {
+      "id": 41,
+      "level": "CRITICAL",
+      "vulnerability": "Weak certificate cipher",
+      "service_ip": "PALANTIR",
+      "source": "Purple Knight AD",
+      "remediation_task": "certificates need to be revoked and re-issued.",
+      "ticket": "INC-156293",
+      "status": "Open",
+      "hidden": 0,
+      "created_at": "2026-06-04 10:19:24"
+    }
+  ],
+  "exportedAt": "2026-06-18T11:30:32.746Z"
+}

@@ -5,14 +5,37 @@ import { MainContent } from '../components/dashboard/MainContent'
 
 const FollowupPage = () => {
   const [items, setItems] = useState([])
+  const [selectedSource, setSelectedSource] = useState('All')
+
+  const levelOrder = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
+
+  const sortByLevel = (items) => {
+    return items.sort((a, b) => {
+      const aIndex = levelOrder.indexOf(a.level)
+      const bIndex = levelOrder.indexOf(b.level)
+      if (aIndex === -1 && bIndex === -1) return 0
+      if (aIndex === -1) return 1
+      if (bIndex === -1) return -1
+      return aIndex - bIndex
+    })
+  }
 
   useEffect(() => {
     const loadItems = async () => {
       const visibleItems = await followupManager.getVisibleItems()
-      setItems(visibleItems)
+      setItems(sortByLevel(visibleItems))
     }
     loadItems()
   }, [])
+
+  const getUniqueSources = () => {
+    const sources = [...new Set(items.map(item => item.source))]
+    return ['All', ...sources.sort()]
+  }
+
+  const filteredItems = selectedSource === 'All' 
+    ? items 
+    : items.filter(item => item.source === selectedSource)
 
   const getLevelColor = (level) => {
     switch (level) {
@@ -52,9 +75,23 @@ const FollowupPage = () => {
         <MainContent>
           <div className="space-y-6">
             {/* Header */}
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Vulnerability Follow-up</h1>
-              <p className="text-gray-600 mt-1">Track and manage security vulnerabilities</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">Vulnerability Follow-up</h1>
+                <p className="text-gray-600 mt-1">Track and manage security vulnerabilities</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="text-sm text-gray-600">Filter by Source:</label>
+                <select
+                  value={selectedSource}
+                  onChange={(e) => setSelectedSource(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  {getUniqueSources().map(source => (
+                    <option key={source} value={source}>{source}</option>
+                  ))}
+                </select>
+              </div>
             </div>
 
             {/* Table */}
@@ -76,7 +113,7 @@ const FollowupPage = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {items.map((item) => (
+                      {filteredItems.map((item) => (
                         <tr key={item.id} className={`border-b border-gray-100 hover:bg-gray-50 ${getRowBackgroundColor(item.status)}`}>
                           <td className="py-3 px-4">
                             <span className={getLevelColor(item.level)}>{item.level}</span>
