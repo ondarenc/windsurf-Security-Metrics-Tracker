@@ -103,6 +103,8 @@ class FollowupManager {
             status: this.items[index].status,
             hidden: this.items[index].hidden ? 1 : 0
           })
+          // Reload from API to ensure local state matches database
+          await this.loadItems()
         } catch (error) {
           console.error('Error updating follow-up item via API:', error)
           this.useApi = false
