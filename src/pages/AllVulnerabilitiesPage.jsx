@@ -11,6 +11,19 @@ const AllVulnerabilitiesPage = () => {
   const [loading, setLoading] = useState(true)
   const [selectedSource, setSelectedSource] = useState('All')
 
+  const levelOrder = ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']
+
+  const sortByLevel = (items) => {
+    return items.sort((a, b) => {
+      const aIndex = levelOrder.indexOf(a.level)
+      const bIndex = levelOrder.indexOf(b.level)
+      if (aIndex === -1 && bIndex === -1) return 0
+      if (aIndex === -1) return 1
+      if (bIndex === -1) return -1
+      return aIndex - bIndex
+    })
+  }
+
   useEffect(() => {
     loadItems()
   }, [])
@@ -43,9 +56,11 @@ const AllVulnerabilitiesPage = () => {
     return ['All', ...sources.sort()]
   }
 
-  const filteredItems = selectedSource === 'All' 
-    ? items 
-    : items.filter(item => item.source === selectedSource)
+  const filteredItems = sortByLevel(
+    selectedSource === 'All' 
+      ? items 
+      : items.filter(item => item.source === selectedSource)
+  )
 
   const getLevelColor = (level) => {
     switch (level) {

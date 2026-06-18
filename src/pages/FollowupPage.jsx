@@ -34,8 +34,8 @@ const FollowupPage = () => {
   }
 
   const filteredItems = selectedSource === 'All' 
-    ? items 
-    : items.filter(item => item.source === selectedSource)
+    ? items.filter(item => item.status !== 'Archived')
+    : items.filter(item => item.source === selectedSource && item.status !== 'Archived')
 
   const getLevelColor = (level) => {
     switch (level) {
