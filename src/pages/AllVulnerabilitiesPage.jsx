@@ -9,6 +9,7 @@ const AllVulnerabilitiesPage = () => {
   const navigate = useNavigate()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
+  const [selectedSource, setSelectedSource] = useState('All')
 
   useEffect(() => {
     loadItems()
@@ -36,6 +37,15 @@ const AllVulnerabilitiesPage = () => {
     await followupManager.updateItem(id, { status: newStatus })
     loadItems()
   }
+
+  const getUniqueSources = () => {
+    const sources = [...new Set(items.map(item => item.source))]
+    return ['All', ...sources.sort()]
+  }
+
+  const filteredItems = selectedSource === 'All' 
+    ? items 
+    : items.filter(item => item.source === selectedSource)
 
   const getLevelColor = (level) => {
     switch (level) {
@@ -68,19 +78,33 @@ const AllVulnerabilitiesPage = () => {
       <MainContent>
         <div className="space-y-6">
           {/* Header */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => navigate('/dashboard')}
-              className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 text-gray-600" />
-            </button>
-            <h1 className="text-2xl font-bold text-gray-900">All Vulnerabilities</h1>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => navigate('/dashboard')}
+                className="p-2 hover:bg-gray-200 rounded-lg transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 text-gray-600" />
+              </button>
+              <h1 className="text-2xl font-bold text-gray-900">All Vulnerabilities</h1>
+            </div>
+            <div className="flex items-center gap-2">
+              <label className="text-sm text-gray-600">Filter by Source:</label>
+              <select
+                value={selectedSource}
+                onChange={(e) => setSelectedSource(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                {getUniqueSources().map(source => (
+                  <option key={source} value={source}>{source}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {/* Table */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-            {items.length === 0 ? (
+            {filteredItems.length === 0 ? (
               <p className="text-gray-500 text-center py-8">No vulnerabilities found</p>
             ) : (
               <div className="overflow-x-auto">
@@ -99,7 +123,7 @@ const AllVulnerabilitiesPage = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {items.map((item) => (
+                    {filteredItems.map((item) => (
                       <tr key={item.id} className="border-b border-gray-100 hover:bg-gray-50">
                         <td className="py-3 px-4">
                           <input
@@ -128,7 +152,7 @@ const AllVulnerabilitiesPage = () => {
                           <select
                             value={item.status}
                             onChange={(e) => handleStatusChange(item.id, e.target.value)}
-                            className="px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                            className="px-2 py-1 border borderf-lteredIgray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
                           >
                             <option value="Discovered">Discovered</option>
                             <option value="Open">Open</option>

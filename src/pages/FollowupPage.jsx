@@ -49,11 +49,15 @@ const FollowupPage = () => {
 
   const getRowBackgroundColor = (status) => {
     if (status === 'Fixed') return 'bg-green-50'
+    if (status === 'Fix in progress') return 'bg-blue-50'
+    if (status === 'Open') return 'bg-red-50'
     return ''
   }
 
   const getStatusColor = (status) => {
     if (status === 'Fixed') return 'text-green-600 font-semibold'
+    if (status === 'Fix in progress') return 'text-blue-600 font-semibold'
+    if (status === 'Open') return 'text-red-600 font-semibold'
     return 'text-gray-700'
   }
 
