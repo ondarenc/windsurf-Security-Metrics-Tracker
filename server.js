@@ -82,6 +82,7 @@ const autoHideItems = () => {
       SET hidden = 1
       WHERE status = 'Fixed' 
         AND hidden = 0
+        AND status_updated_at IS NOT NULL
         AND status_updated_at < datetime('now', '-60 days')
     `);
     const fixedCount = hideFixed.run();
@@ -92,6 +93,7 @@ const autoHideItems = () => {
       SET hidden = 1
       WHERE status = 'Accepted risk' 
         AND hidden = 0
+        AND status_updated_at IS NOT NULL
         AND status_updated_at < datetime('now', '-90 days')
     `);
     const acceptedRiskCount = hideAcceptedRisk.run();
