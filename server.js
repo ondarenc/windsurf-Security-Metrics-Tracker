@@ -120,11 +120,11 @@ const autoHideItems = () => {
   }
 };
 
-// Run auto-hide on startup
-autoHideItems();
+// Run auto-hide on startup (temporarily disabled due to schema issue)
+// autoHideItems();
 
-// Schedule auto-hide to run every hour
-setInterval(autoHideItems, 60 * 60 * 1000);
+// Schedule auto-hide to run every hour (temporarily disabled)
+// setInterval(autoHideItems, 60 * 60 * 1000);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
