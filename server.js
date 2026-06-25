@@ -184,9 +184,11 @@ app.post('/api/followup', (req, res) => {
 app.put('/api/followup/:id', (req, res) => {
   try {
     const { level, vulnerability, service_ip, source, remediation_task, ticket, status, hidden } = req.body;
+    console.log('[FOLLOWUP UPDATE] Request:', { id: req.params.id, status, level, source });
     
     // Check if status is changing
     const current = db.prepare('SELECT status FROM followup WHERE id = ?').get(req.params.id);
+    console.log('[FOLLOWUP UPDATE] Current status:', current?.status);
     const statusChanged = current && current.status !== status;
     
     const stmt = db.prepare(`
@@ -196,9 +198,16 @@ app.put('/api/followup/:id', (req, res) => {
           status_updated_at = ${statusChanged ? 'CURRENT_TIMESTAMP' : 'status_updated_at'}
       WHERE id = ?
     `);
-    stmt.run(level, vulnerability, service_ip, source, remediation_task, ticket, status, hidden, req.params.id);
+    const result = stmt.run(level, vulnerability, service_ip, source, remediation_task, ticket, status, hidden, req.params.id);
+    console.log('[FOLLOWUP UPDATE] Result:', { changes: result.changes, affectedRows: result.changes });
+    
+    // Verify the update
+    const updated = db.prepare('SELECT status FROM followup WHERE id = ?').get(req.params.id);
+    console.log('[FOLLOWUP UPDATE] New status:', updated?.status);
+    
     res.json({ id: req.params.id, ...req.body });
   } catch (error) {
+    console.error('[FOLLOWUP UPDATE] Error:', error);
     res.status(500).json({ error: error.message });
   }
 });
