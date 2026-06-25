@@ -50,6 +50,16 @@ const initDatabase = () => {
     )
   `);
 
+  // Migration: Add status_updated_at column if it doesn't exist
+  try {
+    db.exec(`ALTER TABLE followup ADD COLUMN status_updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP`);
+  } catch (error) {
+    // Column might already exist, ignore error
+    if (!error.message.includes('duplicate column name')) {
+      console.error('Error adding status_updated_at column:', error);
+    }
+  }
+
   // Create reports table
   db.exec(`
     CREATE TABLE IF NOT EXISTS reports (
