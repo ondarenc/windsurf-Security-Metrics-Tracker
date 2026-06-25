@@ -52,11 +52,15 @@ const initDatabase = () => {
 
   // Migration: Add status_updated_at column if it doesn't exist
   try {
+    console.log('[MIGRATION] Attempting to add status_updated_at column...');
     db.exec(`ALTER TABLE followup ADD COLUMN status_updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP`);
+    console.log('[MIGRATION] Column added successfully');
   } catch (error) {
     // Column might already exist, ignore error
-    if (!error.message.includes('duplicate column name')) {
-      console.error('Error adding status_updated_at column:', error);
+    if (error.message.includes('duplicate column name')) {
+      console.log('[MIGRATION] Column already exists, skipping');
+    } else {
+      console.error('[MIGRATION] Error adding status_updated_at column:', error);
     }
   }
 
