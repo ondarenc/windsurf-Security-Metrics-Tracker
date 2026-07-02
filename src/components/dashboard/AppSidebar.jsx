@@ -10,7 +10,6 @@ import {
   Settings,
   Home,
   BarChart3,
-  FileText,
   AlertTriangle,
 } from 'lucide-react'
 
@@ -28,10 +27,6 @@ const mainMenu = [
 
 const vulnerabilitiesMenu = [
   { id: 'followup', label: 'Follow-up', path: '/followup', icon: AlertTriangle },
-]
-
-const reportMenu = [
-  { id: 'report', label: 'Report', path: '/report', icon: FileText },
 ]
 
 const bottomMenu = [
@@ -86,19 +81,6 @@ export function AppSidebar({ className }) {
         </p>
         <nav className="space-y-0.5 mb-6">
           {vulnerabilitiesMenu.map((item) => (
-            <SidebarLink
-              key={item.id}
-              item={item}
-              isActive={location.pathname === item.path}
-            />
-          ))}
-        </nav>
-
-        <p className="px-2 mb-2 text-[11px] font-medium text-muted-foreground uppercase tracking-wider">
-          Reports
-        </p>
-        <nav className="space-y-0.5">
-          {reportMenu.map((item) => (
             <SidebarLink
               key={item.id}
               item={item}

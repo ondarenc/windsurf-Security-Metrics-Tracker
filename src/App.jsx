@@ -14,8 +14,6 @@ import FollowupPage from './pages/FollowupPage'
 import MetricTargetSetup from './pages/MetricTargetSetup'
 import AllMetricsPage from './pages/AllMetricsPage'
 import AllVulnerabilitiesPage from './pages/AllVulnerabilitiesPage'
-import ReportEditorPage from './pages/ReportEditorPage'
-import ReportPage from './pages/ReportPage'
 
 function App() {
   return (
@@ -37,8 +35,6 @@ function App() {
         <Route path="/metric-target-setup" element={<MetricTargetSetup />} />
         <Route path="/all-metrics" element={<AllMetricsPage />} />
         <Route path="/all-vulnerabilities" element={<AllVulnerabilitiesPage />} />
-        <Route path="/report-editor" element={<ReportEditorPage />} />
-        <Route path="/report" element={<ReportPage />} />
       </Routes>
     </Router>
   )
